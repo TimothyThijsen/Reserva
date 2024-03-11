@@ -7,9 +7,9 @@
         private double rating;
 
         private List<int> rooms;
-        public Hotel() 
+        public Hotel()
         {
-            
+
         }
     }
 }

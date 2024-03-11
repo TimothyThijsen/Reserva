@@ -1,5 +1,3 @@
-using ReservaDesktopApp;
-
 namespace ReservaDesktopApp
 {
     internal static class Program
