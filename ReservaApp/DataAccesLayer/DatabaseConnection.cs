@@ -17,16 +17,14 @@ namespace DataAccessLayer
                 conn.Open();
 				cmd.ExecuteNonQuery();
 				transaction.Commit();
-            }catch (SqlException ex) 
+                conn.Close();
+            }
+            catch (SqlException ex) 
 			{ 
 				transaction.Rollback();
+                conn.Close();
                 throw ex;
-			}finally
-			{
-				conn.Close();
 			}
-            
-
             
         }
 

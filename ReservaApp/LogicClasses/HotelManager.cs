@@ -1,4 +1,4 @@
-﻿namespace LogicClasses
+﻿namespace DomainLayer
 {
     public class HotelManager
     {
