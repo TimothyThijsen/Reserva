@@ -1,4 +1,4 @@
-﻿namespace LogicClasses.Interface
+﻿namespace DomainLayer.Interface
 {
     public interface IHotelDAL
     {
