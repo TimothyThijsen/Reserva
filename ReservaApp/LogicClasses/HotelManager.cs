@@ -1,26 +1,33 @@
-﻿namespace DomainLayer
+﻿using DomainLayer.Interface;
+
+namespace DomainLayer
 {
     public class HotelManager
     {
-        public HotelManager()
+        IHotelDAL hotelDAL;
+        public HotelManager(IHotelDAL hotelDAL)
         {
-
+            this.hotelDAL = hotelDAL;
         }
 
         public void AddHotel(Hotel hotel)
         {
-
+            hotelDAL.AddHotel(hotel);
         }
 
-        public void EditHotel(Hotel hotel) { }
-        public void RemoveHotel(int id) { }
+        public void EditHotel(Hotel hotel) {
+            hotelDAL.EditHotel(hotel);
+        }
+        public void RemoveHotel(Hotel hotel) {
+            hotelDAL.RemoveHotel(hotel);
+        }
         public List<Hotel> GertAllHotels()
         {
-            return new();
+            return hotelDAL.GetAllHotels();
         }
         public Hotel GetHotelById(int id)
         {
-            return new();
+            return hotelDAL.GetHotelById(id);
         }
     }
 }
