@@ -2,18 +2,26 @@
 {
     public class Room
     {
-        int id, quantity;
+        int id, quantity, hotelId;
         string name;
         decimal price;
         Schedule schedule;
+        
+        public int Id { get { return id; } }
+        public int Quantity {  get { return quantity; } }
+        public string Name { get { return name; } }
+        public int HotelId {  get { return hotelId; } }
+        public decimal Price { get { return price; } }
 
-        public Room(int id, int quantity, string name, decimal price, Schedule schedule)
+        public Room(int hotelId, string name, int quantity,  decimal price)
         {
-            this.id = id;
             this.quantity = quantity;
             this.name = name;
             this.price = price;
-            this.schedule = schedule;
+            this.hotelId = hotelId;
+        }public Room(int id, int hotelId, string name, int quantity, decimal price) : this(hotelId, name, quantity, price)
+        {
+            this.id = id;
         }
     }
 }

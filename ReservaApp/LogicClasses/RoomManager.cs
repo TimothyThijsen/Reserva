@@ -1,26 +1,35 @@
-﻿namespace DomainLayer
+﻿using DomainLayer.Interface;
+
+namespace DomainLayer
 {
     public class RoomManager
     {
-        public RoomManager()
+        IRoomDAL roomDAL;
+        public RoomManager(IRoomDAL roomDAL)
         {
-
+            this.roomDAL = roomDAL;
         }
 
         public void AddRoom(Room room)
         {
-
+            roomDAL.AddRoom(room);
         }
 
-        public void EditRoom(Room room) { }
-        public void RemoveRoom(int id) { }
+        public void EditRoom(Room room) 
+        {
+            roomDAL.EditRoom(room);
+        }
+        public void RemoveRoom(int id) 
+        { 
+            roomDAL.RemoveRoom(id);
+        }
         public List<Room> GertAllRooms()
         {
-            return new();
+            return roomDAL.GetAllRooms();
         }
         public Room GetRoomById(int id)
         {
-            return null;
+            return roomDAL.GetRoomById(id);
         }
     }
 }
