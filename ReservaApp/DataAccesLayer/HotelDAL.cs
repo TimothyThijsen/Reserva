@@ -16,12 +16,18 @@ namespace DataAccessLayer
     public class HotelDAL : IHotelDAL
     {
         IConnection dbConnection; 
+
+        public HotelDAL()
+        {
+            dbConnection = new DatabaseConnection();
+        }
         public void AddHotel(Hotel hotel)
         {
-            string query = "CreateHotel @name, @cityId, @street, @postalCode;";
+            string query = "CreateHotel @name, @description, @cityId, @street, @postalCode;";
             using SqlCommand cmd = new SqlCommand();
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@name", hotel.Name);
+            cmd.Parameters.AddWithValue("@description", hotel.Description);
             cmd.Parameters.AddWithValue("@cityId", hotel.CityId);
             cmd.Parameters.AddWithValue("@street", hotel.Address.Street);
             cmd.Parameters.AddWithValue("@postalCode", hotel.Address.PostalCode);
@@ -35,11 +41,12 @@ namespace DataAccessLayer
            
             try
             {
-                string query = "UPDATE [Hotel] SET name = @name, cityId = @cityId WHERE id = @id;  UPDATE [Address] SET street = @street, postalCode = @postalCode WHERE id = (SELECT addressId FROM [Hotel] WHERE id = @id);";
+                string query = "UPDATE [Hotel] SET name = @name, description = @description, cityId = @cityId WHERE id = @id;  UPDATE [Address] SET street = @street, postalCode = @postalCode WHERE id = (SELECT addressId FROM [Hotel] WHERE id = @id);";
                 using SqlCommand cmd = new SqlCommand(query);
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@id", hotel.Id);
                 cmd.Parameters.AddWithValue("@name", hotel.Name);
+                cmd.Parameters.AddWithValue("@description", hotel.Description);
                 cmd.Parameters.AddWithValue("@cityId", hotel.CityId);
                 cmd.Parameters.AddWithValue("@street", hotel.Address.Street);
                 cmd.Parameters.AddWithValue("@postalCode", hotel.Address.PostalCode);
@@ -66,8 +73,9 @@ namespace DataAccessLayer
                 int addressId = reader.GetInt32(3);
                 string street = reader.GetString(4);
                 string postalCode = reader.GetString(5);
+                string description = reader.GetString(6);
 
-                hotels.Add(new Hotel(id, name, cityId, new Address(street, postalCode)));
+                hotels.Add(new Hotel(id, name, description, cityId, new Address(street, postalCode)));
 
             }
             cmd.Connection.Close();
@@ -101,8 +109,9 @@ namespace DataAccessLayer
             int addressId = reader.GetInt32(3);
             string street = reader.GetString(4);
             string postalCode = reader.GetString(5);
+            string description = reader.GetString(6);
 
-            hotel = (id, name, cityId, new Address(street, postalCode)));
+            hotel = (id, name, description, cityId, new Address(street, postalCode)));
             cmd.Connection.Close();
 
             query = "SELECT * FROM [Room] WHERE hotelId = @hotelId";

@@ -18,14 +18,20 @@ namespace DomainLayer
         public int CityId { get { return cityId; } }
         public string Name { get { return name; } }
         public string Description { get { return description; } }
+        public Address Address { get { return address; } }
         //public double Rating { get { return rating; } }
         public List<int> Rooms { get { return rooms; } set { rooms = value; } }
-        public Hotel(string name,string description, Address address)
+        public Hotel(string name,string description, int cityId, Address address)
         {
+            this.name = name;
+            this.description = description;
+            this.cityId = cityId;
+            this.address = address;
 
-        }public Hotel(int id, string name,string description, Address address)
+
+        }public Hotel(int id, string name,string description, int cityId, Address address) : this(name,description,cityId,address)
         {
-
+            this.id = id;
         }
     }
 }
