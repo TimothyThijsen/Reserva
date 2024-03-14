@@ -111,7 +111,7 @@ namespace DataAccessLayer
             string postalCode = reader.GetString(5);
             string description = reader.GetString(6);
 
-            hotel = (id, name, description, cityId, new Address(street, postalCode)));
+            hotel = new Hotel(id, name, description, cityId, new Address(street, postalCode));
             cmd.Connection.Close();
 
             query = "SELECT * FROM [Room] WHERE hotelId = @hotelId";
