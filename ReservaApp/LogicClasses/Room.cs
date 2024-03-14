@@ -2,8 +2,8 @@
 {
     public class Room
     {
-        int id, quantity, hotelId;
-        string name;
+        int id, quantity, hotelId, capacity;
+        string name, bedType;
         decimal price;
         Schedule schedule;
         
@@ -12,16 +12,25 @@
         public string Name { get { return name; } }
         public int HotelId {  get { return hotelId; } }
         public decimal Price { get { return price; } }
+        public int Capacity {  get { return capacity; } }
+        public string BedType {  get { return bedType; } }
 
-        public Room(int hotelId, string name, int quantity,  decimal price)
+        public Room(int hotelId, string name, int quantity,  decimal price, int capacity, string bedType)
         {
             this.quantity = quantity;
             this.name = name;
             this.price = price;
             this.hotelId = hotelId;
-        }public Room(int id, int hotelId, string name, int quantity, decimal price) : this(hotelId, name, quantity, price)
+            this.capacity = capacity;
+            this.bedType = bedType;
+        }public Room(int id, int hotelId, string name, int quantity, decimal price, int capacity, string bedType) : this(hotelId, name, quantity, price, capacity, bedType)
         {
             this.id = id;
+        }
+
+        public string GetPrice()
+        {
+            return price.ToString("0.00");
         }
     }
 }

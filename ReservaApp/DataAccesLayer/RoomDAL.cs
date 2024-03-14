@@ -20,13 +20,15 @@ namespace DataAccessLayer
         {
             try
             {
-                string query = "CreateRoom @name, @hotelId, @price, @quantity;";
+                string query = "CreateRoom @name, @hotelId, @price, @quantity, @capacity, @bedType;";
                 using SqlCommand cmd = new SqlCommand();
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@name", room.Name);
                 cmd.Parameters.AddWithValue("@hotelId", room.HotelId);
                 cmd.Parameters.AddWithValue("@price", room.Price);
                 cmd.Parameters.AddWithValue("@quantity", room.Quantity);
+                cmd.Parameters.AddWithValue("@capacity", room.Capacity);
+                cmd.Parameters.AddWithValue("@bedType", room.BedType);
 
 
                 dbConnection.ModifyDB(cmd);
@@ -41,14 +43,15 @@ namespace DataAccessLayer
         {
             try
             {
-                string query = "CreateRoom @name, @hotelId, @price, @quantity;";
+                string query = "CreateRoom @name, @hotelId, @price, @quantity, @capacity, @bedType;";
                 using SqlCommand cmd = new SqlCommand();
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@name", room.Name);
                 cmd.Parameters.AddWithValue("@hotelId", room.HotelId);
                 cmd.Parameters.AddWithValue("@price", room.Price);
                 cmd.Parameters.AddWithValue("@quantity", room.Quantity);
-
+                cmd.Parameters.AddWithValue("@capacity", room.Capacity);
+                cmd.Parameters.AddWithValue("@bedType", room.BedType);
 
                 dbConnection.ModifyDB(cmd);
             }
@@ -60,7 +63,7 @@ namespace DataAccessLayer
 
         public List<Room> GetAllRooms()
         {
-            string query = "SELECT * FROM [vwRooms]";
+            string query = "SELECT * FROM [vwRoom]";
             using SqlCommand cmd = new SqlCommand(query);
             SqlDataReader reader = dbConnection.GetFromDB(cmd);
             List<Room> rooms = new List<Room>();
@@ -71,8 +74,10 @@ namespace DataAccessLayer
                 string name = reader.GetString(2);
                 int quantity = reader.GetInt32(3);
                 decimal price = reader.GetDecimal(4);
+                int capacity = reader.GetInt32(5);
+                string bedType = reader.GetString(6);
 
-                rooms.Add(new Room(id, hotelId, name, quantity, price));
+                rooms.Add(new Room(id, hotelId, name, quantity, price, capacity, bedType));
 
             }
             return rooms;
@@ -80,7 +85,7 @@ namespace DataAccessLayer
 
         public List<Room> GetAllRoomsByLocation(string locationName)
         {
-            string query = "SELECT * FROM [vwRooms] WHERE cityName = @locationName";
+            string query = "SELECT * FROM [vwRoom] WHERE cityName = @locationName";
             using SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@locationName", locationName);
@@ -93,8 +98,9 @@ namespace DataAccessLayer
                 string name = reader.GetString(2);
                 int quantity = reader.GetInt32(3);
                 decimal price = reader.GetDecimal(4);
-
-                rooms.Add(new Room(id, hotelId, name, quantity, price));
+                int capacity = reader.GetInt32(5);
+                string bedType = reader.GetString(6);
+                rooms.Add(new Room(id, hotelId, name, quantity, price, capacity, bedType));
 
             }
             return rooms;
@@ -102,7 +108,7 @@ namespace DataAccessLayer
 
         public Room GetRoomById(int id)
         {
-            string query = "SELECT * FROM [vwRooms] where id = @id";
+            string query = "SELECT * FROM [vwRoom] where id = @id";
             using SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@id", id);
@@ -117,8 +123,10 @@ namespace DataAccessLayer
             string name = reader.GetString(2);
             int quantity = reader.GetInt32(3);
             decimal price = reader.GetDecimal(4);
+            int capacity = reader.GetInt32(5);
+            string bedType = reader.GetString(6);
 
-            room = new Room(id, hotelId, name, quantity, price);
+            room = new Room(id, hotelId, name, quantity, price, capacity, bedType);
             
             return room;
         }

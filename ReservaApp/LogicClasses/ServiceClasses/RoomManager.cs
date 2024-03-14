@@ -23,7 +23,7 @@ namespace DomainLayer.ServiceClasses
         {
             roomDAL.RemoveRoom(id);
         }
-        public List<Room> GertAllRooms()
+        public List<Room> GetAllRooms()
         {
             return roomDAL.GetAllRooms();
         }
