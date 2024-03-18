@@ -1,4 +1,4 @@
-﻿namespace DomainLayer.Interface
+﻿namespace DomainLayer.Interfaces
 {
     public interface IHotelDAL
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomainLayer.Interface
+namespace DomainLayer.Interfaces
 {
     public interface IRoomDAL
     {
