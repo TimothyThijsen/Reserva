@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DomainLayer.Interface;
+using DomainLayer.Interfaces;
 namespace DomainLayer.ServiceClasses
 {
     public class ReservationManager

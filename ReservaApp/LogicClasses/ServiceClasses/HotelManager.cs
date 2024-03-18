@@ -1,4 +1,4 @@
-﻿using DomainLayer.Interface;
+﻿using DomainLayer.Interfaces;
 
 namespace DomainLayer.ServiceClasses
 {
