@@ -17,16 +17,15 @@ namespace DataAccessLayer
                 conn.Open();
 				cmd.ExecuteNonQuery();
 				transaction.Commit();
-                conn.Close();
             }
             catch (SqlException ex) 
 			{ 
 				transaction.Rollback();
-                conn.Close();
-                throw ex;
+                throw new Exception(ex.Message);
 			}
-            
+
         }
+            
 
         public SqlDataReader GetFromDB(SqlCommand cmd)
 		{
@@ -36,9 +35,5 @@ namespace DataAccessLayer
 			SqlDataReader reader = cmd.ExecuteReader();
 			return reader;
 		}
-
-       
-
-
 	}
 }

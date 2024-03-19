@@ -1,5 +1,5 @@
 ﻿using DomainLayer;
-using DomainLayer.Interface;
+using DomainLayer.Interfaces;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;

@@ -8,9 +8,9 @@ using Microsoft.Data.SqlClient;
 
 namespace DataAccessLayer.Mapper
 {
-    public class HotelMapper
+    public static class HotelMapper
     {
-        public Hotel GetHotel(SqlDataReader reader)
+        public static Hotel GetHotel(SqlDataReader reader)
         {
             int id = reader.GetInt32(0);
             string name = reader.GetString(1);
@@ -23,7 +23,7 @@ namespace DataAccessLayer.Mapper
             return new Hotel(id, name, description, cityId, new Address(street, postalCode));
         }
 
-        public List<Hotel> GetHotels(SqlDataReader reader)
+        public static List<Hotel> GetHotels(SqlDataReader reader)
         {
             List<Hotel> hotels = new List<Hotel>();
             while (reader.Read())

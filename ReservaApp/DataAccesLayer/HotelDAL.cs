@@ -7,8 +7,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccessLayer.Mapper;
 using DomainLayer;
-using DomainLayer.Interface;
+using DomainLayer.Interfaces;
 using Microsoft.Data.SqlClient;
 
 namespace DataAccessLayer
@@ -32,7 +33,6 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@street", hotel.Address.Street);
             cmd.Parameters.AddWithValue("@postalCode", hotel.Address.PostalCode);
 
-           
             dbConnection.ModifyDB(cmd);
         }
 
@@ -63,37 +63,45 @@ namespace DataAccessLayer
         {
             string query = "SELECT * FROM [vwHotel]";
             using SqlCommand cmd = new SqlCommand(query);
-            SqlDataReader reader = dbConnection.GetFromDB(cmd);
             List<Hotel> hotels = new List<Hotel>();
-            while (reader.Read())
+            try
             {
-                int id = reader.GetInt32(0);
-                string name = reader.GetString(1);
-                int cityId = reader.GetInt32(2);
-                int addressId = reader.GetInt32(3);
-                string street = reader.GetString(4);
-                string postalCode = reader.GetString(5);
-                string description = reader.GetString(6);
-
-                hotels.Add(new Hotel(id, name, description, cityId, new Address(street, postalCode)));
-
-            }
-            cmd.Connection.Close();
-            foreach (Hotel hotel in hotels)
-            {
-                query = "SELECT * FROM [Room] WHERE hotelId = @hotelId";
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@hotelId", hotel.Id);
-                cmd.CommandText = query;
-                reader = dbConnection.GetFromDB(cmd);
-                List<int> rooms = new List<int>();
-                while (reader.Read())
+                using (SqlDataReader reader = dbConnection.GetFromDB(cmd))
                 {
-                    rooms.Add(reader.GetInt32(0));
+                    hotels = HotelMapper.GetHotels(reader);
                 }
-                hotel.Rooms = rooms;
+    
+                foreach (Hotel hotel in hotels)
+                {
+                    query = "SELECT * FROM [Room] WHERE hotelId = @hotelId";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@hotelId", hotel.Id);
+                    cmd.CommandText = query;
+                    using (SqlDataReader reader = dbConnection.GetFromDB(cmd))
+                    {
+                        //reader = dbConnection.GetFromDB(cmd);
+                        List<int> rooms = new List<int>();
+                        while (reader.Read())
+                        {
+                            rooms.Add(reader.GetInt32(0));
+                        }
+                        hotel.Rooms = rooms;
+                    }
+                   
+                    //cmd.Connection.Close();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception (ex.Message);
+            }
+            finally
+            {
                 cmd.Connection.Close();
             }
+           
+            
+            
             return hotels;
         }
 
@@ -101,32 +109,37 @@ namespace DataAccessLayer
         {
             string query = "SELECT * FROM [vwHotel]";
             using SqlCommand cmd = new SqlCommand(query);
-            SqlDataReader reader = dbConnection.GetFromDB(cmd);
             Hotel hotel = null;
-            reader.Read();
-            string name = reader.GetString(1);
-            int cityId = reader.GetInt32(2);
-            int addressId = reader.GetInt32(3);
-            string street = reader.GetString(4);
-            string postalCode = reader.GetString(5);
-            string description = reader.GetString(6);
-
-            hotel = new Hotel(id, name, description, cityId, new Address(street, postalCode));
-            cmd.Connection.Close();
-
-            query = "SELECT * FROM [Room] WHERE hotelId = @hotelId";
-            cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@hotelId", hotel.Id);
-            cmd.CommandText = query;
-            reader = dbConnection.GetFromDB(cmd);
-            List<int> rooms = new List<int>();
-            while (reader.Read())
+            try
             {
-                rooms.Add(reader.GetInt32(0));
+                using (SqlDataReader reader = dbConnection.GetFromDB(cmd))
+                {
+                    reader.Read();
+                    hotel = HotelMapper.GetHotel(reader);
+                }
+                //cmd.Connection.Close();
+
+                query = "SELECT * FROM [Room] WHERE hotelId = @hotelId";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@hotelId", hotel.Id);
+                cmd.CommandText = query;
+                using (SqlDataReader reader = dbConnection.GetFromDB(cmd))
+                {
+                    List<int> rooms = new List<int>();
+                    while (reader.Read())
+                    {
+                        rooms.Add(reader.GetInt32(0));
+                    }
+                    hotel.Rooms = rooms;
+                }
+                
+                //cmd.Connection.Close();
             }
-            hotel.Rooms = rooms;
-            cmd.Connection.Close();
-            
+            catch(SqlException ex)
+            {
+
+            }
+
             return hotel;
         }
 
