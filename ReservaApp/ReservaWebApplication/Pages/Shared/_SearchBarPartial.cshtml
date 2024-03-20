@@ -4,17 +4,33 @@
 @{
 }
 <div class="searchbar">
-    <label for="location">Location:</label>
-    <select name="location" id="location">
-        <option>None</option>
-        <option value="Amsterdam">Amsterdam</option>
-        <option value="Aruba">Aruba</option>
-        <option value="Bahamas">Bahamas</option>
-        <option value="Mallorca">Mallorca</option>
-    </select>
-    <label for="startDate">Start of stay:</label>
-    <input type="date" id="startDate" name="startDate">
-    <label for="startDate">Amount of guests:</label>
-    <input type="number" value="0">
-    <button type="submit">Search</button>
+    <form method="post">
+        <label for="location">Location:</label>
+        <select name="location" id="location">
+            <option>None</option>
+            <option value="Amsterdam">Amsterdam</option>
+            <option value="Aruba">Aruba</option>
+            <option value="Bahamas">Bahamas</option>
+            <option value="Mallorca">Mallorca</option>
+        </select>
+        <label for="startDate">Start of stay:</label>
+        <input type="date" id="startDate" name="startDate">
+        <label for="startDate">Amount of guests:</label>
+        <input type="number" value="0">
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div class=" ">
+    <div class="">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                location
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+        </div>
+    </div>
 </div>

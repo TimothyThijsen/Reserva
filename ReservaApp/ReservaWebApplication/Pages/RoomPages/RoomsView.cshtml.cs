@@ -10,10 +10,10 @@ namespace ReservaWebApplication.Pages.RoomPages
     {
         RoomManager roomManager = new RoomManager(new RoomDAL());
         [BindProperty]
-        public List<Room> rooms {  get; set; } = new List<Room>();
+        public List<Room> Rooms {  get; set; } = new List<Room>();
         public void OnGet()
         {
-            rooms = roomManager.GetAllRooms();
+            Rooms = roomManager.GetAllRooms();
         }
     }
 }
