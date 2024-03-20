@@ -66,12 +66,12 @@ namespace DataAccessLayer
             List<Hotel> hotels = new List<Hotel>();
             try
             {
-                using (SqlDataReader reader = dbConnection.GetFromDB(cmd))
-                {
-                    hotels = HotelMapper.GetHotels(reader);
-                }
+                using SqlDataReader reader = dbConnection.GetFromDB(cmd);
+                
+                hotels = HotelMapper.GetHotels(reader);
+                
     
-                foreach (Hotel hotel in hotels)
+                /*foreach (Hotel hotel in hotels)
                 {
                     query = "SELECT * FROM [Room] WHERE hotelId = @hotelId";
                     cmd.Parameters.Clear();
@@ -89,7 +89,7 @@ namespace DataAccessLayer
                     }
                    
                     //cmd.Connection.Close();
-                }
+                }*/
             }
             catch(Exception ex)
             {
@@ -97,7 +97,7 @@ namespace DataAccessLayer
             }
             finally
             {
-                cmd.Connection.Close();
+                //cmd.Connection.Close();
             }
            
             
@@ -112,28 +112,10 @@ namespace DataAccessLayer
             Hotel hotel = null;
             try
             {
-                using (SqlDataReader reader = dbConnection.GetFromDB(cmd))
-                {
-                    reader.Read();
-                    hotel = HotelMapper.GetHotel(reader);
-                }
-                //cmd.Connection.Close();
-
-                query = "SELECT * FROM [Room] WHERE hotelId = @hotelId";
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@hotelId", hotel.Id);
-                cmd.CommandText = query;
-                using (SqlDataReader reader = dbConnection.GetFromDB(cmd))
-                {
-                    List<int> rooms = new List<int>();
-                    while (reader.Read())
-                    {
-                        rooms.Add(reader.GetInt32(0));
-                    }
-                    hotel.Rooms = rooms;
-                }
+                using SqlDataReader reader = dbConnection.GetFromDB(cmd);
+                reader.Read();
+                hotel = HotelMapper.GetHotel(reader);
                 
-                //cmd.Connection.Close();
             }
             catch(SqlException ex)
             {
