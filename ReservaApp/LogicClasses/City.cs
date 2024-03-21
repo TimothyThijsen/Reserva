@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DomainLayer
+{
+    public class City
+    {
+        private int id;
+        private string name;
+
+        public int Id { get { return id; } }
+        public string Name { get { return name; } }
+        public City(string name) 
+        {
+            this.name = name;
+        }
+        public City(int id, string name) : this(name)
+        { 
+            this.id = id;
+        }
+    }
+}
