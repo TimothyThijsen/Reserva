@@ -83,6 +83,40 @@ namespace DataAccessLayer
             return rooms;
         }
 
+        public List<Room> GetAllRoomsByHotel(int hotelId)
+        {
+            string query = "SELECT * FROM [vwRoom] WHERE hotelId = @hotelId";
+            SqlCommand cmd = new SqlCommand(query);
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@hotelId", hotelId);
+            List<Room> rooms = new List<Room>();
+            try
+            {
+                SqlDataReader reader = dbConnection.GetFromDB(cmd);
+
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string name = reader.GetString(2);
+                    int quantity = reader.GetInt32(3);
+                    decimal price = reader.GetDecimal(4);
+                    int capacity = reader.GetInt32(5);
+                    string bedType = reader.GetString(6);
+                    rooms.Add(new Room(id, hotelId, name, quantity, price, capacity, bedType));
+
+                }
+            }catch(SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if(cmd is IDisposable diposable) { diposable.Dispose(); }
+            }
+            
+            return rooms;
+        }
+
         public List<Room> GetAllRoomsByLocation(string locationName)
         {
             string query = "SELECT * FROM [vwRoom] WHERE cityName = @locationName";

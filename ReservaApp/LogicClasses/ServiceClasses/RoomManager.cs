@@ -31,5 +31,9 @@ namespace DomainLayer.ServiceClasses
         {
             return roomDAL.GetRoomById(id);
         }
+        public List<Room> GetRoomByHotel(int hotelId)
+        {
+            return roomDAL.GetAllRoomsByHotel(hotelId);
+        }
     }
 }
