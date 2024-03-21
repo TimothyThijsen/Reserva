@@ -11,7 +11,7 @@ namespace DomainLayer
         //private double rating;
         private Address address;
         
-        private List<int> rooms;
+        private List<Room> rooms;
         //private List<Rating> ratings;
 
         public int Id { get { return id; } }
@@ -20,7 +20,7 @@ namespace DomainLayer
         public string Description { get { return description; } }
         public Address Address { get { return address; } }
         //public double Rating { get { return rating; } }
-        public List<int> Rooms { get { return rooms; } set { rooms = value; } }
+        public List<Room> Rooms { get { return rooms; } set { rooms = value; } }
         public Hotel(string name,string description, int cityId, Address address)
         {
             this.name = name;

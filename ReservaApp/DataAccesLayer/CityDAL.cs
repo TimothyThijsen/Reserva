@@ -53,7 +53,7 @@ namespace DataAccessLayer
                 }
                 
             }
-            return cities
+            return cities;
         }
 
         public City GetCity(int cityId)

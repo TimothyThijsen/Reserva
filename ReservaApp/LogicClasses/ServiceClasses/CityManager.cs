@@ -27,6 +27,9 @@ namespace DomainLayer.ServiceClasses
         public List<City> GetAllCities()
         {
             return cityDAL.GetAllCities();
+        }public City GetCity(int cityId)
+        {
+            return cityDAL.GetCity(cityId);
         }
     }
 }

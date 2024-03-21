@@ -89,7 +89,7 @@ namespace ReservaDesktopApp
 
         private void btnHotelOverview_Click(object sender, EventArgs e)
         {
-
+            OpenChildForm(new HotelForms.HotelOverview(), sender);
         }
     }
 }

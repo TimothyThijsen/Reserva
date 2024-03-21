@@ -50,7 +50,7 @@
             panelMenu.Dock = DockStyle.Left;
             panelMenu.Location = new Point(0, 0);
             panelMenu.Name = "panelMenu";
-            panelMenu.Size = new Size(220, 630);
+            panelMenu.Size = new Size(183, 495);
             panelMenu.TabIndex = 0;
             // 
             // btnHotelOverview
@@ -62,10 +62,10 @@
             btnHotelOverview.ForeColor = Color.Gainsboro;
             btnHotelOverview.Image = (Image)resources.GetObject("btnHotelOverview.Image");
             btnHotelOverview.ImageAlign = ContentAlignment.MiddleLeft;
-            btnHotelOverview.Location = new Point(0, 80);
+            btnHotelOverview.Location = new Point(0, 76);
             btnHotelOverview.Name = "btnHotelOverview";
             btnHotelOverview.Padding = new Padding(12, 0, 0, 0);
-            btnHotelOverview.Size = new Size(220, 60);
+            btnHotelOverview.Size = new Size(183, 60);
             btnHotelOverview.TabIndex = 1;
             btnHotelOverview.Text = "   Hotel";
             btnHotelOverview.TextAlign = ContentAlignment.MiddleLeft;
@@ -80,7 +80,7 @@
             panelLogo.Dock = DockStyle.Top;
             panelLogo.Location = new Point(0, 0);
             panelLogo.Name = "panelLogo";
-            panelLogo.Size = new Size(220, 80);
+            panelLogo.Size = new Size(183, 76);
             panelLogo.TabIndex = 0;
             // 
             // lblLogo
@@ -89,7 +89,7 @@
             lblLogo.AutoSize = true;
             lblLogo.Font = new Font("Script MT Bold", 21.75F, FontStyle.Bold);
             lblLogo.ForeColor = SystemColors.HighlightText;
-            lblLogo.Location = new Point(37, 23);
+            lblLogo.Location = new Point(33, 21);
             lblLogo.Name = "lblLogo";
             lblLogo.Size = new Size(111, 35);
             lblLogo.TabIndex = 1;
@@ -98,12 +98,12 @@
             // panelTitle
             // 
             panelTitle.BackColor = Color.FromArgb(0, 11, 105);
-            panelTitle.Controls.Add(btnCloseChildForm);
             panelTitle.Controls.Add(lblTitle);
+            panelTitle.Controls.Add(btnCloseChildForm);
             panelTitle.Dock = DockStyle.Top;
-            panelTitle.Location = new Point(220, 0);
+            panelTitle.Location = new Point(183, 0);
             panelTitle.Name = "panelTitle";
-            panelTitle.Size = new Size(855, 80);
+            panelTitle.Size = new Size(756, 76);
             panelTitle.TabIndex = 1;
             // 
             // btnCloseChildForm
@@ -114,7 +114,7 @@
             btnCloseChildForm.Image = (Image)resources.GetObject("btnCloseChildForm.Image");
             btnCloseChildForm.Location = new Point(0, 0);
             btnCloseChildForm.Name = "btnCloseChildForm";
-            btnCloseChildForm.Size = new Size(75, 80);
+            btnCloseChildForm.Size = new Size(75, 76);
             btnCloseChildForm.TabIndex = 1;
             btnCloseChildForm.UseVisualStyleBackColor = true;
             btnCloseChildForm.Click += btnCloseChildForm_Click;
@@ -122,38 +122,38 @@
             // lblTitle
             // 
             lblTitle.Anchor = AnchorStyles.None;
-            lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Montserrat", 16F, FontStyle.Bold);
             lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(369, 28);
+            lblTitle.Location = new Point(179, 8);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(86, 30);
+            lblTitle.Size = new Size(403, 65);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "HOME";
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // panelDesktopPanel
             // 
             panelDesktopPanel.Dock = DockStyle.Fill;
-            panelDesktopPanel.Location = new Point(220, 80);
+            panelDesktopPanel.Location = new Point(183, 76);
             panelDesktopPanel.Name = "panelDesktopPanel";
-            panelDesktopPanel.Size = new Size(855, 550);
+            panelDesktopPanel.Size = new Size(756, 419);
             panelDesktopPanel.TabIndex = 2;
             // 
-            // Main
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1075, 630);
+            ClientSize = new Size(939, 495);
             Controls.Add(panelDesktopPanel);
             Controls.Add(panelTitle);
             Controls.Add(panelMenu);
-            Name = "Main";
+            Name = "MainForm";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Main";
             panelMenu.ResumeLayout(false);
             panelLogo.ResumeLayout(false);
             panelLogo.PerformLayout();
             panelTitle.ResumeLayout(false);
-            panelTitle.PerformLayout();
             ResumeLayout(false);
         }
 

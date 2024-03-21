@@ -25,7 +25,7 @@ namespace DataAccessLayer
         public void AddHotel(Hotel hotel)
         {
             string query = "CreateHotel @name, @description, @cityId, @street, @postalCode;";
-            using SqlCommand cmd = new SqlCommand();
+            using SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@name", hotel.Name);
             cmd.Parameters.AddWithValue("@description", hotel.Description);
@@ -66,41 +66,20 @@ namespace DataAccessLayer
             List<Hotel> hotels = new List<Hotel>();
             try
             {
-                using SqlDataReader reader = dbConnection.GetFromDB(cmd);
+                SqlDataReader reader = dbConnection.GetFromDB(cmd);
                 
                 hotels = HotelMapper.GetHotels(reader);
                 
-    
-                /*foreach (Hotel hotel in hotels)
-                {
-                    query = "SELECT * FROM [Room] WHERE hotelId = @hotelId";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@hotelId", hotel.Id);
-                    cmd.CommandText = query;
-                    using (SqlDataReader reader = dbConnection.GetFromDB(cmd))
-                    {
-                        //reader = dbConnection.GetFromDB(cmd);
-                        List<int> rooms = new List<int>();
-                        while (reader.Read())
-                        {
-                            rooms.Add(reader.GetInt32(0));
-                        }
-                        hotel.Rooms = rooms;
-                    }
-                   
-                    //cmd.Connection.Close();
-                }*/
             }
-            catch(Exception ex)
+            catch(SqlException ex)
             {
-                throw new Exception (ex.Message);
+                //if(ex.Number = )
+                throw new Exception("Unable to reach database!");
             }
             finally
             {
-                //cmd.Connection.Close();
+                if (cmd is IDisposable disposable) { disposable.Dispose(); }
             }
-           
-            
             
             return hotels;
         }

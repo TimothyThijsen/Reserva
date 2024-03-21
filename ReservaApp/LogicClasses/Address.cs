@@ -19,5 +19,9 @@ namespace DomainLayer
             this.street = street;
             this.postalcode = postalCode;
         }
+        public override string ToString()
+        {
+            return Street + ", " + PostalCode;
+        }
     }
 }

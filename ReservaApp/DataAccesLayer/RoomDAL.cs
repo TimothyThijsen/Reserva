@@ -149,7 +149,7 @@ namespace DataAccessLayer
             SqlDataReader reader = dbConnection.GetFromDB(cmd);
             Room room;
             reader.Read();
-            if(reader.GetInt32(0) == null)
+            if(reader.IsDBNull(0))
             {
                 return null;
             }
