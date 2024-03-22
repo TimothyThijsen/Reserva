@@ -50,9 +50,8 @@
             lvHotelDisplay.Font = new Font("Segoe UI", 11F);
             lvHotelDisplay.FullRowSelect = true;
             lvHotelDisplay.Location = new Point(0, 0);
-            lvHotelDisplay.Margin = new Padding(2);
             lvHotelDisplay.Name = "lvHotelDisplay";
-            lvHotelDisplay.Size = new Size(624, 279);
+            lvHotelDisplay.Size = new Size(890, 465);
             lvHotelDisplay.TabIndex = 0;
             lvHotelDisplay.UseCompatibleStateImageBehavior = false;
             lvHotelDisplay.View = View.Details;
@@ -62,7 +61,7 @@
             // clhId
             // 
             clhId.Text = "Id";
-            clhId.Width = 30;
+            clhId.Width = 50;
             // 
             // clhName
             // 
@@ -82,7 +81,7 @@
             // clhAmountOfRooms
             // 
             clhAmountOfRooms.Text = "Amount of Room types";
-            clhAmountOfRooms.Width = 190;
+            clhAmountOfRooms.Width = 240;
             // 
             // panel1
             // 
@@ -91,17 +90,17 @@
             panel1.Controls.Add(btnCreateHotel);
             panel1.Controls.Add(lvHotelDisplay);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 140);
+            panel1.Location = new Point(0, 233);
+            panel1.Margin = new Padding(4, 5, 4, 5);
             panel1.Name = "panel1";
-            panel1.Size = new Size(756, 279);
+            panel1.Size = new Size(1080, 465);
             panel1.TabIndex = 1;
             // 
             // btnRemoveHotel
             // 
-            btnRemoveHotel.Location = new Point(628, 112);
-            btnRemoveHotel.Margin = new Padding(2);
+            btnRemoveHotel.Location = new Point(897, 187);
             btnRemoveHotel.Name = "btnRemoveHotel";
-            btnRemoveHotel.Size = new Size(117, 51);
+            btnRemoveHotel.Size = new Size(167, 85);
             btnRemoveHotel.TabIndex = 4;
             btnRemoveHotel.Text = "Remove hotel";
             btnRemoveHotel.UseVisualStyleBackColor = true;
@@ -109,10 +108,9 @@
             // 
             // btnEditHotel
             // 
-            btnEditHotel.Location = new Point(628, 57);
-            btnEditHotel.Margin = new Padding(2);
+            btnEditHotel.Location = new Point(897, 95);
             btnEditHotel.Name = "btnEditHotel";
-            btnEditHotel.Size = new Size(117, 51);
+            btnEditHotel.Size = new Size(167, 85);
             btnEditHotel.TabIndex = 3;
             btnEditHotel.Text = "Edit hotel";
             btnEditHotel.UseVisualStyleBackColor = true;
@@ -120,10 +118,9 @@
             // 
             // btnCreateHotel
             // 
-            btnCreateHotel.Location = new Point(628, 2);
-            btnCreateHotel.Margin = new Padding(2);
+            btnCreateHotel.Location = new Point(897, 3);
             btnCreateHotel.Name = "btnCreateHotel";
-            btnCreateHotel.Size = new Size(117, 51);
+            btnCreateHotel.Size = new Size(167, 85);
             btnCreateHotel.TabIndex = 2;
             btnCreateHotel.Text = "Add hotel";
             btnCreateHotel.UseVisualStyleBackColor = true;
@@ -132,28 +129,31 @@
             // lblSearch
             // 
             lblSearch.AutoSize = true;
-            lblSearch.Location = new Point(12, 51);
+            lblSearch.Location = new Point(17, 85);
+            lblSearch.Margin = new Padding(4, 0, 4, 0);
             lblSearch.Name = "lblSearch";
-            lblSearch.Size = new Size(42, 15);
+            lblSearch.Size = new Size(64, 25);
             lblSearch.TabIndex = 2;
             lblSearch.Text = "Search";
             // 
             // txbSearch
             // 
-            txbSearch.Location = new Point(60, 48);
+            txbSearch.Location = new Point(86, 80);
+            txbSearch.Margin = new Padding(4, 5, 4, 5);
             txbSearch.Name = "txbSearch";
-            txbSearch.Size = new Size(215, 23);
+            txbSearch.Size = new Size(305, 31);
             txbSearch.TabIndex = 3;
             // 
             // HotelOverview
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(756, 419);
+            ClientSize = new Size(1080, 698);
             Controls.Add(txbSearch);
             Controls.Add(lblSearch);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(4, 5, 4, 5);
             Name = "HotelOverview";
             StartPosition = FormStartPosition.WindowsDefaultBounds;
             Text = "HOTEL OVERVIEW";

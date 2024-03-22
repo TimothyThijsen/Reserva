@@ -28,12 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "EditHotelForm";
+            btnCancel = new Button();
+            SuspendLayout();
+            // 
+            // btnCancel
+            // 
+            btnCancel.Location = new Point(314, 193);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(112, 34);
+            btnCancel.TabIndex = 0;
+            btnCancel.Text = "Cancel";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
+            // 
+            // EditHotelForm
+            // 
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(btnCancel);
+            Name = "EditHotelForm";
+            Text = "EditHotelForm";
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Button btnCancel;
     }
 }

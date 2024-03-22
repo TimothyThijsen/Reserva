@@ -6,5 +6,23 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
+</div>
+<partial name="_SearchBarPartial" />
+
+<h2>Last-minute deals:</h2>
+<div class="scrollable-cards">
+    <div class="card border-2 shadow">
+        <img src="https://th.bing.com/th/id/OIP.YlF5RjQbKdSe-jPvbJuo7QHaE8?w=287&h=191&c=7&r=0&o=5&dpr=1.5&pid=1.7" class="card-img-top" alt="room">
+        <div class="card-body">
+            <h5 class="card-title">Single bedroom</h5>
+            <p class="card-text">Cost Per night: $100</p>
+            <p class="card-text">1 double bed</p>
+            <p class="card-text">Sleeps 2</p>
+        </div>
+        <div class="card-footer">
+            <a asp-page="/RoomPages/RoomPage" class="btn align-self-center btn-primary">Reserve</a>
+        </div>
+    </div>
+    
 </div>
