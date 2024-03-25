@@ -5,7 +5,7 @@
         int id, quantity, hotelId, capacity;
         string name, bedType;
         decimal price;
-        Schedule schedule;
+        Schedule? schedule;
         
         public int Id { get { return id; } }
         public int Quantity {  get { return quantity; } }
