@@ -38,6 +38,11 @@ namespace ReservaDesktopApp.HotelForms
                 
 
         }
+        void Form_Closing(object sender, EventArgs e)
+        {
+            ShowHotels();
+        }
+
 
         private void btnCreateHotel_Click(object sender, EventArgs e)
         {
@@ -48,7 +53,9 @@ namespace ReservaDesktopApp.HotelForms
             childForm.Dock = DockStyle.Fill;
             ((System.Windows.Forms.Panel)Application.OpenForms["MainForm"].Controls["panelDesktopPanel"]).Controls.Add(childForm);
             childForm.BringToFront();
+            childForm.FormClosing += Form_Closing;
             childForm.Show();
+
         }
 
         private void btnEditHotel_Click(object sender, EventArgs e)

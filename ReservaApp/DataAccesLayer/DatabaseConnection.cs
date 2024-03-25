@@ -9,19 +9,28 @@ namespace DataAccessLayer
         public void ModifyDB(SqlCommand cmd)
         {
 			
-            using SqlConnection conn = new SqlConnection(connectionString);
+            SqlConnection conn = new SqlConnection(connectionString);
             SqlTransaction transaction = conn.BeginTransaction();
-			try
+            cmd.Connection = conn;
+            cmd.Transaction = transaction;
+            try
 			{
-                cmd.Connection = conn;
                 conn.Open();
-				cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
 				transaction.Commit();
             }
             catch (SqlException ex) 
 			{ 
 				transaction.Rollback();
                 throw new Exception(ex.Message);
+			}
+			finally
+			{
+				if (conn != null)
+				{
+                    conn.Close();
+                }
+				
 			}
 
         }

@@ -37,8 +37,8 @@ namespace ReservaDesktopApp.HotelForms
 
             }
 
-            cmbCities.DisplayMember = "Name"; // Display the Name property
-            cmbCities.ValueMember = "Id";     // Return the Id property when selected
+            cmbCities.DisplayMember = "Name";
+            cmbCities.ValueMember = "Id";    
             cmbCities.DataSource = citiesComboItems;
             cmbCities.SelectedIndex = -1;
         }
