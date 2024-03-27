@@ -10,10 +10,10 @@ namespace DomainLayer.ServiceClasses
 {
     public class MemberManager
     {
-        IMemberDAL memberDAL;
-        public MemberManager(IMemberDAL memberDAL) 
+        IUserDAL userDAL;
+        public MemberManager(IUserDAL userDAL) 
         { 
-            this.memberDAL = memberDAL;
+            this.userDAL = userDAL;
         }
 
         public void AddMember(Member member)
@@ -26,28 +26,28 @@ namespace DomainLayer.ServiceClasses
             }
             member.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(member.Password);
 
-            memberDAL.AddMember(member);
+            userDAL.AddUser(member);
         }
 
         public void RemoveMember(int id)
         {
-            memberDAL.RemoveMember(id);
+            userDAL.RemoveUser(id);
         }
         public Member GetMember(int id)
         {
-            return memberDAL.GetMember(id);
+            return (Member)userDAL.GetUser(id);
         }
 
         public List<Member> GetAllMembers()
         {
-            return memberDAL.GetAllMembers();
+            return userDAL.GetAllUser().Select(x => (Member)x).ToList();
         }
         public Member Login(string email, string password)
         {
-            string[] credentials = memberDAL.GetCredentials(email.ToLower());
+            string[] credentials = userDAL.GetCredentials(email.ToLower());
             if (credentials[0] == null)
             {
-                throw new Exception("No member found with that email");
+                throw new Exception("No member found with that email");//custom exception throwing credential error
             }
             Member member;
             if (BCrypt.Net.BCrypt.EnhancedVerify(password, credentials[1]))

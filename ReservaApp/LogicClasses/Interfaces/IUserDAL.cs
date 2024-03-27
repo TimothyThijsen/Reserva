@@ -11,10 +11,9 @@ namespace DomainLayer.Interfaces
         void AddUser(User user);
         void RemoveUser(int id);
         string[] GetCredentials(string email);
-        void ChangePassword(string oldPwd, string newPwd, int userId);
-        void EditUser(Member member);
+        void ChangePassword(string newPwd, int userId);
+        void EditUser(User user);
         User GetUser(int id);
-        List<Member> GetAllMembers();
-        List<Employee> GetAllEmployees();
+        List<User> GetAllUser();
     }
 }
