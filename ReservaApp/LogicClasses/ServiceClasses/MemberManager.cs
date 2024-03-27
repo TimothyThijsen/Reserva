@@ -1,4 +1,5 @@
-﻿using DomainLayer.Interfaces;
+﻿using DomainLayer.Exceptions;
+using DomainLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -47,7 +48,7 @@ namespace DomainLayer.ServiceClasses
             string[] credentials = userDAL.GetCredentials(email.ToLower());
             if (credentials[0] == null)
             {
-                throw new Exception("No member found with that email");//custom exception throwing credential error
+                throw new CredentialException();
             }
             Member member;
             if (BCrypt.Net.BCrypt.EnhancedVerify(password, credentials[1]))
@@ -56,7 +57,8 @@ namespace DomainLayer.ServiceClasses
             }
             else
             {
-                throw new Exception("Incorrect password");
+                
+                throw new CredentialException();
             }
             return member;
 
