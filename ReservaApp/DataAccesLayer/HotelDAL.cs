@@ -41,7 +41,9 @@ namespace DataAccessLayer
            
             try
             {
-                string query = "UPDATE [Hotel] SET name = @name, description = @description, cityId = @cityId WHERE id = @id;  UPDATE [Address] SET street = @street, postalCode = @postalCode WHERE id = (SELECT addressId FROM [Hotel] WHERE id = @id);";
+                string query = "UPDATE [Hotel] SET name = @name, description = @description, " +
+                    "cityId = @cityId WHERE id = @id;  UPDATE [Address] SET street = @street, " +
+                    "postalCode = @postalCode WHERE id = (SELECT addressId FROM [Hotel] WHERE id = @id);";
                 using SqlCommand cmd = new SqlCommand(query);
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@id", hotel.Id);
@@ -71,7 +73,7 @@ namespace DataAccessLayer
                 hotels = HotelMapper.GetHotels(reader);
                 
             }
-            catch(SqlException ex)
+            catch(SqlException)
             {
                 //if(ex.Number = )
                 throw new Exception("Unable to reach database!");
@@ -86,8 +88,9 @@ namespace DataAccessLayer
 
         public Hotel GetHotelById(int id)
         {
-            string query = "SELECT * FROM [vwHotel]";
+            string query = "SELECT * FROM [vwHotel] where id = @id";
             using SqlCommand cmd = new SqlCommand(query);
+            cmd.Parameters.AddWithValue("@id", id);
             Hotel hotel = null;
             try
             {
@@ -98,7 +101,7 @@ namespace DataAccessLayer
             }
             catch(SqlException ex)
             {
-
+                throw new Exception(ex.Message);
             }
 
             return hotel;
