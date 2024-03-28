@@ -79,8 +79,7 @@ body {
     margin: 10px;
     color: #0c0057;
 }*/
-
-@media (max-width: 540px){
+@media (max-width: 540px) {
     .card {
         width: 12rem
     }

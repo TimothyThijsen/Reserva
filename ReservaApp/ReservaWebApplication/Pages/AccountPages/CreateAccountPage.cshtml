@@ -1,0 +1,67 @@
+﻿@page
+@model ReservaWebApplication.Pages.AccountPages.CreateAccountPageModel
+@{
+}
+
+
+<h1 class="text-center mb-4">Create Account</h1>
+<p class="text-center">@Model.StatusMessage</p>
+<div class="border rounded col-md-10 mx-auto">
+	<form method="post">
+		<div class="card-body">
+			<div class="form-group mb-3">
+				<div class="row"><label class="form-label ">Membership plan: </label></div>
+				
+				<input class="form-check-input" type="radio" asp-for="Member.Role" value="free_account" checked="checked" />
+				<label class="form-check-label me-2" asp-for="Member.Role">Free</label>
+
+				<input class="form-check-input" type="radio" asp-for="Member.Role" value="premium_account" />
+				<label class="form-check-label" asp-for="Member.Role">Premium</label>
+			</div>
+			<div class="row mb-4">
+				<div class="col">
+					<label class="form-label" asp-for="Member.FirstName">First name</label>
+					<input class="form-control" asp-for="Member.FirstName" />
+					<span asp-validation-for="Member.FirstName" class="text-danger"></span>
+				</div>
+
+				<div class="col">
+					<label class="form-label" asp-for="Member.LastName">Last name</label>
+					<input class="form-control" asp-for="Member.LastName" />
+					<span asp-validation-for="Member.LastName" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="row mb-4">
+				<div class="col-3">
+					<label class="form-label" asp-for="Member.Age">Age</label>
+					<input class="form-control" type="number" asp-for="Member.Age" value="18"/>
+					<span asp-validation-for="Member.Age" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">
+					<label class="form-label" asp-for="Member.Email">Email</label>
+					<input class="form-control" type="email" asp-for="Member.Email" />
+					<span asp-validation-for="Member.Email" class="text-danger"></span>
+				</div>
+
+				<div class="col">
+					<label class="form-label" asp-for="Member.Password">Password</label>
+					<input class="form-control" type="password" asp-for="Member.Password" />
+					<span asp-validation-for="Member.Password" class="text-danger"></span>
+				</div>
+			</div>
+
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-3 m-4">
+				<input type="submit" class="btn form-control btn-primary" value="Submit"/>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+
+
+
