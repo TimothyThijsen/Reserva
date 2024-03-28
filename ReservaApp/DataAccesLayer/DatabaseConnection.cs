@@ -10,12 +10,12 @@ namespace DataAccessLayer
 		{
 
 			SqlConnection conn = new SqlConnection(connectionString);
+			conn.Open();
 			SqlTransaction transaction = conn.BeginTransaction();
 			cmd.Connection = conn;
 			cmd.Transaction = transaction;
 			try
 			{
-				conn.Open();
 				cmd.ExecuteNonQuery();
 				transaction.Commit();
 			}

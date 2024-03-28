@@ -23,7 +23,7 @@ namespace DataAccessLayer
 			cmd.Parameters.AddWithValue("@email", member.Email);
 			cmd.Parameters.AddWithValue("@password", member.Password);
 			cmd.Parameters.AddWithValue("@age", member.Age);
-			cmd.Parameters.AddWithValue("@role", member.MemberType);
+			cmd.Parameters.AddWithValue("@role", (int)member.MemberType);
 			cmd.Parameters.AddWithValue("@verified", member.Verified);
 			try
 			{

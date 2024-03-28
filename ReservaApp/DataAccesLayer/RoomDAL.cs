@@ -38,7 +38,7 @@ namespace DataAccessLayer
 		public void EditRoom(Room room)
 		{
 			string query = "CreateRoom @name, @hotelId, @price, @quantity, @capacity, @bedType;";
-			SqlCommand cmd = new SqlCommand(query;
+			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
 			cmd.Parameters.AddWithValue("@name", room.Name);
 			cmd.Parameters.AddWithValue("@hotelId", room.HotelId);
