@@ -3,7 +3,7 @@
 @{
 }
 
-<h1 class="text-center mb-4">Login</h1>
+<h1 class="text-center mb-5">Login</h1>
 <p class="text-center">@Model.StatusMessage</p>
 <div class="border rounded col-md-5 mx-auto">
 	<form method="post" class="p-4">
@@ -22,3 +22,5 @@
 			<a type="button" asp-page="/AccountPages/RegisterAccount" class="btn form-control btn-secondary col mx-2">Register</a>
 		</div>
 	</form>
+</div>
+<partial name="_ValidationScriptsPartial" />

@@ -4,9 +4,9 @@
 }
 
 
-<h1 class="text-center mb-4">Create Account</h1>
+<h1 class="text-center mb-5">Create Account</h1>
 <p class="text-center">@Model.StatusMessage</p>
-<div class="border rounded col-md-10 mx-auto">
+<div class="border rounded col-md-8 mx-auto">
 	<form method="post">
 		<div class="card-body">
 			<div class="form-group mb-3">
@@ -18,7 +18,7 @@
 				<input class="form-check-input" type="radio" asp-for="Member.Role" value="premium_account" />
 				<label class="form-check-label" asp-for="Member.Role">Premium</label>
 			</div>
-			<div class="row mb-4">
+			<div class="row mb-3">
 				<div class="col">
 					<label class="form-label" asp-for="Member.FirstName">First name</label>
 					<input class="form-control" asp-for="Member.FirstName" />
@@ -31,7 +31,7 @@
 					<span asp-validation-for="Member.LastName" class="text-danger"></span>
 				</div>
 			</div>
-			<div class="row mb-4">
+			<div class="row mb-3">
 				<div class="col-3">
 					<label class="form-label" asp-for="Member.Age">Age</label>
 					<input class="form-control" type="number" asp-for="Member.Age" value="18"/>
@@ -60,6 +60,7 @@
 		</div>
 	</form>
 </div>
+<partial name="_ValidationScriptsPartial" />
 
 
 
