@@ -11,7 +11,7 @@ using Models.Mapper;
 namespace ReservaWebApplication.Pages.AccountPages
 {
     
-    public class CreateAccountPageModel : PageModel
+    public class RegisterAccountModel : PageModel
     {
 		[BindProperty]
 		public MemberModel Member {  get; set; }
