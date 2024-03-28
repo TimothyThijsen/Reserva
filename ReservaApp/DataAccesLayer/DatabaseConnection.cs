@@ -6,37 +6,33 @@ namespace DataAccessLayer
 	{
 		private const string connectionString = "server=mssqlstud.fhict.local;database=dbi504835_reserva;uid=dbi504835_reserva;password=password12345;TrustServerCertificate=True;";
 
-        public void ModifyDB(SqlCommand cmd)
-        {
-			
-            SqlConnection conn = new SqlConnection(connectionString);
-            SqlTransaction transaction = conn.BeginTransaction();
-            cmd.Connection = conn;
-            cmd.Transaction = transaction;
-            try
+		public void ModifyDB(SqlCommand cmd)
+		{
+
+			SqlConnection conn = new SqlConnection(connectionString);
+			SqlTransaction transaction = conn.BeginTransaction();
+			cmd.Connection = conn;
+			cmd.Transaction = transaction;
+			try
 			{
-                conn.Open();
-                cmd.ExecuteNonQuery();
+				conn.Open();
+				cmd.ExecuteNonQuery();
 				transaction.Commit();
-            }
-            catch (SqlException ex) 
-			{ 
+			}
+			catch (SqlException ex)
+			{
 				transaction.Rollback();
-                throw new Exception(ex.Message);
+				throw new Exception(ex.Message);
 			}
 			finally
 			{
-				if (conn != null)
-				{
-                    conn.Close();
-                }
-				
+				if (cmd is IDisposable disposable) { disposable.Dispose(); }
 			}
 
-        }
-            
+		}
 
-        public SqlDataReader GetFromDB(SqlCommand cmd)
+
+		public SqlDataReader GetFromDB(SqlCommand cmd)
 		{
 			SqlConnection conn = new SqlConnection(connectionString);
 			cmd.Connection = conn;
