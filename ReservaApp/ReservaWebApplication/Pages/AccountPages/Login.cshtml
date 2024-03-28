@@ -1,0 +1,24 @@
+﻿@page
+@model LoginModel
+@{
+}
+
+<h1 class="text-center mb-4">Login</h1>
+<p class="text-center">@Model.StatusMessage</p>
+<div class="border rounded col-md-5 mx-auto">
+	<form method="post" class="p-4">
+		
+		<div class="mb-3">
+			<label class="form-label" asp-for="Credentials.Email">Email</label>
+			<input type="email" class ="form-control" asp-for="Credentials.Email" >
+			<span asp-validation-for="Credentials.Email" class="text-danger"></span>
+		</div>
+		<div class="mb-3">
+			<label class="form-label" asp-for="Credentials.Password">Password</label>
+			<input type="password" class="form-control" asp-for="Credentials.Password">
+			<span asp-validation-for="Credentials.Email" class="text-danger"></span>
+		</div><div class="mb-3 row">
+			<input type="submit" class="btn btn-primary col mx-2" value="Login" />
+			<a type="button" asp-page="/AccountPages/RegisterAccount" class="btn form-control btn-secondary col mx-2">Register</a>
+		</div>
+	</form>
