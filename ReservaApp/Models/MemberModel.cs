@@ -22,7 +22,7 @@ namespace Models
 		[Required]
 		public MemberType Role { get; set; }
 
-		[StringLength(50, MinimumLength = 6, ErrorMessage = "Must be longer than 6 characters long.")]
+		[StringLength(50, MinimumLength = 6, ErrorMessage = "Password must be longer than 6 characters.")]
 		[RegularExpression(@"^(?=.*\d).+$", ErrorMessage = "Password must contain at least one numeric digit.")]
 		public string Password {  get; set; }
 		public MemberModel() { }

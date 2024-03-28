@@ -49,6 +49,9 @@ body {
     overflow-x: auto;
     white-space: nowrap;
 }
+.custom-width {
+    min-width: 200px; /* Adjust the width as needed */
+}
 
 /*.card {
     flex: 0 0 auto;

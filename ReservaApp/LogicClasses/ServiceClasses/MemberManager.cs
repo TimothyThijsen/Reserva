@@ -51,7 +51,7 @@ namespace DomainLayer.ServiceClasses
                 throw new CredentialException();
             }
             Member member;
-            if (BCrypt.Net.BCrypt.EnhancedVerify(password, credentials[1]))
+            if (BCrypt.Net.BCrypt.EnhancedVerify(password, credentials[2]))
             {
                 member = GetMember(Convert.ToInt32(credentials[0]));
             }
