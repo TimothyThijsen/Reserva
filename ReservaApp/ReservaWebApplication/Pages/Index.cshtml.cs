@@ -4,6 +4,8 @@ using DomainLayer.ServiceClasses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace ReservaWebApplication.Pages
 {
@@ -28,8 +30,14 @@ namespace ReservaWebApplication.Pages
         }
         public IActionResult OnPost() 
         {
-            
-            return RedirectToPage("Index");
+            HttpContext.Session.SetString("search_model", JsonConvert.SerializeObject(SearchModel));
+            return RedirectToPage("/RoomPages/RoomsView");
         }
+        public IActionResult OnPostReset()
+        {
+            HttpContext.Session.Remove("search_model");
+            return RedirectToPage("/Index");
+        }
+
     }
 }

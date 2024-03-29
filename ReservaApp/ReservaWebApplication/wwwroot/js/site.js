@@ -62,7 +62,8 @@ $(function () {
         opens: 'left',
         minDate: currentDate.toString(),
         startDate: SelectedStart.toString(),
-        endDate: SelectedEnd.toString()
+        endDate: SelectedEnd.toString(),
+        autoApply: true
     }, function (start, end, label) {
         console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
         
@@ -81,3 +82,8 @@ function ChangeHiddenValues(start, end) {
 
 }
 
+function submitForm(handlerName) {
+    var form = document.getElementById("searchForm");
+    form.action = "?handler=" + handlerName;
+    form.submit();
+}

@@ -10,7 +10,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.LoginPath = new PathString("/Login");
     options.AccessDeniedPath = new PathString("/AccessDenied");
 });
-
+builder.Services.AddSession(option =>
+{
+    option.Cookie.HttpOnly = true;
+    option.Cookie.IsEssential = true;
+    option.IdleTimeout = TimeSpan.FromSeconds(5);
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,6 +34,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseSession();
 app.MapRazorPages();
 
 app.Run();

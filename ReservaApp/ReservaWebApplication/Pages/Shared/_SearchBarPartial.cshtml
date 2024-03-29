@@ -4,62 +4,59 @@
 
 @model dynamic 
 
-
-@* <div class="searchbar">
-    <form method="post" class="row">
-        <div class="col">
-            <label for="location">Location:</label>
-            <select name="location" id="location">
-                <option>None</option>
-                <option value="1">Amsterdam</option>
-                <option value="Aruba">Aruba</option>
-                <option value="Bahamas">Bahamas</option>
-                <option value="Mallorca">Mallorca</option>
-            </select>
-        </div>
-        <div class="col">
-            <label for="startDate">Start of stay:</label>
-            <input type="date" id="startDate" name="startDate">
-        </div>
-        <div class="col">
-
-            <label for="startDate">Amount of guests:</label>
-            <input type="number" value="0">
-            
-        </div>
-        <div class="col">
-            <button type="submit">Search</button>
-        </div>
-        
-    </form>
-</div> *@
-<form method="post" class="row "> 
-    <div class="col">
-        <label class="form-label"for="location">Location:</label>
+ 
+<form method="post" class="row fs-4 border-bottom pb-2" id="searchForm" >
+    <div class="col-3">
+        <label class="form-label"for="location">Location</label>
         <select name="SearchModel.CityId" id="location" class="form-select">
-            <option value="0">None</option>
-            @foreach(City city in Model.Cities)
+            <option value="" selected disabled hidden>Select your destination</option>
+            @foreach (City city in Model.Cities)
             {
-                <option value="@city.Id">@city.Name</option>
+                @if (Model.SearchModel != null && Model.SearchModel.CityId != null)
+                {
+                    @if (city.Id == Model.SearchModel.CityId)
+                    {
+                        <option value="@city.Id" selected>@city.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@city.Id">@city.Name</option>
+                    }
+                }
+                else
+                {
+                    <option value="@city.Id">@city.Name</option>
+                }
             }
-
-        </select>
+        </select>      
     </div>
-    @* <input type="date" name="daterange" /> *@
-    <div class="col">
-        <label class="form-label" for="daterange">Select date of stay:</label>
+    <div class="col-3">
+        <label class="form-label" for="daterange">Select date of stay</label>
         <input type="text" name="daterange" class="form-control"/>
-        <input name="SearchModel.StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" />
-        <input name="SearchModel.EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" />
-
+        @if (Model.SearchModel != null && Model.SearchModel.StartDate != null)
+        {
+            <input name="SearchModel.StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" value="@Model.SearchModel.StartDate" />
+            <input name="SearchModel.EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" value="@Model.SearchModel.EndDate" />
+        }
+        else
+        {
+            <input name="SearchModel.StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" />
+            <input name="SearchModel.EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" />
+        }
     </div>
-    <div class="col">
-        <label class="form-label"  for="amountOfGuest">Amount of guests:</label>
-        <input name="SearchModel.AmountOfGuests" class="form-control" type="number" value="0">
-
+    <div class="col-3">
+        <label class="form-label"  for="amountOfGuest">Amount of guests</label>
+        @if (Model.SearchModel != null && Model.SearchModel.AmountOfGuests != null){
+            <input name="SearchModel.AmountOfGuests" class="form-control" type="number" min="1" value="@Model.SearchModel.AmountOfGuests">
+        }
+        else
+        {
+            <input name="SearchModel.AmountOfGuests" class="form-control" type="number" min="1" value="1">
+        }
     </div>
-    <div class="col">
-        <button class="btn-primary btn" type="submit">Search</button>
+    <div class="col-2">
+        <button class="btn-secondary btn form-control " type="submit" onclick="submitForm('reset')">Reset</button>
+        <button class="btn-primary btn form-control" type="submit" >Search</button>
     </div>
 
 </form>

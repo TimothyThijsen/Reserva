@@ -4,6 +4,7 @@ using DomainLayer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
+using Newtonsoft.Json;
 
 namespace ReservaWebApplication.Pages.RoomPages
 {
@@ -20,6 +21,22 @@ namespace ReservaWebApplication.Pages.RoomPages
         {
             Rooms = roomManager.GetAllRooms();
             Cities = cityManager.GetAllCities();
+            if(HttpContext.Session.GetString("search_model") != null)
+            {
+                SearchModel = JsonConvert.DeserializeObject<SearchModel>(HttpContext.Session.GetString("search_model"));
+            }
+            
+
+        }
+        public IActionResult OnPost()
+        {
+            HttpContext.Session.SetString("search_model", JsonConvert.SerializeObject(SearchModel));
+            return RedirectToPage("/RoomPages/RoomsView");
+        }
+        public IActionResult OnPostReset()
+        {
+            HttpContext.Session.Remove("search_model");
+            return RedirectToPage("/RoomPages/RoomsView");
         }
     }
 }
