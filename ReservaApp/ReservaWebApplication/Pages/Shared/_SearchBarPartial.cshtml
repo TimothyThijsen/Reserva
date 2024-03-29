@@ -1,36 +1,65 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-}
-<div class="searchbar">
-    <form method="post">
-        <label for="location">Location:</label>
-        <select name="location" id="location">
-            <option>None</option>
-            <option value="Amsterdam">Amsterdam</option>
-            <option value="Aruba">Aruba</option>
-            <option value="Bahamas">Bahamas</option>
-            <option value="Mallorca">Mallorca</option>
-        </select>
-        <label for="startDate">Start of stay:</label>
-        <input type="date" id="startDate" name="startDate">
-        <label for="startDate">Amount of guests:</label>
-        <input type="number" value="0">
-        <button type="submit">Search</button>
-    </form>
-</div>
-<div class=" ">
-    <div class="">
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                location
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+
+@model dynamic 
+
+
+@* <div class="searchbar">
+    <form method="post" class="row">
+        <div class="col">
+            <label for="location">Location:</label>
+            <select name="location" id="location">
+                <option>None</option>
+                <option value="1">Amsterdam</option>
+                <option value="Aruba">Aruba</option>
+                <option value="Bahamas">Bahamas</option>
+                <option value="Mallorca">Mallorca</option>
+            </select>
         </div>
+        <div class="col">
+            <label for="startDate">Start of stay:</label>
+            <input type="date" id="startDate" name="startDate">
+        </div>
+        <div class="col">
+
+            <label for="startDate">Amount of guests:</label>
+            <input type="number" value="0">
+            
+        </div>
+        <div class="col">
+            <button type="submit">Search</button>
+        </div>
+        
+    </form>
+</div> *@
+<form method="post" class="row "> 
+    <div class="col">
+        <label class="form-label"for="location">Location:</label>
+        <select name="SearchModel.CityId" id="location" class="form-select">
+            <option value="0">None</option>
+            @foreach(City city in Model.Cities)
+            {
+                <option value="@city.Id">@city.Name</option>
+            }
+
+        </select>
     </div>
-</div>
+    @* <input type="date" name="daterange" /> *@
+    <div class="col">
+        <label class="form-label" for="daterange">Select date of stay:</label>
+        <input type="text" name="daterange" class="form-control"/>
+        <input name="SearchModel.StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" />
+        <input name="SearchModel.EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" />
+
+    </div>
+    <div class="col">
+        <label class="form-label"  for="amountOfGuest">Amount of guests:</label>
+        <input name="SearchModel.AmountOfGuests" class="form-control" type="number" value="0">
+
+    </div>
+    <div class="col">
+        <button class="btn-primary btn" type="submit">Search</button>
+    </div>
+
+</form>

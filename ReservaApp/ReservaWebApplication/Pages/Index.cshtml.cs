@@ -1,4 +1,9 @@
+using DataAccessLayer;
+using DomainLayer;
+using DomainLayer.ServiceClasses;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Models;
 
 namespace ReservaWebApplication.Pages
 {
@@ -6,15 +11,25 @@ namespace ReservaWebApplication.Pages
     {
         //<div class="tileDisplay">
         private readonly ILogger<IndexModel> _logger;
-
+        public CityManager cityManager = new CityManager(new CityDAL());
+        [BindProperty]
+        public SearchModel SearchModel { get; set; } 
+        public List<City> Cities { get; private set; } 
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
+
         }
 
         public void OnGet()
         {
-
+            Cities = cityManager.GetAllCities();
+            
+        }
+        public IActionResult OnPost() 
+        {
+            
+            return RedirectToPage("Index");
         }
     }
 }
