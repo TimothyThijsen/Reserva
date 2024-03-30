@@ -15,16 +15,17 @@ namespace ReservaWebApplication.Pages.RoomPages
         public List<Room> Rooms {  get; set; } = new List<Room>();
         public CityManager cityManager = new CityManager(new CityDAL());
         [BindProperty]
-        public SearchModel SearchModel { get; set; }
-        public List<City> Cities { get; private set; }
+        public SearchModel SearchModel { get; set; } = new SearchModel();
+        //public List<City> Cities { get; private set; }
         public void OnGet()
         {
             Rooms = roomManager.GetAllRooms();
-            Cities = cityManager.GetAllCities();
+            //Cities = cityManager.GetAllCities();
             if(HttpContext.Session.GetString("search_model") != null)
             {
                 SearchModel = JsonConvert.DeserializeObject<SearchModel>(HttpContext.Session.GetString("search_model"));
             }
+            SearchModel.Cities = cityManager.GetAllCities();
             
 
         }

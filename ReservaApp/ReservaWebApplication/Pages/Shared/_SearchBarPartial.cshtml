@@ -2,19 +2,19 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-@model dynamic 
+@model SearchModel 
 
  
 <form method="post" class="row fs-4 border-bottom pb-2" id="searchForm" >
     <div class="col-3">
         <label class="form-label"for="location">Location</label>
-        <select name="SearchModel.CityId" id="location" class="form-select">
+        <select asp-for="CityId" id="location" class="form-select">
             <option value="" selected disabled hidden>Select your destination</option>
             @foreach (City city in Model.Cities)
             {
-                @if (Model.SearchModel != null && Model.SearchModel.CityId != null)
+                @if (Model.CityId != null)
                 {
-                    @if (city.Id == Model.SearchModel.CityId)
+                    @if (city.Id == Model.CityId)
                     {
                         <option value="@city.Id" selected>@city.Name</option>
                     }
@@ -33,25 +33,25 @@
     <div class="col-3">
         <label class="form-label" for="daterange">Select date of stay</label>
         <input type="text" name="daterange" class="form-control"/>
-        @if (Model.SearchModel != null && Model.SearchModel.StartDate != null)
+        @if (Model.StartDate != null)
         {
-            <input name="SearchModel.StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" value="@Model.SearchModel.StartDate" />
-            <input name="SearchModel.EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" value="@Model.SearchModel.EndDate" />
+            <input asp-for="StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" value="@Model.StartDate" />
+            <input asp-for="EndDate" name="EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" value="@Model.EndDate" />
         }
         else
         {
-            <input name="SearchModel.StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" />
-            <input name="SearchModel.EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" />
+            <input asp-for="StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" />
+            <input asp-for="EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" />
         }
     </div>
     <div class="col-3">
         <label class="form-label"  for="amountOfGuest">Amount of guests</label>
-        @if (Model.SearchModel != null && Model.SearchModel.AmountOfGuests != null){
-            <input name="SearchModel.AmountOfGuests" class="form-control" type="number" min="1" value="@Model.SearchModel.AmountOfGuests">
+        @if (Model.AmountOfGuests != null && Model.AmountOfGuests != 0 ){
+            <input asp-for="AmountOfGuests" class="form-control" type="number" min="1" value="@Model.AmountOfGuests">
         }
         else
         {
-            <input name="SearchModel.AmountOfGuests" class="form-control" type="number" min="1" value="1">
+            <input asp-for="AmountOfGuests" class="form-control" type="number" min="1" value="1">
         }
     </div>
     <div class="col-2">

@@ -59,7 +59,7 @@ $(function () {
             ],
 
         },
-        opens: 'left',
+        opens: 'center',
         minDate: currentDate.toString(),
         startDate: SelectedStart.toString(),
         endDate: SelectedEnd.toString(),

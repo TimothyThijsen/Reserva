@@ -15,8 +15,7 @@ namespace ReservaWebApplication.Pages
         private readonly ILogger<IndexModel> _logger;
         public CityManager cityManager = new CityManager(new CityDAL());
         [BindProperty]
-        public SearchModel SearchModel { get; set; } 
-        public List<City> Cities { get; private set; } 
+        public SearchModel SearchModel { get; set; } = new SearchModel();
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
@@ -25,7 +24,7 @@ namespace ReservaWebApplication.Pages
 
         public void OnGet()
         {
-            Cities = cityManager.GetAllCities();
+            SearchModel.Cities = cityManager.GetAllCities();
             
         }
         public IActionResult OnPost() 

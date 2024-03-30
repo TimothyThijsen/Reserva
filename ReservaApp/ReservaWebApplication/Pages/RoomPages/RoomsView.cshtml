@@ -3,7 +3,7 @@
 @{
 }
 
-<partial name="_SearchBarPartial" />
+<partial name="_SearchBarPartial" model="@Model.SearchModel"/>
 <div class="row row-cols-2 row-cols-md-auto justify-content-center justify-content-sm-start my-4">
     @foreach(Room room in Model.Rooms)
     {

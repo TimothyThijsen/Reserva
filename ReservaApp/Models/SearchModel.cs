@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DomainLayer;
 
 namespace Models
 {
@@ -12,6 +13,7 @@ namespace Models
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public int AmountOfGuests { get; set; }
+        public List<City> Cities { get; set; }
         public SearchModel() { }
     }
 }
