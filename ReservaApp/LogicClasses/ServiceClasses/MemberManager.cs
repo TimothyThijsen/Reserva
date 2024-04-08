@@ -18,9 +18,6 @@ namespace DomainLayer.ServiceClasses
             this.userDAL = userDAL;
         }
         
-
-
-
         public void AddMember(IMemberModel memberModel)
         {
             List<Member> members = GetAllMembers();
@@ -30,7 +27,6 @@ namespace DomainLayer.ServiceClasses
                 throw new ValidationException("Incomplete member model");
             }
 
-            
             if (members.Find(u => u.Email == memberModel.Email) != null)
             {
                 throw new ValidationException($"Email is already in use!");

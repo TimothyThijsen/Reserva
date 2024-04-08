@@ -15,7 +15,7 @@ namespace ReservaWebApplication.Pages.RoomPages
         public List<Room> Rooms {  get; set; } = new List<Room>();
         public CityManager cityManager = new CityManager(new CityDAL());
         [BindProperty]
-        public SearchModel SearchModel { get; set; } = new SearchModel();
+        public SearchModel? SearchModel { get; set; } = new SearchModel();
         //public List<City> Cities { get; private set; }
         public void OnGet()
         {
