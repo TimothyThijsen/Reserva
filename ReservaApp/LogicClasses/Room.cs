@@ -1,11 +1,11 @@
 ﻿namespace DomainLayer
 {
-    public class Room
+    public class Room 
     {
         int id, quantity, hotelId, capacity;
         string name, bedType;
         decimal price;
-        Schedule? schedule;
+        RoomSchedule? schedule;
         
         public int Id { get { return id; } }
         public int Quantity {  get { return quantity; } }
@@ -14,6 +14,7 @@
         public decimal Price { get { return price; } }
         public int Capacity {  get { return capacity; } }
         public string BedType {  get { return bedType; } }
+        public RoomSchedule Schedule { get { return schedule; } }
 
         public Room(int hotelId, string name, int quantity,  decimal price, int capacity, string bedType)
         {
