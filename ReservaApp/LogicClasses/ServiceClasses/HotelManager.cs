@@ -1,4 +1,5 @@
 ﻿using DomainLayer.Interfaces;
+using System.Data.Common;
 
 namespace DomainLayer.ServiceClasses
 {
@@ -23,13 +24,29 @@ namespace DomainLayer.ServiceClasses
         {
             hotelDAL.RemoveHotel(hotel);
         }
-        public List<Hotel> GertAllHotels()
+        public List<Hotel> GetAllHotels()
         {
             return hotelDAL.GetAllHotels();
         }
         public Hotel GetHotelById(int id)
         {
             return hotelDAL.GetHotelById(id);
+        }
+        public List<Hotel> GetHotelsBySearchModel(ISearchModel searchModel) 
+        {
+            //List<Hotel> searchResults = new List<Hotel>();
+            List<Hotel> searchResults = GetAllHotels();
+            if (searchModel.CityId != null) 
+            { 
+                List<Hotel> results = new List<Hotel>();
+                foreach(Hotel hotel in searchResults)
+                {
+                    if (hotel.CityId.Equals(searchModel.CityId)) { results.Add(hotel);}
+                }
+                searchResults = results;
+            }
+            
+            return searchResults;
         }
     }
 }
