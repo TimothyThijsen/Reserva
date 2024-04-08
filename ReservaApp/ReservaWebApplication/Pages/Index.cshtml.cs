@@ -30,7 +30,7 @@ namespace ReservaWebApplication.Pages
         public IActionResult OnPost() 
         {
             HttpContext.Session.SetString("search_model", JsonConvert.SerializeObject(SearchModel));
-            return RedirectToPage("/RoomPages/RoomsView");
+            return RedirectToPage("/HotelPages/HotelsView");
         }
         public IActionResult OnPostReset()
         {

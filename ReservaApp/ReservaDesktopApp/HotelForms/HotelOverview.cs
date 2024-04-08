@@ -20,7 +20,7 @@ namespace ReservaDesktopApp.HotelForms
         {
             lvHotelDisplay.Items.Clear();
             try{
-                foreach (Hotel hotel in hotelManager.GertAllHotels())
+                foreach (Hotel hotel in hotelManager.GetAllHotels())
                 {
                     ListViewItem item = new ListViewItem(hotel.Id.ToString());
                     item.Tag = hotel;
