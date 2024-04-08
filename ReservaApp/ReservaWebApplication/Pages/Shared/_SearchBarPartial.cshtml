@@ -12,21 +12,7 @@
             <option value="" selected disabled hidden>Select your destination</option>
             @foreach (City city in Model.Cities)
             {
-                @if (Model.CityId != null)
-                {
-                    @if (city.Id == Model.CityId)
-                    {
-                        <option value="@city.Id" selected>@city.Name</option>
-                    }
-                    else
-                    {
-                        <option value="@city.Id">@city.Name</option>
-                    }
-                }
-                else
-                {
-                    <option value="@city.Id">@city.Name</option>
-                }
+                <option value="@city.Id">@city.Name</option>
             }
         </select>      
     </div>
