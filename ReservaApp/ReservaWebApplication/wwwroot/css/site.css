@@ -53,6 +53,10 @@ body {
     min-width: 200px; /* Adjust the width as needed */
 }
 
+.hotelImage img {
+    object-fit: cover;
+    height: 100%;
+}
 /*.card {
     flex: 0 0 auto;
     margin-right: 15px;
