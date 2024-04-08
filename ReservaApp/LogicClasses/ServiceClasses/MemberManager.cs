@@ -1,5 +1,6 @@
 ﻿using DomainLayer.Exceptions;
 using DomainLayer.Interfaces;
+using DomainLayer.Mapper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,15 +17,25 @@ namespace DomainLayer.ServiceClasses
         { 
             this.userDAL = userDAL;
         }
+        
 
-        public void AddMember(Member member)
+
+
+        public void AddMember(IMemberModel memberModel)
         {
             List<Member> members = GetAllMembers();
+
+            if(!ObjectValidator.HasNoEmptyFields(memberModel)) 
+            {
+                throw new ValidationException("Incomplete member model");
+            }
+
             
-            if (members.Find(u => u.Email == member.Email) != null)
+            if (members.Find(u => u.Email == memberModel.Email) != null)
             {
                 throw new ValidationException($"Email is already in use!");
             }
+            Member member = memberModel.ToLogicLayer();
             member.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(member.Password);
 
             userDAL.AddUser(member);

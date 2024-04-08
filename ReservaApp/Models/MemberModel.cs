@@ -1,4 +1,5 @@
-﻿using DomainLayer;
+﻿using DomainLayer.Interfaces;
+using DomainLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-	public class MemberModel
+	public class MemberModel : IMemberModel
 	{
-		[Required]
+		[Required(ErrorMessage = "First name is required")]
 		public string FirstName {  get; set; }
-		[Required]
+		[Required(ErrorMessage = "Last name is required")]
 		public string LastName { get; set; }
 		//[DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
@@ -25,7 +26,7 @@ namespace Models
 		[StringLength(50, MinimumLength = 6, ErrorMessage = "Password must be longer than 6 characters.")]
 		[RegularExpression(@"^(?=.*\d).+$", ErrorMessage = "Password must contain at least one numeric digit.")]
 		public string Password {  get; set; }
-		public MemberModel() { }
+		
 
 	}
 }

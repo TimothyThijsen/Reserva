@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using System.ComponentModel.DataAnnotations;
 using Models.Mapper;
+using DomainLayer;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace ReservaWebApplication.Pages.AccountPages
 {
@@ -32,8 +36,9 @@ namespace ReservaWebApplication.Pages.AccountPages
 			}
 			try
 			{
-				memberManager.AddMember(Member.ToLogicLayer());
-			}
+				memberManager.AddMember(Member);
+                
+            }
 			catch (ValidationException ex)
 			{
 				StatusMessage = ex.Message;
@@ -48,10 +53,24 @@ namespace ReservaWebApplication.Pages.AccountPages
 
 			if (StatusMessage != null)
 			{
-				return RedirectToPage("CreateAccountPage", new Dictionary<string, string> { { "statusMessage", StatusMessage } });
+				return RedirectToPage("/AccountPages/RegisterAccount", new Dictionary<string, string> { { "statusMessage", StatusMessage } });
 			}
-			return new RedirectToPageResult("Index");
+			try
+			{
+                Member member = memberManager.Login(Member.Email, Member.Password);
+                ClaimsPrincipal claimsPrincipal = GetClaimsPrincipal(member);
+                HttpContext.SignInAsync(claimsPrincipal).GetAwaiter().GetResult();
+			}
+			catch (Exception) { }
+			return new RedirectToPageResult("/Index");
 
 		}
-	}
+        private ClaimsPrincipal GetClaimsPrincipal(Member member)
+        {
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim("id", member.Id.ToString()));
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            return new ClaimsPrincipal(claimsIdentity);
+        }
+    }
 }

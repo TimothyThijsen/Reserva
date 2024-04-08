@@ -27,8 +27,8 @@ namespace ReservaWebApplication.Pages.AccountPages
         }
         public IActionResult OnPost()
         {
-			Member member;
-			;
+			
+			
 			if(!ModelState.IsValid)
 			{
 				return Page();
@@ -36,7 +36,7 @@ namespace ReservaWebApplication.Pages.AccountPages
 		
 			try
 			{
-				member = memberManager.Login(Credentials.Email, Credentials.Password);
+				Member member = memberManager.Login(Credentials.Email, Credentials.Password);
 				ClaimsPrincipal claimsPrincipal = GetClaimsPrincipal(member);
 				HttpContext.SignInAsync(claimsPrincipal).GetAwaiter().GetResult();
 			}
