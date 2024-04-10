@@ -8,8 +8,8 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.btnCustom:focus, .btnCustom:active:focus, .btnCustom-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
@@ -57,11 +57,20 @@ body {
     object-fit: cover;
     height: 100%;
 }
-/*.card {
+.hotelView{
+    min-height: 200px;
+}
+.hotelSumBar {
+    background-color: #002A69;
+}
+.hotelSumBarText{
+    background-color: white;
+}
+    /*.card {
     flex: 0 0 auto;
     margin-right: 15px;
 }*/
-/*.content {
+    /*.content {
     height: 100px;
     margin: 20px;
     display: grid;
@@ -86,6 +95,21 @@ body {
     margin: 10px;
     color: #0c0057;
 }*/
+    .no-spinners {
+        -moz-appearance: textfield;
+    }
+
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input {
+    width: 50px;
+    text-align: center;
+}
+
 @media (max-width: 540px) {
     .card {
         width: 12rem

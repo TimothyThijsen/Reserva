@@ -17,12 +17,14 @@ secondaryDate.setDate(today.getDate() + 3)
 
 var SelectedStart = currentDate;
 var SelectedEnd = secondaryDate.getDate() + '/' + (secondaryDate.getMonth() + 1) + '/' + secondaryDate.getFullYear()
-
-if (document.getElementById("SearchModel_StartDate").value !== "") {
-    SelectedStart = document.getElementById("SearchModel_StartDate").value;
-} if (document.getElementById("SearchModel_EndDate").value !== "") {
-    SelectedEnd = document.getElementById("SearchModel_EndDate").value;
+if (window.location.pathname == "/Index" || window.location.pathname == "/HotelPages/HotelsView") {
+    if (document.getElementById("SearchModel_StartDate").value !== "") {
+        SelectedStart = document.getElementById("SearchModel_StartDate").value;
+    } if (document.getElementById("SearchModel_EndDate").value !== "") {
+        SelectedEnd = document.getElementById("SearchModel_EndDate").value;
+    }
 }
+
 $(function () {
     $('input[name="daterange"]').daterangepicker({
         "locale": {
@@ -81,9 +83,56 @@ function ChangeHiddenValues(start, end) {
     endInput.value = e.format('DD-MM-YYYY');
 
 }
-
+//onpost
 function submitForm(handlerName) {
     var form = document.getElementById("searchForm");
     form.action = "?handler=" + handlerName;
     form.submit();
+}
+
+//PLUS MINUS
+if (window.location.pathname == "/HotelPages/HotelPage") {
+    const plusButtons = document.querySelectorAll(".plus");
+    const minusButtons = document.querySelectorAll(".minus");
+    const inputs = document.querySelectorAll(".input");
+
+    const totalPrice = document.querySelector(".totalPrice");
+
+    plusButtons.forEach((button) => {
+        const buttonId = button.getAttribute("data-id"),
+            quantity = document.querySelector(".quantity-" + buttonId)
+
+        button.addEventListener("click", function () {
+            quantity.value++;
+            priceCalc(buttonId, quantity);
+        });
+    });
+
+    minusButtons.forEach((button) => {
+        const buttonId = button.getAttribute("data-id"),
+            quantity = document.querySelector(".quantity-" + buttonId)
+        button.addEventListener("click", function () {
+
+            if (quantity.value > 0) {
+                quantity.value--;
+                priceCalc(buttonId, quantity);
+            }
+
+        });
+    });
+    inputs.forEach((input) => {
+        input.addEventListener("input", function () {
+            priceCalc();
+        });
+    });
+    function priceCalc() {
+        var cost = 0;
+        inputs.forEach((input) => {
+            var inputId = input.getAttribute("data-id");
+            var quantity = document.querySelector(".quantity-" + inputId).value;
+            var price = document.getElementById("roomPrice-" + inputId).value
+            cost += (price * quantity);
+            });
+        totalPrice.innerHTML = cost.toFixed(2);
+    }
 }
