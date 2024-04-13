@@ -11,8 +11,7 @@ namespace DomainLayer.Interfaces
         void CreateReservation(Reservation reservation);
         void UpdateReservation(Reservation reservation);
         List<Reservation> GetAllReservationByMember(int userId);
-        List<RoomReservation> GetAllReservationByRoom(int roomId);
-        List<ActivityReservation> GetAllReservationByActivity(int activityId);
-        Reservation GetReservationById(int id);
+        List<Reservation> GetAllReservationByObjectId(int objectId);
+        Reservation GetByReservationId(int id);
     }
 }
