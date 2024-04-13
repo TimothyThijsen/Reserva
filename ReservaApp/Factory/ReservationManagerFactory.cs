@@ -5,13 +5,17 @@ namespace Factory
 {
     public  class ReservationManagerFactory
     {
-        public static ReservationManager GetRoomReservationManager() 
+        public static ReservationManager GetReservationManager(ReservationType type)
         {
-            return new ReservationManager(new RoomReservationDAL());
-        } 
-        public static ReservationManager GetActivityReservationManager() 
-        {
-            return new ReservationManager(new ActivityReservationDAL());
+            switch (type)
+            {
+                case ReservationType.RoomReservation:
+                    return new ReservationManager(new RoomReservationDAL());
+                case ReservationType.ActivityReservation:
+                    return new ReservationManager(new ActivityReservationDAL());
+                default:
+                    throw new ArgumentException("Invalid reservation type");
+            }
         }
     }
 }
