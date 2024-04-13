@@ -16,7 +16,7 @@ namespace DataAccessLayer
 		public void AddUser(User user)
 		{
 			Member member = (Member)user;
-			string query = "CreateMember @name, @email, @password, @age, @role, @verified;";
+			string query = "EXEC CreateMember @name, @email, @password, @age, @role, @verified;";
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
 			cmd.Parameters.AddWithValue("@name", member.FirstName + " " + member.LastName);
@@ -50,7 +50,7 @@ namespace DataAccessLayer
 		public void EditUser(User user)
 		{
 			Member member = (Member)user;
-			string query = "UpdateMember @id, @name, @email, @age, @role, @points, @verified;";
+			string query = "EXEC UpdateMember @id, @name, @email, @age, @role, @points, @verified;";
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
 			cmd.Parameters.AddWithValue("@id", member.Id);

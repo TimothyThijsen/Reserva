@@ -15,7 +15,7 @@ namespace DataAccessLayer
 		}
 		public void AddHotel(Hotel hotel)
 		{
-			string query = "CreateHotel @name, @description, @cityId, @street, @postalCode;";
+			string query = "EXEC CreateHotel @name, @description, @cityId, @street, @postalCode;";
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
 			cmd.Parameters.AddWithValue("@name", hotel.Name);

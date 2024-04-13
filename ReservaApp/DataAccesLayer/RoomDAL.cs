@@ -13,7 +13,7 @@ namespace DataAccessLayer
 		}
 		public void AddRoom(Room room)
 		{
-			string query = "CreateRoom @name, @hotelId, @price, @quantity, @capacity, @bedType;";
+			string query = "EXEC CreateRoom @name, @hotelId, @price, @quantity, @capacity, @bedType;";
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
 			cmd.Parameters.AddWithValue("@name", room.Name);
