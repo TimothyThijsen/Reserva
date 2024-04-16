@@ -3,7 +3,13 @@
 @{
 }
 
-
+@if (Model.StatusMessage != null)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> @Model.StatusMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 <div class="col-12 ">
     <div class="card w-100 border-3 my-3 mx-3 shadow">
         <div class="row g-0 ">
@@ -25,44 +31,44 @@
 
 <h3 class="text-center mt-2">Available rooms </h3>
 <form method="post">
-<div class="row row-cols-auto  justify-content-center mb-2">
+    <div class="row row-cols-auto  justify-content-center mb-2">
  
-    @foreach (Room room in Model.Rooms)
-    {
-        int index = Model.Rooms.IndexOf(room);
-        <div class="col">
-            <div class="card border-3 my-3 mx-3 shadow">
-                <img src="https://th.bing.com/th/id/OIP.YlF5RjQbKdSe-jPvbJuo7QHaE8?w=287&h=191&c=7&r=0&o=5&dpr=1.5&pid=1.7" class="card-img-top" alt="room">
-                <div class="card-body ">
-                    <h5 class="card-title">@room.Name</h5>
-                    <p class="card-text m-0">Cost Per night: $@room.GetPrice()</p>
-                    <p class="card-text m-0">@room.BedType</p>
-                    <p class="card-text m-0">Sleeps @room.Capacity</p>
-                    <input type="hidden" id="roomPrice-@index" value="@room.Price">
-                </div>
-                <div class="card-footer text-center justify-content-center col">
-                    <div class="btn-group col-6">
-                            <button type="button" class="btn btn-outline-primary plus col-4 text-center" data-id="@index"><i class="fas fa-plus"></i></button>
-                        <input class="no-spinners form-control rounded-0 input quantity-@index col-3" data-id="@index" min="0" type="number" asp-for="@Model.ReservedRooms.Find(r => r.RoomId == room.Id).Quantity" value="@Model.ReservedRooms.Find(r => r.RoomId == room.Id).Quantity">
-                            <button type="button" class="btn btn-outline-danger minus col-4  text-center" data-id="@index"><i class="fas fa-minus"></i></button>
+        @foreach (Room room in Model.Rooms)
+        {
+            int index = Model.Rooms.IndexOf(room);
+            <div class="col">
+                <div class="card border-3 my-3 mx-3 shadow">
+                    <img src="https://th.bing.com/th/id/OIP.YlF5RjQbKdSe-jPvbJuo7QHaE8?w=287&h=191&c=7&r=0&o=5&dpr=1.5&pid=1.7" class="card-img-top" alt="room">
+                    <div class="card-body ">
+                        <h5 class="card-title">@room.Name</h5>
+                        <p class="card-text m-0">Cost Per night: $@room.GetPrice()</p>
+                        <p class="card-text m-0">@room.BedType</p>
+                        <p class="card-text m-0">Sleeps @room.Capacity</p>
+                        <input type="hidden" id="roomPrice-@index" value="@room.Price">
                     </div>
-                    @* <a asp-page="/RoomPages/RoomPage" asp-route-id="@room.Id" class="btn btn-primary stretched-link">Reserve</a> *@
+                    <div class="card-footer text-center justify-content-center col">
+                        <div class="btn-group  col-10">
+                                <button type="button" class="btn btn-outline-primary plus col-4 text-center" data-id="@index" title="plus button"><i class="fas fa-plus"></i></button>
+                            <input class="no-spinners form-control rounded-0 input quantity-@index col-3" data-id="@index" min="0" id="quantity-@room.Id" type="number" title="quantity-@room.Id" asp-for="@Model.ReservedRooms[index].Quantity" value="@Model.ReservedRooms[index].Quantity">
+                                <button type="button" class="btn btn-outline-danger minus col-4 text-center" data-id="@index" title="minus button"><i class="fas fa-minus"></i></button>
+                        </div>
+                        @* <a asp-page="/RoomPages/RoomPage" asp-route-id="@room.Id" class="btn btn-primary stretched-link">Reserve</a> *@
+                    </div>
                 </div>
             </div>
-        </div>
 
-    }
-
-</div>
-<div class="row justify-content-center mx-auto">
-    <div class="col-7 border border-2 rounded d-flex justify-content-center border-primary hotelSumBar">
-        <div class="col-5  d-flex justify-content-center my-2 py-auto text-light text-center">
-            <p>Total price per night: €<span class="totalPrice">0.00 </span></p>
-        </div>
-        <div class="col-3 d-flex justify-content-center my-2  text-center">
-                <button class="btn-light btn form-control text-dark" type="submit">Reserve now   <i class="fas fa-arrow-right"></i></button>
-        </div>
+        }
 
     </div>
-</div>
+    <div class="row justify-content-center mx-auto">
+        <div class="col-7 border border-2 rounded d-flex justify-content-center border-primary hotelSumBar">
+            <div class="col-5  d-flex justify-content-center my-2 py-auto text-light text-center">
+                <p>Total price per night: €<span class="totalPrice">0.00 </span></p>
+            </div>
+            <div class="col-3 d-flex justify-content-center my-2  text-center">
+                    <button class="btn-light btn form-control text-dark" type="submit">Reserve now   <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+        </div>
+    </div>
 </form>

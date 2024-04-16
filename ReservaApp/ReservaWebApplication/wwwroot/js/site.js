@@ -24,7 +24,7 @@ if (window.location.pathname == "/Index" || window.location.pathname == "/HotelP
         SelectedEnd = document.getElementById("SearchModel_EndDate").value;
     }
 }
-
+//Daterange settings
 $(function () {
     $('input[name="daterange"]').daterangepicker({
         "locale": {
@@ -83,6 +83,7 @@ function ChangeHiddenValues(start, end) {
     endInput.value = e.format('DD-MM-YYYY');
 
 }
+
 //onpost
 function submitForm(handlerName) {
     var form = document.getElementById("searchForm");
