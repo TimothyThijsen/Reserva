@@ -5,7 +5,7 @@
 
 /*$(function () {
     $('input[name="daterange"]').daterangepicker({
-        opens: 'left'
+        opens: 'left'Checkout page
     }, function (start, end, label) {
         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
     });
@@ -20,10 +20,13 @@ var SelectedEnd = secondaryDate.getDate() + '/' + (secondaryDate.getMonth() + 1)
 if (window.location.pathname == "/Index" || window.location.pathname == "/HotelPages/HotelsView") {
     if (document.getElementById("SearchModel_StartDate").value !== "") {
         SelectedStart = document.getElementById("SearchModel_StartDate").value;
-    } if (document.getElementById("SearchModel_EndDate").value !== "") {
-        SelectedEnd = document.getElementById("SearchModel_EndDate").value;
     }
+    if (document.getElementById("SearchModel_EndDate").value !== "") {
+        SelectedEnd = document.getElementById("SearchModel_EndDate").value;
+    } 
+    ChangeHiddenDateToDefaultDate();
 }
+
 //Daterange settings
 $(function () {
     $('input[name="daterange"]').daterangepicker({
@@ -78,12 +81,16 @@ function ChangeHiddenValues(start, end) {
     var e = end;
     var startInput = document.getElementById("SearchModel_StartDate");
     var endInput = document.getElementById("SearchModel_EndDate");
-
     startInput.value = s.format('DD-MM-YYYY');
     endInput.value = e.format('DD-MM-YYYY');
 
 }
-
+function ChangeHiddenDateToDefaultDate() {
+    var startInput = document.getElementById("SearchModel_StartDate");
+    var endInput = document.getElementById("SearchModel_EndDate");
+    startInput.value = SelectedStart.toString();
+    endInput.value = SelectedEnd.toString();
+}
 //onpost
 function submitForm(handlerName) {
     var form = document.getElementById("searchForm");

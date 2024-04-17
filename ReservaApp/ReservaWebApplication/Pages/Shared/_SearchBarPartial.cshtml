@@ -19,26 +19,13 @@
     <div class="col-3">
         <label class="form-label" for="daterange">Select date of stay</label>
         <input type="text" name="daterange" class="form-control"/>
-        @if (Model.StartDate != null)
-        {
-            <input asp-for="StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" value="@Model.StartDate" />
-            <input asp-for="EndDate" name="EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" value="@Model.EndDate" />
-        }
-        else
-        {
-            <input asp-for="StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" />
-            <input asp-for="EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" />
-        }
+
+        <input asp-for="StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" value="@Model.StartDate" />
+        <input asp-for="EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" value="@Model.EndDate" />
     </div>
     <div class="col-3">
         <label class="form-label"  for="amountOfGuest">Amount of guests</label>
-        @if (Model.AmountOfGuests != null && Model.AmountOfGuests != 0 ){
-            <input asp-for="AmountOfGuests" class="form-control" type="number" min="1" value="@Model.AmountOfGuests">
-        }
-        else
-        {
-            <input asp-for="AmountOfGuests" class="form-control" type="number" min="1" value="1">
-        }
+        <input asp-for="AmountOfGuests" class="form-control" type="number" min="1" value="@(Model.AmountOfGuests == null ? 2 : Model.AmountOfGuests)">
     </div>
     <div class="col-2">
         <button class="btn-secondary btn form-control " type="submit" onclick="submitForm('reset')">Reset</button>

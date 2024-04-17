@@ -29,5 +29,23 @@ namespace DomainLayer
         {
             return $"Your check out time is {DateRange.End.TimeOfDay.ToString("HH: mm")}";
         }
+
+        public int GetRoomCount()
+        {
+            int roomCount = 0;
+            foreach (IReservedRoom rm in reservedRooms)
+            {
+                roomCount += rm.Quantity;
+            }
+            return roomCount;
+        }
+
+        public int GetAmountOfNights()
+        {
+			TimeSpan timeSpan = dateRange.End.Date - dateRange.Start.Date;
+
+			return timeSpan.Days;
+		}
+
     }
 }
