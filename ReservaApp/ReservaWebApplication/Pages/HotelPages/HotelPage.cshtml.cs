@@ -21,12 +21,12 @@ namespace ReservaWebApplication.Pages.HotelPages
         [BindProperty]
         public string StatusMessage { get; set; }
         [BindProperty]
-        public List<IReservedRoom> ReservedRooms { get; set; } = new List<IReservedRoom>();
+        public List<ReservedRoom> ReservedRooms { get; set; } = new List<ReservedRoom>();
         public Hotel Hotel { get; set; }
 		
 		public void OnGet(int id, string statusMessage)
         {
-            
+            HttpContext.Session.SetString("prev_page", "/HotelPages/HotelPage");
             if (id> 0)
             {
                 if (HttpContext.Session.GetInt32("hotel_id") != id)
@@ -50,12 +50,17 @@ namespace ReservaWebApplication.Pages.HotelPages
         }
         public IActionResult OnPost()
         {
-            RoomReservation reservation;
-			SearchModel searchModel = new SearchModel();
-            DateTime endDate;
-            DateTime startDate; 
+            StatusMessage = string.Empty;
+            RoomReservationModel reservation = new RoomReservationModel();
+			SearchModel searchModel = new SearchModel(); 
             int countOfRooms = 0;
             decimal totalPrice = 0;
+            if(User.FindFirst("id") == null)
+            {
+                StatusMessage = "Log in to make reservation";
+                return RedirectToPage("/HotelPages/HotelPage", new { statusMessage = StatusMessage });
+            }
+            reservation.UserId = Convert.ToInt32(User.FindFirst("id").Value);
             foreach (ReservedRoom rm in ReservedRooms)
             {
                 countOfRooms += rm.Quantity;
@@ -74,26 +79,25 @@ namespace ReservaWebApplication.Pages.HotelPages
 			}
             if(searchModel.StartDate == null)
             {
-                startDate = DateTime.Today;
-                endDate = startDate.AddDays(3);
+                reservation.StartDate = DateTime.Today;
+                reservation.EndDate = DateTime.Today.AddDays(3);
             }
             else
             {
-                startDate = DateTime.ParseExact(searchModel.StartDate, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
-                endDate = DateTime.ParseExact(searchModel.EndDate, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                reservation.StartDate = DateTime.ParseExact(searchModel.StartDate, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+                reservation.EndDate = DateTime.ParseExact(searchModel.EndDate, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
             }
+            if (searchModel.AmountOfGuests == null)
+            {
+                reservation.AmountOfGuest = 2;
+            }
+            else { reservation.AmountOfGuest = searchModel.AmountOfGuests.Value; }
 
-            try
-            {
-                reservation = new RoomReservation(Convert.ToInt32(User.FindFirst("id").Value), searchModel.AmountOfGuests.Value != null ? searchModel.AmountOfGuests.Value : 2, 0, totalPrice, startDate, endDate);
-                reservation.ReservedRooms = ReservedRooms;
-                HttpContext.Session.SetString("reservation", JsonConvert.SerializeObject(reservation));
-            }
-            catch(Exception)
-            {
-                StatusMessage = "There seem to be a problem trying to add reservation request";
-            }
-            if(StatusMessage != null)
+            reservation.TotalPrice = totalPrice;
+            reservation.ReservedRooms = ReservedRooms;
+            HttpContext.Session.SetString("reservation", JsonConvert.SerializeObject(reservation));
+
+            if(StatusMessage != string.Empty)
             {
                 return RedirectToPage("/HotelPages/HotelPage", new { statusMessage = StatusMessage });
             }

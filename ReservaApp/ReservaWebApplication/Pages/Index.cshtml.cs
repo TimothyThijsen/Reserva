@@ -24,6 +24,7 @@ namespace ReservaWebApplication.Pages
 
         public void OnGet()
         {
+            HttpContext.Session.Remove("prev_page");
             SearchModel.Cities = cityManager.GetAllCities();
             
         }

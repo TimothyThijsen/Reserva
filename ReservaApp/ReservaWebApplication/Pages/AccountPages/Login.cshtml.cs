@@ -54,7 +54,10 @@ namespace ReservaWebApplication.Pages.AccountPages
 				var routeValues = new Dictionary<string, string> { { "statusMessage", StatusMessage! }, { "email", Credentials.Email } };
 				return RedirectToPage("Login", routeValues);
 			}
-			
+			if(HttpContext.Session.GetString("prev_page") != null) 
+			{
+				return RedirectToPage(HttpContext.Session.GetString("prev_page"));
+			}
 			return RedirectToPage("/Index");
 
 		}

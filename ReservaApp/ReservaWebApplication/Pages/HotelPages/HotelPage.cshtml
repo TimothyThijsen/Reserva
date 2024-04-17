@@ -50,6 +50,7 @@
                         <div class="btn-group  col-10">
                                 <button type="button" class="btn btn-outline-primary plus col-4 text-center" data-id="@index" title="plus button"><i class="fas fa-plus"></i></button>
                             <input class="no-spinners form-control rounded-0 input quantity-@index col-3" data-id="@index" min="0" id="quantity-@room.Id" type="number" title="quantity-@room.Id" asp-for="@Model.ReservedRooms[index].Quantity" value="@Model.ReservedRooms[index].Quantity">
+                            <input hidden asp-for="ReservedRooms[index].RoomId" />
                                 <button type="button" class="btn btn-outline-danger minus col-4 text-center" data-id="@index" title="minus button"><i class="fas fa-minus"></i></button>
                         </div>
                         @* <a asp-page="/RoomPages/RoomPage" asp-route-id="@room.Id" class="btn btn-primary stretched-link">Reserve</a> *@

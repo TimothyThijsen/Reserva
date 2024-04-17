@@ -18,7 +18,7 @@ namespace ReservaWebApplication.Pages.HotelPages
         public SearchModel? SearchModel { get; set; } = new SearchModel();
         public void OnGet()
         {
-            
+            HttpContext.Session.SetString("prev_page", "/HotelPages/HotelsView");
             if (HttpContext.Session.GetString("search_model") != null)
             {
                 SearchModel = JsonConvert.DeserializeObject<SearchModel>(HttpContext.Session.GetString("search_model"));
