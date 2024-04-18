@@ -110,11 +110,11 @@ namespace DataAccessLayer
             return reservations;
         }
 
-        public List<Reservation> GetAllReservationByObjectId(int objectId)
+        public List<Reservation> GetAllReservationByEntityId(int entityId)
         {
             string query = "SELECT DISTINCT * FROM [vwRoomReservation] WHERE roomId = @roomId";
             SqlCommand cmd = new SqlCommand(query);
-            cmd.Parameters.AddWithValue("@roomId", objectId);
+            cmd.Parameters.AddWithValue("@roomId", entityId);
             List<Reservation> roomReservations = new List<Reservation>();
             try
             {

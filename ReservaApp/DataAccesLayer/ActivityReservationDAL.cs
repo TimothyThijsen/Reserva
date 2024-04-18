@@ -65,12 +65,12 @@ namespace DataAccessLayer
             return reservations;
         }
 
-        public List<Reservation> GetAllReservationByObjectId(int objectId)
+        public List<Reservation> GetAllReservationByEntityId(int entityId)
         {
             string query = " SELECT r.id, r.userId, r.amountPaid, r.totalPrice , r.isCanceled, r.amountOfGuests, am.activitiesId, am.date FROM Reservation r " +
                 "LEFT JOIN ActivitiesReservation am ON r.id = am.id WHERE am.activitiesId = @activityId;";
             SqlCommand cmd = new SqlCommand(query);
-            cmd.Parameters.AddWithValue("@activityId", objectId);
+            cmd.Parameters.AddWithValue("@activityId", entityId);
             List<Reservation> reservations = new List<Reservation>();
             try
             {
