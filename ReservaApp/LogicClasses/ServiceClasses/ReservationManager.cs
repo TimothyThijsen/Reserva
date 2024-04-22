@@ -28,9 +28,12 @@ namespace DomainLayer.ServiceClasses
         {
             return reservationDAL.GetAllReservationByMember(userId); ;
         }
-        public List<Reservation> GetAllReservationByObjectId(int objectId)
+        public List<Reservation> GetAllReservationByRoomId(int roomId)
         {
-            return reservationDAL.GetAllReservationByObjectId(objectId);
+            return reservationDAL.GetAllReservationByEntityId(roomId);
+        }public List<Reservation> GetAllReservationByActivityId(int activityId)
+        {
+            return reservationDAL.GetAllReservationByEntityId(activityId);
         }
         public Reservation GetReservationById(int id) 
         {
