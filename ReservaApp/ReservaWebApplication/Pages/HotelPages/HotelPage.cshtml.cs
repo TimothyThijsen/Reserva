@@ -60,7 +60,6 @@ namespace ReservaWebApplication.Pages.HotelPages
             RoomReservationModel reservation = new RoomReservationModel();
 			SearchModel searchModel = new SearchModel(); 
             int countOfRooms = 0;
-            decimal totalPrice = 0;
             if(User.FindFirst("id") == null)
             {
                 StatusMessage = "Log in to make reservation";
@@ -70,8 +69,6 @@ namespace ReservaWebApplication.Pages.HotelPages
             foreach (ReservedRoom rm in ReservedRooms)
             {
                 countOfRooms += rm.Quantity;
-                totalPrice += roomManager.GetRoomById(rm.RoomId).Price * rm.Quantity;
-
             }
             if (countOfRooms < 1)
             {
@@ -99,7 +96,7 @@ namespace ReservaWebApplication.Pages.HotelPages
             }
             else { reservation.AmountOfGuest = searchModel.AmountOfGuests.Value; }
 
-            reservation.TotalPrice = totalPrice;
+            reservation.TotalPrice = 0;
             reservation.ReservedRooms = ReservedRooms;
             HttpContext.Session.SetString("reservation", JsonConvert.SerializeObject(reservation));
 

@@ -115,7 +115,7 @@ namespace DataAccessLayer
 			string query = "SELECT * FROM [vwMember] where id = @id";
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.AddWithValue("@id", id);
-			Member member = null;
+			Member member = null!;
 			try
 			{
 				SqlDataReader reader = dbConnection.GetFromDB(cmd);
