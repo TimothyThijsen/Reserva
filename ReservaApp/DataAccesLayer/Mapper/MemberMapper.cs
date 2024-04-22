@@ -7,15 +7,15 @@ namespace DataAccessLayer.Mapper
 	{
 		public static Member GetMember(SqlDataReader reader)
 		{
-			int id = reader.GetInt32(0);
-			string[] name = reader.GetString(1).Split(' ');
+			int id = Convert.ToInt32(reader["id"]);
+			string[] name = Convert.ToString(reader["name"])!.Split(' ');
 			string firstName = name[0];
 			string lastName = name[1];
-			string email = reader.GetString(2);
-			int age = reader.GetInt32(3);
-			MemberType role = (MemberType)reader.GetInt32(4);
-			//int points = reader.GetInt32(5);
-			bool verified = reader.GetBoolean(6);
+			string email = Convert.ToString(reader["email"])!;
+			int age = Convert.ToInt32(reader["age"]);
+			MemberType role = (MemberType)Convert.ToInt32(reader["role"]);
+			int points = Convert.ToInt32(reader["points"]) ;
+			bool verified = Convert.ToBoolean(reader["verified"]);
 
 			return new Member(id, firstName, lastName, email, age, role, verified);
 		}
