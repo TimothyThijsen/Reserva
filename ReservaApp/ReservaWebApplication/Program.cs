@@ -1,9 +1,22 @@
+using DataAccessLayer;
+using DomainLayer.Interfaces;
+using DomainLayer.ServiceClasses;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddSingleton<IHotelDAL, HotelDAL>();
+builder.Services.AddSingleton<HotelManager>();
+builder.Services.AddSingleton<ICityDAL, CityDAL>();
+builder.Services.AddSingleton<CityManager>();
+builder.Services.AddSingleton<IRoomDAL, RoomDAL>();
+builder.Services.AddSingleton<RoomManager>();
+
+builder.Services.AddRazorPages();
+
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {

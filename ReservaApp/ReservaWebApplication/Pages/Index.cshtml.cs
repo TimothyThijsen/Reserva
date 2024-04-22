@@ -11,15 +11,14 @@ namespace ReservaWebApplication.Pages
 {
     public class IndexModel : PageModel
     {
-        //<div class="tileDisplay">
         private readonly ILogger<IndexModel> _logger;
-        public CityManager cityManager = new CityManager(new CityDAL());
+        public CityManager cityManager;
         [BindProperty]
         public SearchModel SearchModel { get; set; } = new SearchModel();
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, CityManager cityManager)
         {
             _logger = logger;
-
+            this.cityManager = cityManager;
         }
 
         public void OnGet()

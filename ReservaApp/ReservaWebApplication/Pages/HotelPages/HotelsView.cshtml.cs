@@ -10,14 +10,20 @@ namespace ReservaWebApplication.Pages.HotelPages
 {
     public class HotelsViewModel : PageModel
     {
-        HotelManager hotelManager = new HotelManager(new HotelDAL());
+        HotelManager hotelManager;
+        public CityManager cityManager;
         public List<Hotel> Hotels { get; set; } = new List<Hotel>();
         public List<Room> Rooms { get; set; } = new List<Room>();
-        public CityManager cityManager  = new CityManager(new CityDAL());
         [BindProperty]
         public SearchModel? SearchModel { get; set; } = new SearchModel();
+        public HotelsViewModel(HotelManager hotelManager, CityManager cityManager)
+        {
+            this.hotelManager = hotelManager;
+            this.cityManager = cityManager;
+        }
         public void OnGet()
         {
+            
             HttpContext.Session.SetString("prev_page", "/HotelPages/HotelsView");
             if (HttpContext.Session.GetString("search_model") != null)
             {

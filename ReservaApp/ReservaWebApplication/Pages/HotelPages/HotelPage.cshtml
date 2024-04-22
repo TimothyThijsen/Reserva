@@ -19,7 +19,7 @@
             <div class="col-8 d-flex align-items-start flex-column mb-3 ">
                 <div class="card-body">
                     <h5 class="card-title">@Model.Hotel.Name</h5>
-                    <p class="card-text m-0 text-muted">@Model.CityManager.GetCity(@Model.Hotel.CityId).Name, @Model.Hotel.Address.ToString()</p>
+                    <p class="card-text m-0 text-muted">@Model.cityManager.GetCity(@Model.Hotel.CityId).Name, @Model.Hotel.Address.ToString()</p>
                     <p class="card-text m-0">@Model.Hotel.Description</p>
                 </div>
 

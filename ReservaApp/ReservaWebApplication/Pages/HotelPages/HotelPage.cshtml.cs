@@ -14,14 +14,20 @@ namespace ReservaWebApplication.Pages.HotelPages
 {
     public class HotelPageModel : PageModel
     {
-        HotelManager hotelManager = new HotelManager(new HotelDAL());
-        RoomManager roomManager = new RoomManager(new RoomDAL());
-        public CityManager CityManager { get; set; } = new CityManager(new CityDAL());
+        HotelManager hotelManager;
+        RoomManager roomManager;
+        public CityManager cityManager;
         public List<Room> Rooms { get; set; }
         [BindProperty]
         public string StatusMessage { get; set; }
         [BindProperty]
         public List<ReservedRoom> ReservedRooms { get; set; } = new List<ReservedRoom>();
+        public HotelPageModel(HotelManager hotelManager, RoomManager roomManager, CityManager cityManager) 
+        { 
+            this.hotelManager = hotelManager;
+            this.roomManager = roomManager;
+            this.cityManager = cityManager;
+        }
         public Hotel Hotel { get; set; }
 		
 		public void OnGet(int id, string statusMessage)
