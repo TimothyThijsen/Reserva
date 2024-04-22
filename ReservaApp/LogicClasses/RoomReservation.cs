@@ -13,10 +13,11 @@ namespace DomainLayer
         private DateRange dateRange;
         public List<IReservedRoom> ReservedRooms { get {  return reservedRooms; } set { reservedRooms = value; } }
         public DateRange DateRange { get { return dateRange; } }
-        public RoomReservation(int userId, int amountOfGuest, decimal totalPaid, decimal totalPrice, DateTime startDate, DateTime endDate) : base(userId, amountOfGuest, totalPaid, totalPrice)
+        public RoomReservation() { }
+        public RoomReservation(int userId, int amountOfGuest, decimal totalPrice, DateTime startDate, DateTime endDate) : base(userId, amountOfGuest, totalPrice)
         {
             dateRange = new DateRange(startDate, endDate);
-        }public RoomReservation(int id, int userId, int amountOfGuest, decimal totalPaid, decimal totalPrice, bool isCanceled, DateTime startDate, DateTime endDate) : base(id,userId,amountOfGuest,totalPaid,totalPrice,isCanceled)
+        }public RoomReservation(int id, int userId, int amountOfGuest, decimal totalPrice, bool isCanceled, DateTime startDate, DateTime endDate) : base(id,userId,amountOfGuest,totalPrice,isCanceled)
         {
             dateRange = new DateRange(startDate, endDate);
         }
@@ -30,21 +31,29 @@ namespace DomainLayer
             return $"Your check out time is {DateRange.End.TimeOfDay.ToString("HH: mm")}";
         }
 
-        public int GetRoomCount()
+        public string GetRoomCount()
         {
             int roomCount = 0;
             foreach (IReservedRoom rm in reservedRooms)
             {
                 roomCount += rm.Quantity;
             }
-            return roomCount;
+            if (roomCount <= 1)
+            {
+                return $"{roomCount} room";
+            }
+            return $"{roomCount} rooms";
         }
 
-        public int GetAmountOfNights()
+        public string GetAmountOfNights()
         {
+            string text = string.Empty;
 			TimeSpan timeSpan = dateRange.End.Date - dateRange.Start.Date;
-
-			return timeSpan.Days;
+            if (timeSpan <= TimeSpan.FromDays(1))
+            {
+                return $"{timeSpan.Days} night";
+            }
+            return $"{timeSpan.Days} nights";
 		}
 
     }

@@ -13,15 +13,14 @@ namespace DataAccessLayer.Mapper
     {
         public static Reservation GetRoomReservation(SqlDataReader reader)
         {
-            int id = reader.GetInt32(0);
-            int userId = reader.GetInt32(1);
-            decimal totalPaid = reader.GetDecimal(2);
-            decimal totalPrice = reader.GetDecimal(3);
-            bool isCancelled = reader.GetBoolean(4);
-            int amountOfGuests = reader.GetInt32(5);
-            DateTime startDate = reader.GetDateTime(6);
-            DateTime endDate = reader.GetDateTime(7);
-            return new RoomReservation(id, userId, amountOfGuests, totalPaid, totalPrice, isCancelled, startDate, endDate);
+            int id = (int)reader["id"];
+            int userId = (int)reader["userId"];
+            decimal totalPrice = (decimal)reader["totalPrice"]; 
+            bool isCancelled = (bool)reader["isCancelled"]; 
+            int amountOfGuests = (int)reader["amountOfGuests"];
+            DateTime startDate = (DateTime)reader["startDate"]; 
+            DateTime endDate = (DateTime)reader["endDate"]; 
+            return new RoomReservation(id, userId, amountOfGuests, totalPrice, isCancelled, startDate, endDate);
         }
 
         public static List<Reservation> GetAllRoomReservations(SqlDataReader reader)
@@ -59,15 +58,14 @@ namespace DataAccessLayer.Mapper
         }
         public static Reservation GetActivityReservation(SqlDataReader reader)
         {
-            int id = reader.GetInt32(0);
-            int userId = reader.GetInt32(1);
-            decimal totalPaid = reader.GetDecimal(2);
-            decimal totalPrice = reader.GetDecimal(3);
-            bool isCancelled = reader.GetBoolean(4);
-            int amountOfGuests = reader.GetInt32(5);
-            int activitiesId = reader.GetInt32(6);
-            DateTime date = reader.GetDateTime(7);
-            return new ActivityReservation(id, userId, amountOfGuests, totalPaid, totalPrice, isCancelled);
+			int id = (int)reader["id"];
+			int userId = (int)reader["userId"];
+			decimal totalPrice = (decimal)reader["totalPrice"];
+			bool isCancelled = (bool)reader["isCancelled"];
+			int amountOfGuests = (int)reader["amountOfGuests"];
+            int activitiesId = (int)reader["activitiesId"];
+			DateTime date = (DateTime)reader["date"];
+			return new ActivityReservation(id, userId, amountOfGuests, totalPrice, isCancelled);
 
         }
     }

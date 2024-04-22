@@ -21,11 +21,10 @@ namespace DataAccessLayer
         public void CreateReservation(Reservation reservation)
         {
             RoomReservation roomReservation = (RoomReservation)reservation;
-            string query = "BEGIN DECLARE @reservationId INT EXEC CreateRoomReservation @userId, @amountPaid, @totalPrice, @isCancelled, @startDate, @endDate SET @reservationId = @@IDENTITY";
+            string query = "BEGIN DECLARE @reservationId INT EXEC CreateRoomReservation @userId, @totalPrice, @isCancelled, @startDate, @endDate SET @reservationId = @@IDENTITY";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@userId", roomReservation.UserId);
-            cmd.Parameters.AddWithValue("@amountPaid", roomReservation.TotalPaid);
             cmd.Parameters.AddWithValue("@totalPrice", roomReservation.TotalPrice);
             cmd.Parameters.AddWithValue("@isCancelled", roomReservation.IsCanceled);
             cmd.Parameters.AddWithValue("@startDate", roomReservation.DateRange.Start);
@@ -60,11 +59,10 @@ namespace DataAccessLayer
 
         public void UpdateReservation(Reservation reservation)
         {
-            string query = "UPDATE [Reservation] SET amountPaid = @amountPaid, totalPrice = @totalPrice, isCancelled = @isCancelled WHERE reservationId = @reservationId";
+            string query = "UPDATE [Reservation] SET totalPrice = @totalPrice, isCancelled = @isCancelled WHERE reservationId = @reservationId";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@reservationId", reservation.Id);
-            cmd.Parameters.AddWithValue("@amountPaid", reservation.TotalPaid);
             cmd.Parameters.AddWithValue("@totalPrice", reservation.TotalPrice);
             cmd.Parameters.AddWithValue("@isCancelled", reservation.IsCanceled);
             try
@@ -79,7 +77,7 @@ namespace DataAccessLayer
 
         public List<Reservation> GetAllReservationByMember(int userId)
         {
-            string query = "SELECT r.id, r.userId, r.amountPaid, r.totalPrice , r.isCanceled, r.amountOfGuests, rm.startDate, rm.endDate FROM Reservation r " +
+            string query = "SELECT r.id, r.userId, r.totalPrice , r.isCanceled, r.amountOfGuests, rm.startDate, rm.endDate FROM Reservation r " +
                 "LEFT JOIN RoomReservation rm ON r.id = rm.id  WHERE r.userId = @userId and rm.id IS NOT NULL";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.AddWithValue("@userId", userId);
@@ -144,7 +142,7 @@ namespace DataAccessLayer
 
         public Reservation GetByReservationId(int id)
         {
-            string query = "SELECT r.id, r.userId, r.amountPaid, r.totalPrice , r.isCanceled, r.amountOfGuests, rm.startDate, rm.endDate FROM Reservation r " +
+            string query = "SELECT r.id, r.userId, r.totalPrice , r.isCanceled, r.amountOfGuests, rm.startDate, rm.endDate FROM Reservation r " +
                "left JOIN RoomReservation rm ON r.id = rm.id WHERE r.id = @reservationId;";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.AddWithValue("@reservationId", id);

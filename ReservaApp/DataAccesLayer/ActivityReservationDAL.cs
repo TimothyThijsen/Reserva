@@ -21,12 +21,11 @@ namespace DataAccessLayer
         public void CreateReservation(Reservation reservation)
         {
             ActivityReservation activityReservation = (ActivityReservation)reservation;
-            string query = "INSERT INTO [Reservation] (userId, amountPaid, totalPrice, isCancelled, amountOfGuests) VALUES (@userId, @amountPaid, @totalPaid, @totalPrice, " +
+            string query = "INSERT INTO [Reservation] (userId, totalPrice, isCancelled, amountOfGuests) VALUES (@userId, @totalPaid, @totalPrice, " +
                 "@isCancelled); INSERT INTO [ActivitiesReservation] (id, activitiesId, date) VALUES (SCOPE_IDENTITY(), @activityId, @date)";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@userId", activityReservation.UserId);
-            cmd.Parameters.AddWithValue("@amountPaid", activityReservation.TotalPaid);
             cmd.Parameters.AddWithValue("@totalPrice", activityReservation.TotalPrice);
             cmd.Parameters.AddWithValue("@isCancelled", activityReservation.IsCanceled);
             cmd.Parameters.AddWithValue("@activityId", activityReservation.ActivityId);
@@ -43,7 +42,7 @@ namespace DataAccessLayer
         }
         public List<Reservation> GetAllReservationByMember(int userId)
         {
-            string query = "SELECT r.id, r.userId, r.amountPaid, r.totalPrice , r.isCanceled, r.amountOfGuests, am.activitiesId, am.date FROM Reservation r " +
+            string query = "SELECT r.id, r.userId, r.totalPrice , r.isCanceled, r.amountOfGuests, am.activitiesId, am.date FROM Reservation r " +
                 "LEFT JOIN ActivitiesReservation am ON r.id = am.id  WHERE r.userId = @userId and am.id IS NOT NULL";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.AddWithValue("@userId", userId);
@@ -67,7 +66,7 @@ namespace DataAccessLayer
 
         public List<Reservation> GetAllReservationByEntityId(int entityId)
         {
-            string query = " SELECT r.id, r.userId, r.amountPaid, r.totalPrice , r.isCanceled, r.amountOfGuests, am.activitiesId, am.date FROM Reservation r " +
+            string query = " SELECT r.id, r.userId, r.totalPrice , r.isCanceled, r.amountOfGuests, am.activitiesId, am.date FROM Reservation r " +
                 "LEFT JOIN ActivitiesReservation am ON r.id = am.id WHERE am.activitiesId = @activityId;";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.AddWithValue("@activityId", entityId);
@@ -90,7 +89,7 @@ namespace DataAccessLayer
 
         public Reservation GetByReservationId(int id)
         {
-            string query = "SELECT r.id, r.userId, r.amountPaid, r.totalPrice , r.isCanceled, r.amountOfGuests, am.activitiesId, am.date FROM Reservation r " +
+            string query = "SELECT r.id, r.userId, r.totalPrice , r.isCanceled, r.amountOfGuests, am.activitiesId, am.date FROM Reservation r " +
                 "left JOIN ActivitiesReservation am ON r.id = am.id WHERE r.id = @reservationId;";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.AddWithValue("@reservationId", id);
@@ -113,11 +112,10 @@ namespace DataAccessLayer
 
         public void UpdateReservation(Reservation reservation)
         {
-            string query = "UPDATE [Reservation] SET amountPaid = @amountPaid, totalPrice = @totalPrice, isCancelled = @isCancelled WHERE reservationId = @reservationId";
+            string query = "UPDATE [Reservation] SET totalPrice = @totalPrice, isCancelled = @isCancelled WHERE reservationId = @reservationId";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@reservationId", reservation.Id);
-            cmd.Parameters.AddWithValue("@amountPaid", reservation.TotalPaid);
             cmd.Parameters.AddWithValue("@totalPrice", reservation.TotalPrice);
             cmd.Parameters.AddWithValue("@isCancelled", reservation.IsCanceled);
             try

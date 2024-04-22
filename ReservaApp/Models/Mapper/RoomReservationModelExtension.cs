@@ -12,7 +12,7 @@ namespace Models.Mapper
     {
         public static RoomReservation ToLogicLayer(this RoomReservationModel reservationModel)
         {
-            RoomReservation reservation = new RoomReservation(reservationModel.UserId, reservationModel.AmountOfGuest, 0,reservationModel.TotalPrice, reservationModel.StartDate, reservationModel.EndDate);
+            RoomReservation reservation = new RoomReservation(reservationModel.UserId, reservationModel.AmountOfGuest,reservationModel.TotalPrice, reservationModel.StartDate, reservationModel.EndDate);
             reservation.ReservedRooms = reservationModel.ReservedRooms.Cast<IReservedRoom>().ToList();
             return reservation;
         }
