@@ -5,17 +5,20 @@ namespace Factory
 {
     public  class ReservationManagerFactory
     {
+        private static readonly Dictionary<ReservationType, Func<ReservationManager>> _factories =
+        new Dictionary<ReservationType, Func<ReservationManager>>
+        {
+            { ReservationType.RoomReservation, () => new ReservationManager(new RoomReservationDAL()) },
+            { ReservationType.ActivityReservation, () => new ReservationManager(new ActivityReservationDAL()) }
+        };
         public static ReservationManager GetReservationManager(ReservationType type)
         {
-            switch (type)
+            if (_factories.TryGetValue(type, out var factory))
             {
-                case ReservationType.RoomReservation:
-                    return new ReservationManager(new RoomReservationDAL());
-                case ReservationType.ActivityReservation:
-                    return new ReservationManager(new ActivityReservationDAL());
-                default:
-                    throw new ArgumentException("Invalid reservation type");
+                return factory();
             }
+
+            throw new ArgumentException("Invalid reservation type");
         }
     }
 }
