@@ -1,5 +1,7 @@
 ﻿using DomainLayer;
 using DomainLayer.Interfaces;
+using DataAccessLayer.Mapper;
+using DomainLayer.ServiceClasses;
 using Microsoft.Data.SqlClient;
 
 namespace DataAccessLayer
@@ -48,8 +50,6 @@ namespace DataAccessLayer
 			cmd.Parameters.AddWithValue("@bedType", room.BedType);
 			try
 			{
-
-
 				dbConnection.ModifyDB(cmd);
 			}
 			catch (Exception ex)
@@ -62,20 +62,19 @@ namespace DataAccessLayer
 		{
 			string query = "SELECT * FROM [vwRoom]";
 			SqlCommand cmd = new SqlCommand(query);
-			SqlDataReader reader = dbConnection.GetFromDB(cmd);
 			List<Room> rooms = new List<Room>();
-			while (reader.Read())
+			try
 			{
-				int id = reader.GetInt32(0);
-				int hotelId = reader.GetInt32(1);
-				string name = reader.GetString(2);
-				int quantity = reader.GetInt32(3);
-				decimal price = reader.GetDecimal(4);
-				int capacity = reader.GetInt32(5);
-				string bedType = reader.GetString(6);
-
-				rooms.Add(new Room(id, hotelId, name, quantity, price, capacity, bedType));
-
+				SqlDataReader reader = dbConnection.GetFromDB(cmd);
+				rooms = RoomMapper.GetAllRooms(reader);
+			}
+			catch (SqlException ex)
+			{
+				throw new Exception(ex.Message);
+			}
+			finally
+			{
+				if (cmd is IDisposable diposable) { diposable.Dispose(); }
 			}
 			return rooms;
 		}
@@ -90,18 +89,7 @@ namespace DataAccessLayer
 			try
 			{
 				SqlDataReader reader = dbConnection.GetFromDB(cmd);
-
-				while (reader.Read())
-				{
-					int id = reader.GetInt32(0);
-					string name = reader.GetString(2);
-					int quantity = reader.GetInt32(3);
-					decimal price = reader.GetDecimal(4);
-					int capacity = reader.GetInt32(5);
-					string bedType = reader.GetString(6);
-					rooms.Add(new Room(id, hotelId, name, quantity, price, capacity, bedType));
-
-				}
+				rooms = RoomMapper.GetAllRooms(reader);
 			}
 			catch (SqlException ex)
 			{
@@ -121,19 +109,19 @@ namespace DataAccessLayer
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
 			cmd.Parameters.AddWithValue("@locationName", locationName);
-			SqlDataReader reader = dbConnection.GetFromDB(cmd);
 			List<Room> rooms = new List<Room>();
-			while (reader.Read())
+			try
 			{
-				int id = reader.GetInt32(0);
-				int hotelId = reader.GetInt32(1);
-				string name = reader.GetString(2);
-				int quantity = reader.GetInt32(3);
-				decimal price = reader.GetDecimal(4);
-				int capacity = reader.GetInt32(5);
-				string bedType = reader.GetString(6);
-				rooms.Add(new Room(id, hotelId, name, quantity, price, capacity, bedType));
-
+				SqlDataReader reader = dbConnection.GetFromDB(cmd);
+				rooms = RoomMapper.GetAllRooms(reader);
+			}
+			catch (SqlException ex)
+			{
+				throw new Exception(ex.Message);
+			}
+			finally
+			{
+				if (cmd is IDisposable diposable) { diposable.Dispose(); }
 			}
 			return rooms;
 		}
@@ -146,21 +134,20 @@ namespace DataAccessLayer
 			cmd.Parameters.AddWithValue("@id", id);
 			SqlDataReader reader = dbConnection.GetFromDB(cmd);
 			Room room;
-			reader.Read();
-			if (reader.IsDBNull(0))
+			try
 			{
-				return null;
-			}
-			int hotelId = reader.GetInt32(1);
-			string name = reader.GetString(2);
-			int quantity = reader.GetInt32(3);
-			decimal price = reader.GetDecimal(4);
-			int capacity = reader.GetInt32(5);
-			string bedType = reader.GetString(6);
-
-			room = new Room(id, hotelId, name, quantity, price, capacity, bedType);
-
-			return room;
+				reader.Read();
+				if (reader.IsDBNull(0))
+				{
+					return null;
+				}
+				room = RoomMapper.GetRoom(reader);
+				return room;
+			}catch (SqlException ex)
+			{
+				throw new Exception(ex.Message);
+			}finally { if (cmd is IDisposable diposable) { diposable.Dispose(); } }
+			
 		}
 
 		public void RemoveRoom(int id)
