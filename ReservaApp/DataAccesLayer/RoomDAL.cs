@@ -24,7 +24,6 @@ namespace DataAccessLayer
 			cmd.Parameters.AddWithValue("@quantity", room.Quantity);
 			cmd.Parameters.AddWithValue("@capacity", room.Capacity);
 			cmd.Parameters.AddWithValue("@bedType", room.BedType);
-
 			try
 			{
 
@@ -34,7 +33,6 @@ namespace DataAccessLayer
 			{
 				throw new Exception(ex.Message);
 			}
-
 		}
 
 		public void EditRoom(Room room)
@@ -100,7 +98,6 @@ namespace DataAccessLayer
 			{
 				if (cmd is IDisposable diposable) { diposable.Dispose(); }
 			}
-
 			return rooms;
 		}
 
