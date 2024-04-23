@@ -21,12 +21,13 @@ namespace DataAccessLayer
         public void CreateReservation(Reservation reservation)
         {
             RoomReservation roomReservation = (RoomReservation)reservation;
-            string query = "BEGIN DECLARE @reservationId INT EXEC CreateRoomReservation @userId, @totalPrice, @isCancelled, @startDate, @endDate SET @reservationId = @@IDENTITY";
+            string query = "BEGIN DECLARE @reservationId INT; EXEC CreateRoomReservation @userId, @totalPrice, @isCancelled, @amountOfGuests, @startDate, @endDate, @reservationId OUTPUT;";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@userId", roomReservation.UserId);
             cmd.Parameters.AddWithValue("@totalPrice", roomReservation.TotalPrice);
             cmd.Parameters.AddWithValue("@isCancelled", roomReservation.IsCanceled);
+            cmd.Parameters.AddWithValue("@amountOfGuests", roomReservation.AmountOfGuest);
             cmd.Parameters.AddWithValue("@startDate", roomReservation.DateRange.Start);
             cmd.Parameters.AddWithValue("@endDate", roomReservation.DateRange.End);
             List<IReservedRoom> roomIds = roomReservation.ReservedRooms;
@@ -36,13 +37,14 @@ namespace DataAccessLayer
                 int index = 0;
                 while (index < rm.Quantity)
                 {
-                    cmd.CommandText += " INSERT INTO [ReservedRoom] (roomId,reservationId) VALUES (@roomId, @reservationId);";
-                    cmd.Parameters.AddWithValue("@roomId", rm.RoomId);
+                    cmd.CommandText += $" INSERT INTO [ReservedRoom] (roomId,reservationId) VALUES (@roomId{index}, @reservationId);";
+                    cmd.Parameters.AddWithValue($"@roomId{index}", rm.RoomId);
                     index++;
                 }
-                countCheck = index;
+                countCheck += index;
             }
-            if (countCheck != roomIds.Count)
+            cmd.CommandText += " END";
+            if (countCheck != roomIds.Sum(rm => rm.Quantity))
             {
                 throw new Exception("A problem has occurred trying to make reservation.");
             }

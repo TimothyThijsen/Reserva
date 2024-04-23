@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DomainLayer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace DomainLayer
         public int UserId { get { return userId; } }
         public int AmountOfGuest {  get { return amountOfGuest; } }
         
-        public decimal TotalPrice {  get { return totalPrice; } }
+        public decimal TotalPrice { get { return totalPrice; } set { totalPrice = value; } }
         public bool IsCanceled {  get { return isCanceled; } }
         public Reservation() { }
         public Reservation(int userId,int amountOfGuest, decimal totalPrice) 
@@ -40,5 +41,5 @@ namespace DomainLayer
         }
 
 
-    }
+	}
 }

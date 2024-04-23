@@ -55,6 +55,9 @@ namespace DomainLayer
             }
             return $"{timeSpan.Days} nights";
 		}
-
-    }
+        public TimeSpan GetTimeSpan()
+        {
+            return dateRange.End.Date - dateRange.Start.Date;
+        }  
+	}
 }
