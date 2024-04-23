@@ -1,7 +1,15 @@
+using DataAccessLayer;
+using DomainLayer.Interfaces;
+using DomainLayer.ServiceClasses;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 namespace ReservaDesktopApp
 {
     internal static class Program
     {
+        internal static IServiceProvider ServiceProvider { get; }
+            = CreateServiceProvider();
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -12,6 +20,24 @@ namespace ReservaDesktopApp
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new MainForm());
+        }
+        private static IServiceProvider CreateServiceProvider()
+        {
+            return new HostBuilder()
+                .ConfigureServices(x =>
+                {
+                    string connectionString =
+                        "Server=.;Database=WAD_20240422;User Id=sa;Password=SqlServer@2022!;" +
+                        "Encrypt=True;TrustServerCertificate=True;";
+                    x.AddSingleton<IHotelDAL, HotelDAL>();
+                    x.AddSingleton<IRoomDAL, RoomDAL>();
+                    x.AddSingleton<ICityDAL, CityDAL>();
+                    x.AddSingleton<CityManager>();
+                    x.AddSingleton<RoomManager>();
+                    x.AddSingleton<HotelManager>();
+                })
+                .Build()
+                .Services;
         }
     }
 }

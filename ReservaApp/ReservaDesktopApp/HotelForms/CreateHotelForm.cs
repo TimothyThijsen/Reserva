@@ -11,18 +11,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ReservaDesktopApp.HotelForms
 {
     public partial class CreateHotelForm : Form
     {
-        CityManager cityManager = new CityManager(new CityDAL());
-        HotelManager hotelManager = new HotelManager(new HotelDAL());
+        CityManager cityManager;
+        HotelManager hotelManager;
        
 
         public CreateHotelForm()
         {
             InitializeComponent();
+            hotelManager = Program.ServiceProvider.GetRequiredService<HotelManager>();
+            cityManager = Program.ServiceProvider.GetRequiredService<CityManager>();
             Setup();
         }
         public void Setup()

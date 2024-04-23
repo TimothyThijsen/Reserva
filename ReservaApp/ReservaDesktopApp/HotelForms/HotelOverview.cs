@@ -1,19 +1,23 @@
 ﻿using DataAccessLayer;
 using DomainLayer;
 using DomainLayer.ServiceClasses;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace ReservaDesktopApp.HotelForms
 {
     public partial class HotelOverview : Form
     {
-        HotelManager hotelManager = new HotelManager(new HotelDAL());
-        CityManager cityManager = new CityManager(new CityDAL());
-        RoomManager roomManager = new RoomManager(new RoomDAL());
+        HotelManager hotelManager;
+        CityManager cityManager;
+        RoomManager roomManager;
         Hotel selectedHotel;
         public HotelOverview()
         {
             InitializeComponent();
+            hotelManager = Program.ServiceProvider.GetRequiredService<HotelManager>();
+            cityManager = Program.ServiceProvider.GetRequiredService<CityManager>();
+            roomManager = Program.ServiceProvider.GetRequiredService<RoomManager>();
             ShowHotels();
         }
         private void ShowHotels()
