@@ -2,12 +2,14 @@ using DataAccessLayer;
 using DomainLayer;
 using DomainLayer.Interfaces;
 using DomainLayer.ServiceClasses;
+using Factory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Reflection;
 using System.Runtime.ConstrainedExecution;
 
 namespace ReservaWebApplication.Pages.HotelPages
@@ -17,19 +19,21 @@ namespace ReservaWebApplication.Pages.HotelPages
         HotelManager hotelManager;
         RoomManager roomManager;
         public CityManager cityManager;
-        public List<Room> Rooms { get; set; }
+        ReservationManager reservationManager = ReservationManagerFactory.GetReservationManager(ReservationType.RoomReservation);
+        //public List<Room> Rooms { get; set; }
         [BindProperty]
         public string StatusMessage { get; set; }
         [BindProperty]
         public List<ReservedRoom> ReservedRooms { get; set; } = new List<ReservedRoom>();
+
+        public SearchModel searchModel = new SearchModel();
+        public Hotel Hotel { get; set; }
         public HotelPageModel(HotelManager hotelManager, RoomManager roomManager, CityManager cityManager) 
         { 
             this.hotelManager = hotelManager;
             this.roomManager = roomManager;
             this.cityManager = cityManager;
         }
-        public Hotel Hotel { get; set; }
-		
 		public void OnGet(int id, string statusMessage)
         {
             HttpContext.Session.SetString("prev_page", "/HotelPages/HotelPage");
@@ -40,72 +44,75 @@ namespace ReservaWebApplication.Pages.HotelPages
                     HttpContext.Session.SetInt32("hotel_id", id);
                 }
             }
-            else{
-                id = (int)HttpContext.Session.GetInt32("hotel_id");
-            }
-            Rooms = roomManager.GetRoomByHotel(id);
-            Hotel = hotelManager.GetHotelById(id);
-            foreach (Room room in Rooms)
+            Setup();
+            foreach (Room room in Hotel.Rooms)
             {
-                ReservedRooms.Add(new ReservedRoom(0, room.Id));
+                ReservedRooms.Add(new ReservedRoom(0, room.Id)); 
             }
             if (statusMessage != null)
             {
                 StatusMessage = statusMessage.Trim();
             }
+            searchModel = SetupSearchModel();
         }
         public IActionResult OnPost()
         {
-            StatusMessage = string.Empty;
             RoomReservationModel reservation = new RoomReservationModel();
 			SearchModel searchModel = new SearchModel(); 
-            int countOfRooms = 0;
             if(User.FindFirst("id") == null)
             {
                 StatusMessage = "Log in to make reservation";
                 return RedirectToPage("/HotelPages/HotelPage", new { statusMessage = StatusMessage });
             }
-            reservation.UserId = Convert.ToInt32(User.FindFirst("id").Value);
-            foreach (ReservedRoom rm in ReservedRooms)
-            {
-                countOfRooms += rm.Quantity;
-            }
-            if (countOfRooms < 1)
+            if (ReservedRooms.Sum(r => r.Quantity) < 1)
             {
                 StatusMessage = "No room selected, please select a room to continue!";
                 return RedirectToPage("/HotelPages/HotelPage", new {statusMessage = StatusMessage });
             }
-			if (HttpContext.Session.GetString("search_model") != null)
-			{
-				searchModel = JsonConvert.DeserializeObject<SearchModel>(HttpContext.Session.GetString("search_model"));
-                
-			}
-            if(searchModel.StartDate == null)
+            searchModel = SetupSearchModel();
+            Setup();
+            foreach (ReservedRoom rm in ReservedRooms)
             {
-                reservation.StartDate = DateTime.Today;
-                reservation.EndDate = DateTime.Today.AddDays(3);
+                if(Hotel.Rooms.Find(r => r.Id == rm.RoomId).GetAvailability(searchModel.GetDateRange()) - rm.Quantity < 0)
+                {
+                    StatusMessage = "Insufficient Rooms for Your Request. Please Choose a Lower Quantity";
+                    return RedirectToPage("/HotelPages/HotelPage", new { statusMessage = StatusMessage });
+                }
             }
-            else
-            {
-                reservation.StartDate = DateTime.ParseExact(searchModel.StartDate, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
-                reservation.EndDate = DateTime.ParseExact(searchModel.EndDate, "dd-MM-yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            }
-            if (searchModel.AmountOfGuests == null)
-            {
-                reservation.AmountOfGuest = 2;
-            }
-            else { reservation.AmountOfGuest = searchModel.AmountOfGuests.Value; }
 
+            reservation.AmountOfGuest = searchModel.AmountOfGuests ?? 2;
+            reservation.UserId = Convert.ToInt32(User.FindFirst("id").Value);
+            reservation.StartDate = DateTime.ParseExact(searchModel.StartDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            reservation.EndDate = DateTime.ParseExact(searchModel.EndDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             reservation.TotalPrice = 0;
             reservation.ReservedRooms = ReservedRooms;
             HttpContext.Session.SetString("reservation", JsonConvert.SerializeObject(reservation));
 
-            if(StatusMessage != string.Empty)
-            {
-                return RedirectToPage("/HotelPages/HotelPage", new { statusMessage = StatusMessage });
-            }
-            
             return RedirectToPage("/HotelPages/Checkout");
+        }
+        private SearchModel SetupSearchModel()
+        {
+            if (HttpContext.Session.GetString("search_model") != null)
+            {
+                searchModel = JsonConvert.DeserializeObject<SearchModel>(HttpContext.Session.GetString("search_model"));
+            }
+            if (searchModel.StartDate == null)
+            {
+                searchModel.StartDate = DateTime.Today.ToString("dd/MM/yyyy");
+                searchModel.EndDate = DateTime.Today.ToString("dd/MM/yyyy");
+            }
+            return searchModel;
+        }
+        private void Setup()
+        {
+            int id = (int)HttpContext.Session.GetInt32("hotel_id");
+            Hotel = hotelManager.GetHotelById(id);
+            Hotel.Rooms = roomManager.GetRoomByHotel(id);
+
+            foreach (Room room in Hotel.Rooms)
+            {
+                room.Schedule.AddListOfReservations(reservationManager.GetAllReservationByRoomId(room.Id));
+            }
         }
     }
 }

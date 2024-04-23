@@ -90,6 +90,7 @@ namespace DataAccessLayer
 			{
 				SqlDataReader reader = dbConnection.GetFromDB(cmd);
 				rooms = RoomMapper.GetAllRooms(reader);
+
 			}
 			catch (SqlException ex)
 			{
@@ -114,6 +115,7 @@ namespace DataAccessLayer
 			{
 				SqlDataReader reader = dbConnection.GetFromDB(cmd);
 				rooms = RoomMapper.GetAllRooms(reader);
+				cmd.Connection.Close();
 			}
 			catch (SqlException ex)
 			{
@@ -142,13 +144,13 @@ namespace DataAccessLayer
 					return null;
 				}
 				room = RoomMapper.GetRoom(reader);
-				return room;
+				
 			}catch (SqlException ex)
 			{
 				throw new Exception(ex.Message);
 			}finally { if (cmd is IDisposable diposable) { diposable.Dispose(); } }
-			
-		}
+            return room;
+        }
 
 		public void RemoveRoom(int id)
 		{

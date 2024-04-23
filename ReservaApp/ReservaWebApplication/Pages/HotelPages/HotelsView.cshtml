@@ -6,8 +6,8 @@
 <div class="row row-cols-1 row-cols-lg-2 justify-content-center justify-content-lg-start my-4">
     @foreach (Hotel hotel in Model.Hotels)
     {
-        <div class="col-11 col-lg-6 ">
-            <div class="card w-100 border-3 my-3 mx-3 shadow">
+        <div class="col-11 col-lg-6">
+            <div class="card w-100  border-3 my-3 mx-3 shadow">
                 <div class="row g-0 ">
                     <div class="col-4 d-flex flex-column hotelImage ">
                         <img class="img-fluid overflow-hidden rounded-start" src="https://www.checkatrade.com/blog/wp-content/uploads/2021/04/Feature-cost-to-build-a-hotel.jpg" class="card-img-top" alt="hotel">
@@ -17,6 +17,10 @@
                             <h5 class="card-title">@hotel.Name</h5>
                             <p class="card-text m-0 text-muted">@Model.cityManager.GetCity(hotel.CityId).Name, @hotel.Address.ToString()</p>
                             <p class="card-text m-0">@hotel.Description</p>
+                            <p class="card-subtitle">Rooms</p>
+                            @* @foreach(Room rm in hotel.Rooms){
+                                <p class="card-text m-0">@rm.Name @rm.GetAvailability(Model.SearchModel.GetDateRange())</p>
+                            } *@
                         </div>
                         <div class="p-2 col-12 d-flex mt-auto  text-center">
                             <a asp-page="/HotelPages/HotelPage" asp-route-id="@hotel.Id" class="btn btn-primary stretched-link ms-auto">Check availability <i class="fas fa-chevron-right"></i></a>

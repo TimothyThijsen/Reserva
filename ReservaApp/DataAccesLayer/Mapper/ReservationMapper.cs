@@ -40,9 +40,7 @@ namespace DataAccessLayer.Mapper
             {
                 int quantity = reader.GetInt32(0);
                 int roomId = reader.GetInt32(1);
-                ReservedRoom reservedRoom = new ReservedRoom();
-                reservedRoom.RoomId = roomId;
-                reservedRoom.Quantity = quantity;
+                ReservedRoom reservedRoom = new ReservedRoom(quantity, roomId);
                 reservedRooms.Add(reservedRoom);
             }
             return reservedRooms;

@@ -79,10 +79,11 @@ $(function () {
 function ChangeHiddenValues(start, end) {
     var s = start;
     var e = end;
+   
     var startInput = document.getElementById("SearchModel_StartDate");
     var endInput = document.getElementById("SearchModel_EndDate");
-    startInput.value = s.format('DD-MM-YYYY');
-    endInput.value = e.format('DD-MM-YYYY');
+    startInput.value = s.format('DD/MM/YYYY');
+    endInput.value = e.format('DD/MM/YYYY');
 
 }
 function ChangeHiddenDateToDefaultDate() {

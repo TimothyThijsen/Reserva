@@ -4,32 +4,32 @@ namespace DomainLayer
 {
     public class RoomSchedule : ISchedule
     {
-        List<RoomReservation> scheduledReservations = new List<RoomReservation> ();
-        public void AddReservation(RoomReservation reservation)
+        List<Reservation> scheduledReservations = new List<Reservation> ();
+        public void AddReservation(Reservation reservation)
         {
             scheduledReservations.Add(reservation);
         }
-
-        public bool IsAvailable(DateRange dateRange,Room room)
+        public void AddListOfReservations(List<Reservation> reservations) 
+        { 
+            foreach (RoomReservation reservation in reservations)
+            {
+                 AddReservation(reservation);
+            }
+        }
+        public int GetAvailability(DateRange dateRange,Room room)
         {
             int countScheduled = 0;
             foreach (RoomReservation reservation in scheduledReservations)
             {
-                //List<Room> reservedRoom = reservation.;
-                //countScheduled += reservation.ReservedRooms.Where(r => r.Key == room.Id).Select(r => r.Value).ToList().Count();
                 if (reservation.DateRange.Includes(dateRange))
                 {
-                    countScheduled += reservation.ReservedRooms.Where(r => r.Key == room.Id).Select(r => r.Value).ToList().Count();
+                    countScheduled += reservation.ReservedRooms.Where(r => r.RoomId == room.Id).Sum(r => r.Quantity);
                 }
             }
-            if(countScheduled >= room.Capacity) 
-            {
-                return false;
-            }
-            return true;
+            return room.Quantity - countScheduled;
         }
 
-        public void RemoveReservation(RoomReservation reservation)
+        public void RemoveReservation(Reservation reservation)
         {
             scheduledReservations.Remove(reservation);
         }

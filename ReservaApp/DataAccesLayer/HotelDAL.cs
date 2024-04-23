@@ -65,8 +65,17 @@ namespace DataAccessLayer
 			try
 			{
 				SqlDataReader reader = dbConnection.GetFromDB(cmd);
-
+				
 				hotels = HotelMapper.GetHotels(reader);
+				cmd.Connection.Close();
+				foreach(Hotel h in hotels)
+				{
+					cmd.CommandText = "SELECT * FROM [vwRoom] WHERE hotelId = @hotelId";
+					cmd.Parameters.Clear();
+					cmd.Parameters.AddWithValue("@hotelId", h.Id);
+					reader = dbConnection.GetFromDB(cmd);
+					h.Rooms = RoomMapper.GetAllRooms(reader);
+				}
 
 			}
 			catch (SqlException)

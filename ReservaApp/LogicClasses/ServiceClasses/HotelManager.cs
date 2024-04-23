@@ -34,15 +34,20 @@ namespace DomainLayer.ServiceClasses
         }
         public List<Hotel> GetHotelsBySearchModel(ISearchModel searchModel) 
         {
-            //List<Hotel> searchResults = new List<Hotel>();
+            
             List<Hotel> searchResults = GetAllHotels();
             if (searchModel.CityId != null) 
             { 
                 List<Hotel> results = new List<Hotel>();
                 foreach(Hotel hotel in searchResults)
                 {
-                    if (hotel.CityId.Equals(searchModel.CityId)) { results.Add(hotel);}
+                    if (!hotel.CityId.Equals(searchModel.CityId)) {
+						continue;
+					}
+
+                    results.Add(hotel);
                 }
+                
                 searchResults = results;
             }
             

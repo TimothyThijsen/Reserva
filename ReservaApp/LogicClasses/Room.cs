@@ -24,6 +24,7 @@
             this.hotelId = hotelId;
             this.capacity = capacity;
             this.bedType = bedType;
+            this.schedule = new RoomSchedule();
         }public Room(int id, int hotelId, string name, int quantity, decimal price, int capacity, string bedType) : this(hotelId, name, quantity, price, capacity, bedType)
         {
             this.id = id;
@@ -32,6 +33,10 @@
         public string GetPrice()
         {
             return price.ToString("0.00");
+        }
+        public int GetAvailability(DateRange dr)
+        {
+            return Schedule.GetAvailability(dr, this);
         }
     }
 }

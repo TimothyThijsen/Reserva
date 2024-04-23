@@ -27,9 +27,9 @@
 <form method="post">
     <div class="row row-cols-auto  justify-content-center mb-2">
  
-        @foreach (Room room in Model.Rooms)
+        @foreach (Room room in Model.Hotel.Rooms)
         {
-            int index = Model.Rooms.IndexOf(room);
+            int index = Model.Hotel.Rooms.IndexOf(room);
             <div class="col">
                 <div class="card border-3 my-3 mx-3 shadow">
                     <img src="https://th.bing.com/th/id/OIP.YlF5RjQbKdSe-jPvbJuo7QHaE8?w=287&h=191&c=7&r=0&o=5&dpr=1.5&pid=1.7" class="card-img-top" alt="room">
@@ -39,6 +39,7 @@
                         <p class="card-text m-0">@room.BedType</p>
                         <p class="card-text m-0">Sleeps @room.Capacity</p>
                         <input type="hidden" id="roomPrice-@index" value="@room.Price">
+                        <p class="card-text m-0">@Model.Hotel.Rooms[index].GetAvailability(Model.searchModel.GetDateRange()) left</p>
                     </div>
                     <div class="card-footer text-center justify-content-center col">
                         <div class="btn-group  col-10">

@@ -19,7 +19,7 @@ namespace DataAccessLayer.Mapper
 			int hotelId = (int)reader["hotelId"];
 			string name = (string)reader["name"];
 			int quantity = (int)reader["quantity"];
-			decimal price = (int)reader["price"];
+			decimal price = (decimal)reader["price"];
 			int capacity = (int)reader["capacity"];
 			string bedType = (string)reader["bedType"];
 			return new Room(id, hotelId, name, quantity, price, capacity, bedType);

@@ -112,9 +112,11 @@ namespace DataAccessLayer
 
         public List<Reservation> GetAllReservationByEntityId(int entityId)
         {
-            string query = "SELECT DISTINCT * FROM [vwRoomReservation] WHERE roomId = @roomId";
+            string query = "SELECT DISTINCT * FROM [vwRoomReservation] WHERE roomId = @roomId AND endDate > @today";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.AddWithValue("@roomId", entityId);
+            cmd.Parameters.AddWithValue("@today", DateTime.Today);
+
             List<Reservation> roomReservations = new List<Reservation>();
             try
             {
