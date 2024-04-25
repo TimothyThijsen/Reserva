@@ -30,7 +30,7 @@
 						
 					</div>
 					<div class="col text-right">
-						<p>@Model.PriceExcl</p>
+							<p>@Model.PriceExcl.ToString("€0.00")</p>
 						<p>@RoomPriceCalculator.CalculateFees(Model.PriceExcl).ToString("€0.00")</p>
 					</div>
 					</div>

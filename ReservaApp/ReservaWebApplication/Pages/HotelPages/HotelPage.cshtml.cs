@@ -99,7 +99,7 @@ namespace ReservaWebApplication.Pages.HotelPages
             if (searchModel.StartDate == null)
             {
                 searchModel.StartDate = DateTime.Today.ToString("dd/MM/yyyy");
-                searchModel.EndDate = DateTime.Today.ToString("dd/MM/yyyy");
+                searchModel.EndDate = DateTime.Today.AddDays(3).ToString("dd/MM/yyyy");
             }
             return searchModel;
         }
