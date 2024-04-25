@@ -20,9 +20,9 @@ namespace DomainLayer.ServiceClasses
         {
             hotelDAL.EditHotel(hotel);
         }
-        public void RemoveHotel(Hotel hotel)
+        public void RemoveHotel(int id)
         {
-            hotelDAL.RemoveHotel(hotel);
+            hotelDAL.RemoveHotel(id);
         }
         public List<Hotel> GetAllHotels()
         {

@@ -116,7 +116,7 @@ namespace DataAccessLayer
 			return hotel;
 		}
 
-		public void RemoveHotel(Hotel hotel)
+		public void RemoveHotel(int id)
 		{
 			throw new NotImplementedException();
 		}
