@@ -10,7 +10,7 @@ namespace DomainLayer.Interfaces
     {
         void AddUser(User user);
         void RemoveUser(int id);
-        string[] GetCredentials(string email);
+        User GetUserByEmail(string email);
         void ChangePassword(string newPwd, int userId);
         void EditUser(User user);
         User GetUser(int id);

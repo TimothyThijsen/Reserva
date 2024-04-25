@@ -27,6 +27,6 @@ namespace Models
 		[RegularExpression(@"^(?=.*\d).+$", ErrorMessage = "Password must contain at least one numeric digit.")]
 		public string Password {  get; set; }
 		
-
+		
 	}
 }

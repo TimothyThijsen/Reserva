@@ -130,7 +130,27 @@ namespace DataAccessLayer
 			return member;
 		}
 
-		public void RemoveUser(int id)
+        public User GetUserByEmail(string email)
+        {
+            string query = "SELECT * FROM [vwMember] where email = @email";
+            SqlCommand cmd = new SqlCommand(query);
+            cmd.Parameters.AddWithValue("@email", email);
+            Member member = null!;
+            try
+            {
+                SqlDataReader reader = dbConnection.GetFromDB(cmd);
+                reader.Read();
+                member = MemberMapper.GetMember(reader);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return member;
+        }
+
+        public void RemoveUser(int id)
 		{
 			string query = "DELETE FROM [Member] where id = @id; DELETE FROM [User] where id = @id";
 			SqlCommand cmd = new SqlCommand(query);

@@ -8,7 +8,7 @@ namespace DomainLayer
 {
     public class Employee : User
     {
-        public Employee(string firstName, string lastName, string email, int age) : base(firstName, lastName, email, age)
+        public Employee(string firstName, string lastName, string email, int age, string password) : base(firstName, lastName, email, age, password)
         {
         }
     }

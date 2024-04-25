@@ -13,8 +13,7 @@ namespace DomainLayer.Mapper
 
 		public static Member ToLogicLayer(this IMemberModel memberModel)
 		{
-			Member member = new Member(memberModel.FirstName, memberModel.LastName, memberModel.Email, memberModel.Age, memberModel.Role);
-			member.Password = memberModel.Password;
+			Member member = new Member(memberModel.FirstName, memberModel.LastName, memberModel.Email.ToLower().Trim(), memberModel.Age, memberModel.Role, memberModel.Password);
 			return member;
 		}
 		

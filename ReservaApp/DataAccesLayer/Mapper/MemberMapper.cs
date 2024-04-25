@@ -16,8 +16,8 @@ namespace DataAccessLayer.Mapper
 			MemberType role = (MemberType)Convert.ToInt32(reader["role"]);
 			int points = Convert.ToInt32(reader["points"]) ;
 			bool verified = Convert.ToBoolean(reader["verified"]);
-
-			return new Member(id, firstName, lastName, email, age, role, verified);
+			string password = Convert.ToString(reader["password"]);
+			return new Member(id, firstName, lastName, email, age, role, verified,password);
 		}
 
 		public static List<User> GetMembers(SqlDataReader reader)

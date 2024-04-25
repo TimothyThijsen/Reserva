@@ -19,14 +19,15 @@ namespace DomainLayer
         public string Email { get { return email; } }
         public string? Password { get { return password; } set { password = value; } }
         public int Age {  get { return age; } }
-        public User(string firstName, string lastName, string email, int age)
+        public User(string firstName, string lastName, string email, int age, string password)
         {
             this.firstName = firstName;
             this.lastName = lastName;
             this.email = email;
             this.age = age;
+            this.password = password;
         }
-        public User(int id, string firstName, string lastName, string email, int age) : this(firstName, lastName,email,age)
+        public User(int id, string firstName, string lastName, string email, int age, string password) : this(firstName, lastName,email,age, password)
         {
             this.id = id;
         }

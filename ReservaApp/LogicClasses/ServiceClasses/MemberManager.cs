@@ -50,25 +50,22 @@ namespace DomainLayer.ServiceClasses
         {
             return userDAL.GetAllUser().Select(x => (Member)x).ToList();
         }
+        public Member GetMemberByEmail(string email)
+        {
+            return (Member)userDAL.GetUserByEmail(email);
+        }
         public Member Login(string email, string password)
         {
-            string[] credentials = userDAL.GetCredentials(email.ToLower());
-            if (credentials[0] == null)
+            Member member = GetMemberByEmail(email);
+            if (member == null)
             {
                 throw new CredentialException();
             }
-            Member member;
-            if (BCrypt.Net.BCrypt.EnhancedVerify(password, credentials[2]))
+            if (!BCrypt.Net.BCrypt.EnhancedVerify(password, member.Password))
             {
-                member = GetMember(Convert.ToInt32(credentials[0]));
-            }
-            else
-            {
-                
                 throw new CredentialException();
             }
             return member;
-
         }
     }
 }
