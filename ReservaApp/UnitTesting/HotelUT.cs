@@ -21,7 +21,7 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        public void AddHotel_ValidHotel_ShouldSucceed()
+        public void AddHotel()
         {
             Hotel hotel = new Hotel(1, faker.Company.CompanyName(),faker.Lorem.Paragraph(), 1, new Address(faker.Person.Address.Street,faker.Person.Address.ZipCode));
             
@@ -32,7 +32,7 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        public void EditHotel_ValidHotel_ShouldSucceed()
+        public void EditHotel()
         {
             Hotel hotel = new Hotel(1, faker.Company.CompanyName(), faker.Lorem.Paragraph(), 1, new Address(faker.Person.Address.Street, faker.Person.Address.ZipCode));
             _hotelManager.AddHotel(hotel);
@@ -43,7 +43,7 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        public void RemoveHotel_ValidHotel_ShouldSucceed()
+        public void RemoveHotel()
         {
             List<Hotel> hotelList = new List<Hotel>();
             hotelList.Add(new Hotel(1, faker.Company.CompanyName(), faker.Lorem.Paragraph(), 1, new Address(faker.Person.Address.Street, faker.Person.Address.ZipCode)));
