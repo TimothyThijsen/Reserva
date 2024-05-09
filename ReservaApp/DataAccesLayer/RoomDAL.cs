@@ -37,9 +37,11 @@ namespace DataAccessLayer
 
 		public void EditRoom(Room room)
 		{
-			string query = "CreateRoom @name, @hotelId, @price, @quantity, @capacity, @bedType;";
+			string query = "UPDATE Room SET hotelId = @hotelId, name = @name, quantity = @quantity, price = @price, " +
+				"capacity = @capacity, bedType = @bedType WHERE id = @id";
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
+			cmd.Parameters.AddWithValue("@id", room.Id);
 			cmd.Parameters.AddWithValue("@name", room.Name);
 			cmd.Parameters.AddWithValue("@hotelId", room.HotelId);
 			cmd.Parameters.AddWithValue("@price", room.Price);
@@ -125,7 +127,7 @@ namespace DataAccessLayer
 			return rooms;
 		}
 
-		public Room GetRoomById(int id)
+		public Room? GetRoomById(int id)
 		{
 			string query = "SELECT * FROM [vwRoom] where id = @id";
 			SqlCommand cmd = new SqlCommand(query);
