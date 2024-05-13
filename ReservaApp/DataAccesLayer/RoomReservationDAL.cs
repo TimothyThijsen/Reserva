@@ -30,9 +30,9 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@amountOfGuests", roomReservation.AmountOfGuest);
             cmd.Parameters.AddWithValue("@startDate", roomReservation.DateRange.Start);
             cmd.Parameters.AddWithValue("@endDate", roomReservation.DateRange.End);
-            List<IReservedRoom> roomIds = roomReservation.ReservedRooms;
+            List<ReservedRoom> roomIds = roomReservation.ReservedRooms;
             int countCheck = 0;
-            foreach (IReservedRoom rm in roomIds)
+            foreach (ReservedRoom rm in roomIds)
             {
                 int index = 0;
                 while (index < rm.Quantity)

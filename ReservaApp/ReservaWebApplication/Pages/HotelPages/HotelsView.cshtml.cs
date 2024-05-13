@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
 using Newtonsoft.Json;
+using ReservaWebApplication.Models;
 
 namespace ReservaWebApplication.Pages.HotelPages
 {
@@ -17,7 +18,8 @@ namespace ReservaWebApplication.Pages.HotelPages
         ReservationManager reservationManager = ReservationManagerFactory.GetReservationManager(ReservationType.RoomReservation);
         public List<Hotel> Hotels { get; set; } = new List<Hotel>();
         [BindProperty]
-        public SearchModel? SearchModel { get; set; } = new SearchModel();
+        public SearchBarPartialModel SearchBarPartialModel { get; set; } = new SearchBarPartialModel(); 
+        SearchModel? SearchModel { get; set; } = new SearchModel();
         public HotelsViewModel(HotelManager hotelManager, CityManager cityManager)
         {
             this.hotelManager = hotelManager;
@@ -25,24 +27,23 @@ namespace ReservaWebApplication.Pages.HotelPages
         }
         public void OnGet()
         {
-            
             HttpContext.Session.SetString("prev_page", "/HotelPages/HotelsView");
             if (HttpContext.Session.GetString("search_model") != null)
             {
                 SearchModel = JsonConvert.DeserializeObject<SearchModel>(HttpContext.Session.GetString("search_model"));
             }
-            SearchModel.Cities = cityManager.GetAllCities();
-            
 			if (SearchModel.StartDate == null)
 			{
                 SearchModel.StartDate = DateTime.Today.ToString("dd/MM/yyyy");
                 SearchModel.EndDate = DateTime.Today.ToString("dd/MM/yyyy");
             }
-			Hotels = hotelManager.GetHotelsBySearchModel(SearchModel);
+            SearchBarPartialModel.Cities = cityManager.GetAllCities();
+            SearchBarPartialModel.SearchModel = SearchModel;
+            Hotels = hotelManager.GetHotelsBySearchModel(SearchBarPartialModel.SearchModel);
         }
         public IActionResult OnPost()
         {
-            HttpContext.Session.SetString("search_model", JsonConvert.SerializeObject(SearchModel));
+            HttpContext.Session.SetString("search_model", JsonConvert.SerializeObject(SearchBarPartialModel.SearchModel));
             return RedirectToPage("/HotelPages/HotelsView");
         }
         public IActionResult OnPostReset()

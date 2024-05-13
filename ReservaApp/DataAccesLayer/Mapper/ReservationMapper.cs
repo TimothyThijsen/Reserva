@@ -33,9 +33,9 @@ namespace DataAccessLayer.Mapper
             return roomReservations;
         }
 
-        public static List<IReservedRoom> GetReservedRoom(SqlDataReader reader)
+        public static List<ReservedRoom> GetReservedRoom(SqlDataReader reader)
         {
-            List<IReservedRoom> reservedRooms = new List<IReservedRoom>();
+            List<ReservedRoom> reservedRooms = new List<ReservedRoom>();
             while (reader.Read())
             {
                 int quantity = reader.GetInt32(0);

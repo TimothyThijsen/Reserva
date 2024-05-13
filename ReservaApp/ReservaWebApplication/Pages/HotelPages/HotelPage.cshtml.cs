@@ -28,6 +28,7 @@ namespace ReservaWebApplication.Pages.HotelPages
 
         public SearchModel searchModel = new SearchModel();
         public Hotel Hotel { get; set; }
+        public DateRange DateRange { get; set; }
         public HotelPageModel(HotelManager hotelManager, RoomManager roomManager, CityManager cityManager) 
         { 
             this.hotelManager = hotelManager;
@@ -44,6 +45,7 @@ namespace ReservaWebApplication.Pages.HotelPages
                     HttpContext.Session.SetInt32("hotel_id", id);
                 }
             }
+            searchModel = SetupSearchModel();
             Setup();
             foreach (Room room in Hotel.Rooms)
             {
@@ -53,7 +55,7 @@ namespace ReservaWebApplication.Pages.HotelPages
             {
                 StatusMessage = statusMessage.Trim();
             }
-            searchModel = SetupSearchModel();
+            
         }
         public IActionResult OnPost()
         {
@@ -73,7 +75,7 @@ namespace ReservaWebApplication.Pages.HotelPages
             Setup();
             foreach (ReservedRoom rm in ReservedRooms)
             {
-                if(Hotel.Rooms.Find(r => r.Id == rm.RoomId).GetAvailability(searchModel.GetDateRange()) - rm.Quantity < 0)
+                if(Hotel.Rooms.Find(r => r.Id == rm.RoomId).GetAvailability(DateRange) - rm.Quantity < 0)
                 {
                     StatusMessage = "Insufficient Rooms for Your Request. Please Choose a Lower Quantity";
                     return RedirectToPage("/HotelPages/HotelPage", new { statusMessage = StatusMessage });
@@ -113,6 +115,7 @@ namespace ReservaWebApplication.Pages.HotelPages
             {
                 room.Schedule.AddListOfReservations(reservationManager.GetAllReservationByRoomId(room.Id));
             }
+            DateRange = new DateRange(searchModel.GetStartDate(), searchModel.GetEndDate());
         }
     }
 }

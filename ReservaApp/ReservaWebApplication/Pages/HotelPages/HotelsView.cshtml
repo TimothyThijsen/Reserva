@@ -2,7 +2,7 @@
 @model ReservaWebApplication.Pages.HotelPages.HotelsViewModel
 @{
 }
-<partial name="_SearchBarPartial" model="@Model.SearchModel" />
+<partial name="_SearchBarPartial" model="@Model.SearchBarPartialModel" />
 <div class="row row-cols-1 row-cols-lg-2 justify-content-center justify-content-lg-start my-4">
     @foreach (Hotel hotel in Model.Hotels)
     {

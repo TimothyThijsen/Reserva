@@ -5,26 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DomainLayer;
-using DomainLayer.Interfaces;
 
 
 namespace Models
 {
-    public class SearchModel : ISearchModel
+    public class SearchModel
     {
         public int? CityId {  get; set; }
         public string? StartDate { get; set; }
         public string? EndDate { get; set; }
         public int? AmountOfGuests { get; set; }
-        public List<City>? Cities { get; set; }
         
-        public DateRange GetDateRange()
-        {
-            string format = "dd/MM/yyyy";
-            DateRange dr = new DateRange(
-                DateTime.ParseExact(StartDate,format, CultureInfo.InvariantCulture),
-                DateTime.ParseExact(EndDate, format, CultureInfo.InvariantCulture));
-            return dr;
+        public DateTime GetStartDate (){
+			return DateTime.ParseExact(StartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
         }
+
+        public DateTime GetEndDate()
+        {
+			return DateTime.ParseExact(EndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+		}
     }
 }

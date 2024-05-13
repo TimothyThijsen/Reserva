@@ -1,6 +1,7 @@
 ﻿using DomainLayer.Exceptions;
 using DomainLayer.Interfaces;
 using DomainLayer.Mapper;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,7 +19,7 @@ namespace DomainLayer.ServiceClasses
             this.userDAL = userDAL;
         }
         
-        public void AddMember(IMemberModel memberModel)
+        public void AddMember(MemberModel memberModel)
         {
             List<Member> members = GetAllMembers();
 

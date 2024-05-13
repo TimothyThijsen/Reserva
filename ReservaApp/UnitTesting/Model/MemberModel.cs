@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UnitTesting.Model
 {
-    public class MemberModel : IMemberModel
+    /*public class MemberModel 
     {
         public int Id { get; set; } 
         public string Password { get; set; }
@@ -27,5 +27,5 @@ namespace UnitTesting.Model
             Role = memberType;
             Password = password;
         }
-    }
+    }*/
 }

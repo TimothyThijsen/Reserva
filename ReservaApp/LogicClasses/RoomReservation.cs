@@ -9,9 +9,9 @@ namespace DomainLayer
 {
     public class RoomReservation : Reservation
     {
-        private List<IReservedRoom> reservedRooms;
+        private List<ReservedRoom> reservedRooms;
         private DateRange dateRange;
-        public List<IReservedRoom> ReservedRooms { get {  return reservedRooms; } set { reservedRooms = value; } }
+        public List<ReservedRoom> ReservedRooms { get {  return reservedRooms; } set { reservedRooms = value; } }
         public DateRange DateRange { get { return dateRange; } }
         public RoomReservation() { }
         public RoomReservation(int userId, int amountOfGuest, decimal totalPrice, DateTime startDate, DateTime endDate) : base(userId, amountOfGuest, totalPrice)
@@ -34,7 +34,7 @@ namespace DomainLayer
         public string GetRoomCount()
         {
             int roomCount = 0;
-            foreach (IReservedRoom rm in reservedRooms)
+            foreach (ReservedRoom rm in reservedRooms)
             {
                 roomCount += rm.Quantity;
             }

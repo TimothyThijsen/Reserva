@@ -14,7 +14,7 @@ namespace DomainLayer
 	
 	public static class RoomPriceCalculator
 	{
-		public static decimal GetTotalPriceExcl(List<IReservedRoom> reservedRooms, List<Room> roomsAtHotel, TimeSpan numberOfDays)
+		public static decimal GetTotalPriceExcl(List<ReservedRoom> reservedRooms, List<Room> roomsAtHotel, TimeSpan numberOfDays)
 		{
 			decimal totalPrice = 0;
 			foreach (var room in reservedRooms)

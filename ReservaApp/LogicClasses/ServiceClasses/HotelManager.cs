@@ -1,4 +1,5 @@
 ﻿using DomainLayer.Interfaces;
+using Models;
 using System.Data.Common;
 
 namespace DomainLayer.ServiceClasses
@@ -32,7 +33,7 @@ namespace DomainLayer.ServiceClasses
         {
             return hotelDAL.GetHotelById(id);
         }
-        public List<Hotel> GetHotelsBySearchModel(ISearchModel searchModel) 
+        public List<Hotel> GetHotelsBySearchModel(SearchModel searchModel) 
         {
             
             List<Hotel> searchResults = GetAllHotels();

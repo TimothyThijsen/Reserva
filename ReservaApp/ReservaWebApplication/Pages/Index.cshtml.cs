@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using ReservaWebApplication.Models;
 
 namespace ReservaWebApplication.Pages
 {
@@ -14,6 +15,7 @@ namespace ReservaWebApplication.Pages
         private readonly ILogger<IndexModel> _logger;
         public CityManager cityManager;
         [BindProperty]
+        public SearchBarPartialModel SearchBarPartialModel { get; set; } = new SearchBarPartialModel();
         public SearchModel SearchModel { get; set; } = new SearchModel();
         public IndexModel(ILogger<IndexModel> logger, CityManager cityManager)
         {
@@ -24,12 +26,13 @@ namespace ReservaWebApplication.Pages
         public void OnGet()
         {
             HttpContext.Session.Remove("prev_page");
-            SearchModel.Cities = cityManager.GetAllCities();
+            SearchBarPartialModel.Cities = cityManager.GetAllCities();
+            SearchBarPartialModel.SearchModel = SearchModel;   
             
         }
         public IActionResult OnPost() 
         {
-            HttpContext.Session.SetString("search_model", JsonConvert.SerializeObject(SearchModel));
+            HttpContext.Session.SetString("search_model", JsonConvert.SerializeObject(SearchBarPartialModel.SearchModel));
             return RedirectToPage("/HotelPages/HotelsView");
         }
         public IActionResult OnPostReset()

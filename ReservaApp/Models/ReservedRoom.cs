@@ -1,4 +1,4 @@
-﻿using DomainLayer.Interfaces;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DomainLayer
 {
-    public class ReservedRoom : IReservedRoom
+    public class ReservedRoom
     {
         public int Quantity { get; set; }
         public int RoomId { get; set; }

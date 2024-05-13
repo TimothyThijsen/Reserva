@@ -39,7 +39,7 @@
                         <p class="card-text m-0">@room.BedType</p>
                         <p class="card-text m-0">Sleeps @room.Capacity</p>
                         <input type="hidden" id="roomPrice-@index" value="@room.Price">
-                        <p class="card-text m-0">@Model.Hotel.Rooms[index].GetAvailability(Model.searchModel.GetDateRange()) left</p>
+                        <p class="card-text m-0">@Model.Hotel.Rooms[index].GetAvailability(Model.DateRange) left</p>
                     </div>
                     <div class="card-footer text-center justify-content-center col">
                         <div class="btn-group  col-10">

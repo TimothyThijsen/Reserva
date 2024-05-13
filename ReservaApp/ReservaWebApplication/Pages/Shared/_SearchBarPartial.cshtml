@@ -2,13 +2,13 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-@model SearchModel 
+@model SearchBarPartialModel 
 
  
 <form method="post" class="row fs-4 border-bottom pb-2" id="searchForm" >
     <div class="col-3">
         <label class="form-label"for="location">Location</label>
-        <select asp-for="CityId" id="location" class="form-select">
+        <select asp-for="SearchModel.CityId" id="location" class="form-select">
             <option value="" selected disabled hidden>Select your destination</option>
             @foreach (City city in Model.Cities)
             {
@@ -20,12 +20,12 @@
         <label class="form-label" for="daterange">Select date of stay</label>
         <input type="text" name="daterange" class="form-control"/>
 
-        <input asp-for="StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" value="@Model.StartDate" />
-        <input asp-for="EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" value="@Model.EndDate" />
+        <input asp-for="SearchModel.StartDate" id="SearchModel_StartDate" type="hidden" class="form-control" value="@Model.SearchModel.StartDate" />
+        <input asp-for="SearchModel.EndDate" id="SearchModel_EndDate" type="hidden" class="form-control" value="@Model.SearchModel.EndDate" />
     </div>
     <div class="col-3">
         <label class="form-label"  for="amountOfGuest">Amount of guests</label>
-        <input asp-for="AmountOfGuests" class="form-control" type="number" min="1" value="@(Model.AmountOfGuests == null ? 2 : Model.AmountOfGuests)">
+        <input asp-for="SearchModel.AmountOfGuests" class="form-control" type="number" min="1" value="@(Model.SearchModel.AmountOfGuests == null ? 2 : Model.SearchModel.AmountOfGuests)">
     </div>
     <div class="col-2">
         <button class="btn-secondary btn form-control " type="submit" onclick="submitForm('reset')">Reset</button>
