@@ -26,7 +26,7 @@ namespace DomainLayer.ServiceClasses
             {
                 throw new ValidationException("Incomplete member model");
             }
-
+            //Fixe
             if (members.Find(u => u.Email == memberModel.Email) != null)
             {
                 throw new ValidationException($"Email is already in use!");

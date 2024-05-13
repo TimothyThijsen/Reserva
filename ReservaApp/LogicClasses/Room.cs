@@ -14,7 +14,7 @@
         public decimal Price { get { return price; } }
         public int Capacity {  get { return capacity; } }
         public string BedType {  get { return bedType; } }
-        public RoomSchedule Schedule { get { return schedule; } }
+        public RoomSchedule Schedule { get { return schedule!; } }
 
         public Room(int hotelId, string name, int quantity,  decimal price, int capacity, string bedType)
         {
