@@ -33,6 +33,11 @@ namespace DomainLayer.ServiceClasses
         {
             return hotelDAL.GetHotelById(id);
         }
+
+        public Hotel GetHotelAndRoomsById(int id)
+        {
+            return hotelDAL.GetHotelAndRoomsById(id); 
+        }
         public List<Hotel> GetHotelsBySearchModel(SearchModel searchModel) 
         {
             

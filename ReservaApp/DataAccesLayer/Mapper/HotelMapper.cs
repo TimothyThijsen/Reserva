@@ -16,7 +16,7 @@ namespace DataAccessLayer.Mapper
 			string description = reader.GetString(6);
 
 			return new Hotel(id, name, description, cityId, new Address(street, postalCode));
-		}
+		 }
 
 		public static List<Hotel> GetHotels(SqlDataReader reader)
 		{

@@ -108,8 +108,7 @@ namespace ReservaWebApplication.Pages.HotelPages
         private void Setup()
         {
             int id = (int)HttpContext.Session.GetInt32("hotel_id");
-            Hotel = hotelManager.GetHotelById(id);
-            Hotel.Rooms = roomManager.GetRoomByHotel(id);
+            Hotel = hotelManager.GetHotelAndRoomsById(id);
 
             foreach (Room room in Hotel.Rooms)
             {

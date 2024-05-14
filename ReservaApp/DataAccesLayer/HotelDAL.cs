@@ -91,7 +91,41 @@ namespace DataAccessLayer
 			return hotels;
 		}
 
-		public Hotel GetHotelById(int id)
+        public Hotel GetHotelAndRoomsById(int id)
+        {
+            string query = "SELECT * FROM [vwHotel] where id = @id; SELECT * FROM [vwRoom] where hotelId = @id";
+            SqlCommand cmd = new SqlCommand(query);
+            cmd.Parameters.AddWithValue("@id", id);
+            Hotel hotel = null;
+            try
+            {
+				
+
+				
+                SqlDataReader reader = dbConnection.GetFromDB(cmd);
+                int index = 0;
+
+                reader.Read();
+				
+                hotel = HotelMapper.GetHotel(reader);
+				reader.NextResult();
+
+                hotel.Rooms = RoomMapper.GetAllRooms(reader);
+
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (cmd is IDisposable disposable) { disposable.Dispose(); }
+            }
+
+            return hotel;
+        }
+
+        public Hotel GetHotelById(int id)
 		{
 			string query = "SELECT * FROM [vwHotel] where id = @id";
 			SqlCommand cmd = new SqlCommand(query);

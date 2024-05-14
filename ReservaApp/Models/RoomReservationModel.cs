@@ -15,5 +15,8 @@ namespace Models
         public List<ReservedRoom> ReservedRooms { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+       // public RoomReservationModel(int userId, int amountOfGuest, decimal TotalPrice,) { }
+
     }
 }
