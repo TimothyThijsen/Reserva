@@ -24,5 +24,14 @@ namespace Models
         {
 			return DateTime.ParseExact(EndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 		}
+
+        public void Setup ()
+        {
+            if (StartDate == null)
+            {
+                StartDate = DateTime.Today.ToString("dd/MM/yyyy");
+                EndDate = DateTime.Today.AddDays(3).ToString("dd/MM/yyyy");
+            }
+        }
     }
 }

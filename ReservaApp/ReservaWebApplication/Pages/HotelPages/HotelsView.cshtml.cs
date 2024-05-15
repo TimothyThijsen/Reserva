@@ -15,7 +15,6 @@ namespace ReservaWebApplication.Pages.HotelPages
     {
         HotelManager hotelManager;
         public CityManager cityManager;
-        ReservationManager reservationManager = ReservationManagerFactory.GetReservationManager(ReservationType.RoomReservation);
         public List<Hotel> Hotels { get; set; } = new List<Hotel>();
         [BindProperty]
         public SearchBarPartialModel SearchBarPartialModel { get; set; } = new SearchBarPartialModel(); 
@@ -32,11 +31,7 @@ namespace ReservaWebApplication.Pages.HotelPages
             {
                 SearchModel = JsonConvert.DeserializeObject<SearchModel>(HttpContext.Session.GetString("search_model"));
             }
-			if (SearchModel.StartDate == null)
-			{
-                SearchModel.StartDate = DateTime.Today.ToString("dd/MM/yyyy");
-                SearchModel.EndDate = DateTime.Today.ToString("dd/MM/yyyy");
-            }
+            SearchModel.Setup();
             SearchBarPartialModel.Cities = cityManager.GetAllCities();
             SearchBarPartialModel.SearchModel = SearchModel;
             Hotels = hotelManager.GetHotelsBySearchModel(SearchBarPartialModel.SearchModel);
