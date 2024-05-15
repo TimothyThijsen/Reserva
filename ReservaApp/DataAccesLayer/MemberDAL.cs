@@ -29,7 +29,9 @@ namespace DataAccessLayer
 			{
 				dbConnection.ModifyDB(cmd);
 			}
-			catch (SqlException ex) { throw new Exception(ex.Message); }
+			catch (SqlException ex) {
+                if (ex.Number == 2601) { throw new Exception("Email is already in use!"); }
+                throw new Exception(ex.Message); }
 
 		}
 

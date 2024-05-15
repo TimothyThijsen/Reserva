@@ -21,17 +21,11 @@ namespace DomainLayer.ServiceClasses
         
         public void AddMember(MemberModel memberModel)
         {
-            List<Member> members = GetAllMembers();
-
             if(!ObjectValidator.HasNoEmptyFields(memberModel)) 
             {
                 throw new ValidationException("Incomplete member model");
             }
-            //Fixe
-            if (members.Find(u => u.Email == memberModel.Email) != null)
-            {
-                throw new ValidationException($"Email is already in use!");
-            }
+            
             Member member = memberModel.ToLogicLayer();
             member.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(member.Password);
 

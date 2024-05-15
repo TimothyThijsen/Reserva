@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DataAccessLayer
 {
@@ -22,7 +23,7 @@ namespace DataAccessLayer
 			catch (SqlException ex)
 			{
 				transaction.Rollback();
-				throw new Exception(ex.Message);
+				throw ex;
 			}
 			finally
 			{
