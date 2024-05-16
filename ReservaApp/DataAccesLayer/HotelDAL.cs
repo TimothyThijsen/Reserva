@@ -80,7 +80,6 @@ namespace DataAccessLayer
 			}
 			catch (SqlException)
 			{
-				//if(ex.Number = )
 				throw new Exception("Unable to reach database!");
 			}
 			finally
