@@ -27,6 +27,11 @@ namespace UnitTesting.MockData
             return hotelList;
         }
 
+        public Hotel GetHotelAndRoomsById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Hotel GetHotelById(int id)
         {
             return hotelList.Find(h => h.Id == id);
