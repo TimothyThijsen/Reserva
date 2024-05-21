@@ -85,32 +85,18 @@ namespace DataAccessLayer
 			{
 				throw new Exception(ex.Message);
 			}
+            finally
+            {
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
+            }
 
-			return members;
+            return members;
 		}
 
-		public string[] GetCredentials(string email)
-		{
-			string query = "SELECT id,email,password FROM [User] WHERE email = @email";
-			SqlCommand cmd = new SqlCommand(query);
-			cmd.Parameters.AddWithValue("@email", email);
-			string[] credentials;
-			try
-			{
-				SqlDataReader reader = dbConnection.GetFromDB(cmd);
-				reader.Read();
-				credentials = new string[]
-				{
-					reader.GetInt32(0).ToString(), reader.GetString(1), reader.GetString(2)
-				};
-			}
-			catch (SqlException ex)
-			{
-				throw new Exception(ex.Message);
-			}
-
-			return credentials;
-		}
 
 		public User GetUser(int id)
 		{
@@ -128,8 +114,16 @@ namespace DataAccessLayer
 			{
 				throw new Exception(ex.Message);
 			}
+            finally
+            {
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
+            }
 
-			return member;
+            return member;
 		}
 
         public User GetUserByEmail(string email)
@@ -147,6 +141,14 @@ namespace DataAccessLayer
             catch (SqlException ex)
             {
                 throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
             }
 
             return member;

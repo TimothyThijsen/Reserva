@@ -27,7 +27,10 @@ namespace DataAccessLayer
 			}
 			finally
 			{
-				if (cmd is IDisposable disposable) { disposable.Dispose(); }
+				if (cmd is IDisposable disposable) { 
+					cmd.Connection.Close();
+					disposable.Dispose(); }
+
 			}
 
 		}
@@ -39,6 +42,7 @@ namespace DataAccessLayer
 			cmd.Connection = conn;
 			conn.Open();
 			SqlDataReader reader = cmd.ExecuteReader();
+			
 			return reader;
 		}
 	}

@@ -75,6 +75,7 @@ namespace DataAccessLayer
 					cmd.Parameters.AddWithValue("@hotelId", h.Id);
 					reader = dbConnection.GetFromDB(cmd);
 					h.Rooms = RoomMapper.GetAllRooms(reader);
+					cmd.Connection.Close();
 				}
 
 			}
@@ -82,12 +83,16 @@ namespace DataAccessLayer
 			{
 				throw new Exception("Unable to reach database!");
 			}
-			finally
-			{
-				if (cmd is IDisposable disposable) { disposable.Dispose(); }
-			}
+            finally
+            {
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
+            }
 
-			return hotels;
+            return hotels;
 		}
 
         public Hotel GetHotelAndRoomsById(int id)
@@ -118,7 +123,11 @@ namespace DataAccessLayer
             }
             finally
             {
-                if (cmd is IDisposable disposable) { disposable.Dispose(); }
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
             }
 
             return hotel;
@@ -141,12 +150,16 @@ namespace DataAccessLayer
 			{
 				throw new Exception(ex.Message);
 			}
-			finally
-			{
-				if (cmd is IDisposable disposable) { disposable.Dispose(); }
-			}
+            finally
+            {
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
+            }
 
-			return hotel;
+            return hotel;
 		}
 
 		public void RemoveHotel(int id)

@@ -88,15 +88,16 @@ namespace DataAccessLayer
             {
                 SqlDataReader reader = dbConnection.GetFromDB(cmd);
                 reservations = ReservationMapper.GetAllRoomReservations(reader);
+                cmd.Connection.Close();
                 foreach (RoomReservation roomReservation in reservations)
                 {
-                    cmd.Connection.Close();
                     query = "SELECT COUNT(roomId), roomId FROM ReservedRoom WHERE reservationId = @reservationId  GROUP BY roomId";
                     cmd = new SqlCommand(query);
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@reservationId", roomReservation.Id);
                     reader = dbConnection.GetFromDB(cmd);
                     roomReservation.ReservedRooms = ReservationMapper.GetReservedRoom(reader);
+                    cmd.Connection.Close();
                 }
             }
             catch (SqlException ex)
@@ -105,7 +106,11 @@ namespace DataAccessLayer
             }
             finally
             {
-                if (cmd is IDisposable diposable) { diposable.Dispose(); }
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
             }
             return reservations;
         }
@@ -139,7 +144,11 @@ namespace DataAccessLayer
             }
             finally
             {
-                if (cmd is IDisposable diposable) { diposable.Dispose(); }
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
             }
             return roomReservations.Cast<Reservation>().ToList();
         }
@@ -171,7 +180,11 @@ namespace DataAccessLayer
             }
             finally
             {
-                if (cmd is IDisposable diposable) { diposable.Dispose(); }
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
             }
             return reservation;
         }

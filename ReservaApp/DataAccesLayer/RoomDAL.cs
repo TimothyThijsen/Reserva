@@ -72,11 +72,15 @@ namespace DataAccessLayer
 			{
 				throw new Exception(ex.Message);
 			}
-			finally
-			{
-				if (cmd is IDisposable diposable) { diposable.Dispose(); }
-			}
-			return rooms;
+            finally
+            {
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
+            }
+            return rooms;
 		}
 
 		public List<Room> GetAllRoomsByHotel(int hotelId)
@@ -96,11 +100,15 @@ namespace DataAccessLayer
 			{
 				throw new Exception(ex.Message);
 			}
-			finally
-			{
-				if (cmd is IDisposable diposable) { diposable.Dispose(); }
-			}
-			return rooms;
+            finally
+            {
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
+            }
+            return rooms;
 		}
 
 		public List<Room> GetAllRoomsByLocation(string locationName)
@@ -120,11 +128,15 @@ namespace DataAccessLayer
 			{
 				throw new Exception(ex.Message);
 			}
-			finally
-			{
-				if (cmd is IDisposable diposable) { diposable.Dispose(); }
-			}
-			return rooms;
+            finally
+            {
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
+            }
+            return rooms;
 		}
 
 		public Room? GetRoomById(int id)
@@ -147,7 +159,9 @@ namespace DataAccessLayer
 			}catch (SqlException ex)
 			{
 				throw new Exception(ex.Message);
-			}finally { if (cmd is IDisposable diposable) { diposable.Dispose(); } }
+			}finally { if (cmd is IDisposable diposable) { 
+					cmd.Connection.Close(); 
+					diposable.Dispose(); }}
             return room;
         }
 

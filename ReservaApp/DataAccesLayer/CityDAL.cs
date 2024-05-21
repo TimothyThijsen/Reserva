@@ -50,15 +50,15 @@ namespace DataAccessLayer
 			{
 				throw new Exception(ex.Message);
 			}
-			finally
-			{
-				if (cmd is IDisposable disposable)
-				{
-					cmd.Dispose();
-				}
-
-			}
-			return cities;
+            finally
+            {
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
+            }
+            return cities;
 		}
 
 		public City GetCity(int cityId)
@@ -80,15 +80,15 @@ namespace DataAccessLayer
 			{
 				throw new Exception(ex.Message);
 			}
-			finally
-			{
-				if (cmd is IDisposable disposable)
-				{
-					cmd.Dispose();
-				}
-
-			}
-			return city;
+            finally
+            {
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
+            }
+            return city;
 		}
 
 		public void RemoveCity(int id)

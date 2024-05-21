@@ -59,7 +59,11 @@ namespace DataAccessLayer
             }
             finally
             {
-                if (cmd is IDisposable diposable) { diposable.Dispose(); }
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
             }
             return reservations;
         }
@@ -82,7 +86,11 @@ namespace DataAccessLayer
             }
             finally
             {
-                if (cmd is IDisposable diposable) { diposable.Dispose(); }
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
             }
             return reservations.Cast<Reservation>().ToList();
         }
@@ -105,7 +113,11 @@ namespace DataAccessLayer
             }
             finally
             {
-                if (cmd is IDisposable diposable) { diposable.Dispose(); }
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
             }
             return reservation;
         }
