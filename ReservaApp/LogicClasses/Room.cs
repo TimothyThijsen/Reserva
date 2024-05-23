@@ -38,5 +38,9 @@
         {
             return Schedule.GetAvailability(dr, this);
         }
+        public int GetBookedAmount(DateTime date)
+        {
+            return Schedule.GetBookedAmount(date,this);
+        }
     }
 }

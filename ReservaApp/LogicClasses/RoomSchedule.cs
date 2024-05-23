@@ -28,6 +28,18 @@ namespace DomainLayer
             }
             return room.Quantity - countScheduled;
         }
+        public int GetBookedAmount(DateTime date, Room room)
+        {
+            int countScheduled = 0;
+            foreach (RoomReservation reservation in scheduledReservations)
+            {
+                if (reservation.DateRange.Includes(date))
+                {
+                    countScheduled += reservation.ReservedRooms.Where(r => r.RoomId == room.Id).Sum(r => r.Quantity);
+                }
+            }
+            return countScheduled;
+        }
 
         public void RemoveReservation(Reservation reservation)
         {

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +25,15 @@ namespace DomainLayer
         public bool Includes(IRange<DateTime> range)
         {
             return ((range.Start >= Start) && (range.Start <= End) || (range.End >= Start) && (range.End <= End));
+        }
+        public bool IsBiggerThan(DateTime date)
+        {
+            if(Start >  date) return true;
+            return false;
+        }
+        public int GetDaysCount()
+        {
+            return (End - Start).Days;
         }
     }
 }

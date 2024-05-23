@@ -58,8 +58,8 @@ namespace ReservaWebApplication.Pages.HotelPages
         {
 			hotel = hotelManager.GetHotelById((int)HttpContext.Session.GetInt32("hotel_id"));
 			reservation = JsonConvert.DeserializeObject<RoomReservationModel>(HttpContext.Session.GetString("reservation")).ToLogicLayer();
-			PriceExcl = RoomPriceCalculator.GetTotalPriceExcl(reservation.ReservedRooms, roomManager.GetRoomByHotel(hotel.Id), reservation.GetTimeSpan());
-			reservation.TotalPrice = RoomPriceCalculator.GetTotalPriceIncl(PriceExcl);
+			PriceExcl = RoomPriceHelper.GetTotalPriceExcl(reservation.ReservedRooms, roomManager.GetRoomByHotel(hotel.Id), reservation.GetTimeSpan());
+			reservation.TotalPrice = RoomPriceHelper.GetTotalPriceIncl(PriceExcl);
 		}
     }
 }

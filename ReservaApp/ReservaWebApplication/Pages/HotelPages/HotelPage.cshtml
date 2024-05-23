@@ -35,7 +35,7 @@
                     <img src="https://th.bing.com/th/id/OIP.YlF5RjQbKdSe-jPvbJuo7QHaE8?w=287&h=191&c=7&r=0&o=5&dpr=1.5&pid=1.7" class="card-img-top" alt="room">
                     <div class="card-body ">
                         <h5 class="card-title">@room.Name</h5>
-                        <p class="card-text m-0">Cost Per night: $@room.GetPrice()</p>
+                        <p class="card-text m-0">Cost Per night: @DynamicRoomPricing.CalculateRoomPriceAverage(room,new DateRange(Model.searchModel.GetStartDate(), Model.searchModel.GetEndDate())).ToString("€0.00")</p>
                         <p class="card-text m-0">@room.BedType</p>
                         <p class="card-text m-0">Sleeps @room.Capacity</p>
                         <input type="hidden" id="roomPrice-@index" value="@room.Price">

@@ -31,7 +31,7 @@
 					</div>
 					<div class="col text-right">
 							<p>@Model.PriceExcl.ToString("€0.00")</p>
-						<p>@RoomPriceCalculator.CalculateFees(Model.PriceExcl).ToString("€0.00")</p>
+						<p>@RoomPriceHelper.CalculateFees(Model.PriceExcl).ToString("€0.00")</p>
 					</div>
 					</div>
 					<div class="row mb-5">
@@ -39,7 +39,7 @@
 						<p>Total price</p>
 					</div>
 					<div class="col text-right">
-							<p>@RoomPriceCalculator.GetTotalPriceIncl(Model.PriceExcl).ToString("€0.00")</p>
+							<p>@RoomPriceHelper.GetTotalPriceIncl(Model.PriceExcl).ToString("€0.00")</p>
 					</div>
 				</div>
 				

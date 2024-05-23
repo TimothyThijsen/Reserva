@@ -19,6 +19,7 @@ namespace ReservaWebApplication.Pages.HotelPages
         HotelManager hotelManager;
         public CityManager cityManager;
         ReservationManager reservationManager = ReservationManagerFactory.GetReservationManager(ReservationType.RoomReservation);
+        //DynamicRoomPricing dynamicRoomPricing = new DynamicRoomPricing();
         [BindProperty]
         public string StatusMessage { get; set; }
         [BindProperty]
