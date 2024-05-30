@@ -25,12 +25,13 @@ namespace UnitTesting
         [TestMethod]
         public void AddMember()
         {
-            MemberModel member = new MemberModel(1, faker.Person.FirstName, faker.Person.LastName, faker.Person.Email.ToLower(), 22, MemberType.free_account, "password");
-            _memberManager.AddMember(member);
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, faker.Person.Email.ToLower(), 22, MemberType.free_account, "password");
 
-            Member member2 = _memberManager.GetMember(1);
-            Assert.IsTrue(member2.Email == member.Email);
             Assert.AreEqual(1, _memberManager.GetAllMembers().Count);
+            _memberManager.AddMember(member);
+            Member member2 = _memberManager.GetMember(2);
+            Assert.IsTrue(member2.Email == member.Email);
+            Assert.AreEqual(2, _memberManager.GetAllMembers().Count);
         }
 
         [TestMethod]
@@ -45,44 +46,39 @@ namespace UnitTesting
         [TestMethod]
         public void AddMember_DuplicateEmail()
         {
-            MemberModel member = new MemberModel(1, faker.Person.FirstName, faker.Person.LastName, "same@email.com", 22, MemberType.free_account, "password");
-            _memberManager.AddMember(member);
-
-            MemberModel duplicateMember = new MemberModel(2, faker.Person.FirstName, faker.Person.LastName, "same@email.com", 22, MemberType.free_account, "password");
-
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "same@mail.com", 22, MemberType.free_account, "password");
             List<Member> members = _memberManager.GetAllMembers();
+            
             Assert.AreEqual(1, members.Count);
             Assert.ThrowsException<ValidationException>(() => _memberManager.AddMember(member));
+            Assert.AreEqual(1, members.Count);
         }
 
         [TestMethod]
         public void RemoveMember()
         {
-            MemberModel member = new MemberModel(1, faker.Person.FirstName, faker.Person.LastName, faker.Person.Email, 22, MemberType.free_account, "password");
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, faker.Person.Email, 22, MemberType.free_account, "password");
             _memberManager.AddMember(member);
 
+            Assert.AreEqual(2, _memberManager.GetAllMembers().Count);
+            _memberManager.RemoveMember(2);
             Assert.AreEqual(1, _memberManager.GetAllMembers().Count);
-            _memberManager.RemoveMember(1);
-
-            Assert.AreEqual(0, _memberManager.GetAllMembers().Count);
         }
 
         [TestMethod]
         public void GetMember()
         {
-            MemberModel member = new MemberModel(1, faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", 22, MemberType.free_account, "password");
-            _memberManager.AddMember(member);
             Member retrievedMember = _memberManager.GetMember(1);
 
             Assert.IsNotNull(retrievedMember);
             Assert.AreEqual(1, retrievedMember.Id);
-            Assert.AreEqual("fake@mail.com", retrievedMember.Email);
+            Assert.AreEqual("same@mail.com", retrievedMember.Email);
         }
 
         [TestMethod]
         public void Login_ValidCredentials()
         {
-            MemberModel member = new MemberModel(1, faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", 22, MemberType.free_account, "password123");
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", 22, MemberType.free_account, "password123");
             _memberManager.AddMember(member);
             Member loggedInMember = _memberManager.Login("fake@mail.com", "password123");
 
@@ -94,7 +90,7 @@ namespace UnitTesting
         
         public void Login_IncorrectPassword()
         {
-            MemberModel member = new MemberModel(1, faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", 22, MemberType.free_account, "password123");
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", 22, MemberType.free_account, "password123");
             _memberManager.AddMember(member);
             
             Assert.ThrowsException<CredentialException>(() => _memberManager.Login("fake@mail.com", "wrongpassword"));
@@ -103,7 +99,7 @@ namespace UnitTesting
         [TestMethod]
         public void Login_NonExistingEmail()
         {
-            MemberModel member = new MemberModel(1, faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", 22, MemberType.free_account, "password123");
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", 22, MemberType.free_account, "password123");
             _memberManager.AddMember(member);
 
             Assert.ThrowsException<CredentialException>(() => _memberManager.Login("nonexisting@example.com", "password123"));

@@ -2,6 +2,7 @@
 using DomainLayer;
 using DomainLayer.Interfaces;
 using LogicClasses.Interfaces;
+using Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,9 +10,13 @@ namespace UnitTesting.MockData
 {
 	public class MockUserDAL : IUserDAL
 	{
-		List<User> users = new List<User>();
+        private readonly Bogus.Faker faker = new Bogus.Faker("uk");
+        List<User> users = new List<User>
+        {
+            new Member(1, "Tim", "Thijsen", "same@mail.com", 22, MemberType.free_account, true, "password")
+        };
 
-        int _id = 1;
+        int _id = 2;
 		public User GetUser(int id)
 		{
 			int index = users.FindIndex(u => u.Id == id);
@@ -26,7 +31,10 @@ namespace UnitTesting.MockData
 
         public void AddUser(User user)
         {
-            
+            if (users.Find(u => u.Email == user.Email) != null)
+            {
+                throw new ValidationException();
+            }
             User userToAdd = new Member(_id,user.FirstName,user.LastName,user.Email,user.Age,((Member)user).MemberType,false,user.Password);
             _id++;
 
