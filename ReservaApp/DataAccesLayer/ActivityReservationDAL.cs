@@ -139,5 +139,10 @@ namespace DataAccessLayer
                 throw new Exception(ex.Message);
             }
         }
+
+        public int GetAvailability(DateRange dateRange, int entityId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

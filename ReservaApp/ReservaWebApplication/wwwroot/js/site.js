@@ -106,6 +106,7 @@ if (window.location.pathname == "/HotelPages/HotelPage") {
     const inputs = document.querySelectorAll(".input");
 
     const totalPrice = document.querySelector(".totalPrice");
+    const totalStayPrice = document.querySelector(".totalStayPrice");
 
     plusButtons.forEach((button) => {
         const buttonId = button.getAttribute("data-id"),
@@ -136,12 +137,17 @@ if (window.location.pathname == "/HotelPages/HotelPage") {
     });
     function priceCalc() {
         var cost = 0;
+        var fullStayCost = 0;
         inputs.forEach((input) => {
             var inputId = input.getAttribute("data-id");
             var quantity = document.querySelector(".quantity-" + inputId).value;
-            var price = document.getElementById("roomPrice-" + inputId).value
+            var price = document.getElementById("roomPrice-" + inputId).value;
+            var priceForStay = document.getElementById("totalStayPrice-" + inputId).value;
+
             cost += (price * quantity);
+            fullStayCost += (priceForStay * quantity)
             });
         totalPrice.innerHTML = cost.toFixed(2);
+        totalStayPrice.innerHTML = fullStayCost.toFixed(2);
     }
 }

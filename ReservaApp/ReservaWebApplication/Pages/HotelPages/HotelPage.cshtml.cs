@@ -18,13 +18,12 @@ namespace ReservaWebApplication.Pages.HotelPages
     {
         HotelManager hotelManager;
         public CityManager cityManager;
-        ReservationManager reservationManager = ReservationManagerFactory.GetReservationManager(ReservationType.RoomReservation);
-        //DynamicRoomPricing dynamicRoomPricing = new DynamicRoomPricing();
+        public ReservationManager reservationManager = ReservationManagerFactory.GetReservationManager(ReservationType.RoomReservation);
         [BindProperty]
         public string StatusMessage { get; set; }
         [BindProperty]
         public List<ReservedRoom> ReservedRooms { get; set; } = new List<ReservedRoom>();
-
+        public List<RoomDTO> roomDTOs { get; set; } = new List<RoomDTO>();
         public SearchModel searchModel = new SearchModel();
         public Hotel Hotel { get; set; }
         public DateRange DateRange { get; set; }
@@ -44,9 +43,10 @@ namespace ReservaWebApplication.Pages.HotelPages
                 }
             }
             Setup();
+          
             foreach (Room room in Hotel.Rooms)
             {
-                ReservedRooms.Add(new ReservedRoom(0, room.Id)); 
+                ReservedRooms.Add(new ReservedRoom(0, room.Id));
             }
             if (statusMessage != null)
             {
@@ -70,18 +70,23 @@ namespace ReservaWebApplication.Pages.HotelPages
             Setup();
             foreach (ReservedRoom rm in ReservedRooms)
             {
-                if(Hotel.Rooms.Find(r => r.Id == rm.RoomId).GetAvailability(DateRange) - rm.Quantity < 0)
+                if(reservationManager.GetAvailability(DateRange,rm.RoomId) - rm.Quantity < 0)
                 {
                     StatusMessage = "Insufficient Rooms for Your Request. Please Choose a Lower Quantity";
                     return RedirectToPage("/HotelPages/HotelPage", new { statusMessage = StatusMessage });
                 }
+                
             }
             reservation.AmountOfGuest = searchModel.AmountOfGuests ?? 2;
             reservation.UserId = Convert.ToInt32(User.FindFirst("id").Value);
-            reservation.StartDate = DateTime.ParseExact(searchModel.StartDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            reservation.EndDate = DateTime.ParseExact(searchModel.EndDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            //servation.TotalPrice = 0;
+            reservation.StartDate = searchModel.GetStartDate();
+            reservation.EndDate = searchModel.GetEndDate();
             reservation.ReservedRooms = ReservedRooms;
+            reservation.TotalPrice = (from room in roomDTOs
+                                     join reserved in ReservedRooms on room.Id equals reserved.RoomId
+                                     where reserved.Quantity > 0
+                                     select room.Price * reserved.Quantity).Sum() * (DateRange.GetDaysCount() + 1);
+
             HttpContext.Session.SetString("reservation", JsonConvert.SerializeObject(reservation));
 
             return RedirectToPage("/HotelPages/Checkout");
@@ -95,12 +100,8 @@ namespace ReservaWebApplication.Pages.HotelPages
             searchModel.Setup();
             int id = (int)HttpContext.Session.GetInt32("hotel_id");
             Hotel = hotelManager.GetHotelAndRoomsById(id);
-
-            foreach (Room room in Hotel.Rooms)
-            {
-                room.Schedule.AddListOfReservations(reservationManager.GetAllReservationByRoomId(room.Id));
-            }
             DateRange = new DateRange(searchModel.GetStartDate(), searchModel.GetEndDate());
+            roomDTOs = Hotel.GetRoomPrices(DateRange,reservationManager);
         }
     }
 }

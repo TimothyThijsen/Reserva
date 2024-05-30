@@ -39,6 +39,10 @@ namespace DomainLayer.ServiceClasses
         {
             return reservationDAL.GetByReservationId(id);
         }
+        public int GetAvailability(DateRange dateRange, int roomId)
+        {
+            return reservationDAL.GetAvailability(dateRange, roomId);
+        }
     }
 }
 

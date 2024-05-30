@@ -13,5 +13,6 @@ namespace DomainLayer.Interfaces
         List<Reservation> GetAllReservationByMember(int userId);
         List<Reservation> GetAllReservationByEntityId(int entityId);
         Reservation GetByReservationId(int id);
+        int GetAvailability(DateRange dateRange, int entityId); 
     }
 }

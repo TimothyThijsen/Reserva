@@ -79,7 +79,7 @@ namespace DataAccessLayer
 
         public List<Reservation> GetAllReservationByMember(int userId)
         {
-            string query = "SELECT r.id, r.userId, r.totalPrice , r.isCanceled, r.amountOfGuests, rm.startDate, rm.endDate FROM Reservation r " +
+            string query = "SELECT r.id, r.userId, r.totalPrice , r.isCancelled, r.amountOfGuests, rm.startDate, rm.endDate FROM Reservation r " +
                 "LEFT JOIN RoomReservation rm ON r.id = rm.id  WHERE r.userId = @userId and rm.id IS NOT NULL";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.AddWithValue("@userId", userId);
@@ -155,7 +155,7 @@ namespace DataAccessLayer
 
         public Reservation GetByReservationId(int id)
         {
-            string query = "SELECT r.id, r.userId, r.totalPrice , r.isCanceled, r.amountOfGuests, rm.startDate, rm.endDate FROM Reservation r " +
+            string query = "SELECT r.id, r.userId, r.totalPrice , r.isCancelled, r.amountOfGuests, rm.startDate, rm.endDate FROM Reservation r " +
                "left JOIN RoomReservation rm ON r.id = rm.id WHERE r.id = @reservationId;";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.AddWithValue("@reservationId", id);
@@ -187,6 +187,36 @@ namespace DataAccessLayer
                 }
             }
             return reservation;
+        }
+
+        public int GetAvailability(DateRange dateRange, int roomId)
+        {
+            string query = "SELECT (SELECT quantity FROM Room WHERE id = @roomId) - COUNT(rsm.reservationId) FROM RoomReservation rm LEFT JOIN ReservedRoom " +
+                "rsm ON rm.id = rsm.reservationId WHERE rsm.roomId = @roomId AND startDate <= @endDate AND endDate >= @startDate;";
+            SqlCommand cmd = new SqlCommand(query);
+            cmd.Parameters.AddWithValue("@startDate", dateRange.Start);
+            cmd.Parameters.AddWithValue("@endDate", dateRange.End);
+            cmd.Parameters.AddWithValue("@roomId", roomId);
+            int availibility = 0;
+            try
+            {
+                SqlDataReader reader = dbConnection.GetFromDB(cmd);
+                reader.Read();
+                availibility = reader.GetInt32(0);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
+            }
+            return availibility;
         }
     }
 }

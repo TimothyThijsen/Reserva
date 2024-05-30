@@ -10,16 +10,6 @@ namespace DomainLayer
 {
     public static class DynamicRoomPricing
     {
-        /*DateRange NextFiveDays;
-        DateTime TwoWeeksAway;*/
-        /*public DynamicRoomPricing() 
-        {
-            NextFiveDays = new DateRange(DateTime.Today, DateTime.Today.AddDays(5));
-            TwoWeeksAway = DateTime.Today.AddDays(14);
-        }*/
-        const decimal highDemandIncreaseFactor = 0.2m;
-        const decimal lowDemandDecreaseFactor = 0.2m;
-        const decimal timeAdjustmentFactor = 0.06m;
         public static decimal CalculateRoomPrice(Room room, DateRange dateRange) 
         {
             decimal finalPrice = 0;
@@ -40,7 +30,7 @@ namespace DomainLayer
         public static decimal CalculatePricePerDay(Room room, DateTime date)
         {
             decimal priceOnDay = 0;
-            double roomPercentageBooked = room.GetBookedAmount(date) / room.Quantity;
+            double roomPercentageBooked = (double)room.GetBookedAmount(date) / room.Quantity;
             double daysUntilDate = (date - DateTime.Today).TotalDays;
             daysUntilDate = daysUntilDate > 0 ? daysUntilDate : 1;
             roomPercentageBooked = roomPercentageBooked > 0 ? roomPercentageBooked : 0.1;
@@ -65,28 +55,23 @@ namespace DomainLayer
             {
                 priceOnDay = room.Price * 1.4m;
             }
-            //double weeksUntilCheckIn = daysUntilDate / 7;
-            //decimal timeAdjustment = room.Price * timeAdjustmentFactor * (decimal)weeksUntilCheckIn;
-            /*if (roomPercentageBooked >= 0.8)
-            {
-                //high demand 
-                decimal highDemandIncrease = room.Price * highDemandIncreaseFactor;
-                priceOnDay = room.Price + highDemandIncrease;
-                priceOnDay += timeAdjustment;
-            }
-            else if (roomPercentageBooked <= 0.20)
-            {
-                //low demand
-                decimal lowDemandIncrease = room.Price * lowDemandDecreaseFactor;
-                priceOnDay = room.Price - lowDemandIncrease;
-                priceOnDay += timeAdjustment;
-            }
-            else
-            {
-                //regular demand
-                priceOnDay = room.Price;
-            }*/
+            priceOnDay += GetSeasonalRate(date,room);
             return priceOnDay;
+        }
+
+        public static decimal GetSeasonalRate(DateTime date, Room room)
+        {
+            int month = date.Month;
+
+            if (month >= 11 || month <= 3)
+            {
+                return -(room.Price * 0.1m);
+            }
+            else if (month >= 5 && month <= 9)
+            {
+                return room.Price * 0.1m;
+            }
+            return 0;
         }
         public static decimal CalculateRoomPriceAverage(Room room, DateRange dateRange)
         {

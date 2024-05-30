@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using DomainLayer.ServiceClasses;
+using Models;
+using System.ComponentModel;
 using System.Net;
 using System.Net.Sockets;
 
@@ -29,6 +31,19 @@ namespace DomainLayer
         }public Hotel(int id, string name,string description, int cityId, Address address) : this(name,description,cityId,address)
         {
             this.id = id;
+        }
+        public List<RoomDTO> GetRoomPrices(DateRange dateRange,ReservationManager reservationManager)
+        {
+            List<RoomDTO> roomsList = new List<RoomDTO>();
+            foreach(Room room in rooms)
+            {
+                //room.Schedule.AddListOfReservations(reservationManager.GetAllReservationByRoomId(room.Id));
+                roomsList.Add(new RoomDTO(room.Id, room.Quantity, room.Name, room.HotelId,
+                    DynamicRoomPricing.CalculateRoomPriceAverage(room, dateRange),
+                    room.Capacity, room.BedType
+                    ));
+            }
+            return roomsList;
         }
     }
 }

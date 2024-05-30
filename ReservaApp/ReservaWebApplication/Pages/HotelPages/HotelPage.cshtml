@@ -27,19 +27,20 @@
 <form method="post">
     <div class="row row-cols-auto  justify-content-center mb-2">
  
-        @foreach (Room room in Model.Hotel.Rooms)
+        @foreach (var room in Model.roomDTOs)
         {
-            int index = Model.Hotel.Rooms.IndexOf(room);
+            int index = Model.roomDTOs.IndexOf(room);
             <div class="col">
                 <div class="card border-3 my-3 mx-3 shadow">
                     <img src="https://th.bing.com/th/id/OIP.YlF5RjQbKdSe-jPvbJuo7QHaE8?w=287&h=191&c=7&r=0&o=5&dpr=1.5&pid=1.7" class="card-img-top" alt="room">
                     <div class="card-body ">
                         <h5 class="card-title">@room.Name</h5>
-                        <p class="card-text m-0">Cost Per night: @DynamicRoomPricing.CalculateRoomPriceAverage(room,new DateRange(Model.searchModel.GetStartDate(), Model.searchModel.GetEndDate())).ToString("€0.00")</p>
+                        <p class="card-text m-0">Cost Per night: @room.Price.ToString("€0.00")</p>
                         <p class="card-text m-0">@room.BedType</p>
                         <p class="card-text m-0">Sleeps @room.Capacity</p>
                         <input type="hidden" id="roomPrice-@index" value="@room.Price">
-                        <p class="card-text m-0">@Model.Hotel.Rooms[index].GetAvailability(Model.DateRange) left</p>
+                        <input type="hidden" id="totalStayPrice-@index" value="@(@room.Price * @Convert.ToDecimal(Model.DateRange.GetDaysCount()+1))">
+                        <p class="card-text m-0">@Model.reservationManager.GetAvailability(Model.DateRange,room.Id) left</p>
                     </div>
                     <div class="card-footer text-center justify-content-center col">
                         <div class="btn-group  col-10">
@@ -58,8 +59,11 @@
     </div>
     <div class="row justify-content-center mx-auto">
         <div class="col-7 border border-2 rounded d-flex justify-content-center border-primary hotelSumBar">
-            <div class="col-5  d-flex justify-content-center my-2 py-auto text-light text-center">
-                <p>Total price per night: €<span class="totalPrice">0.00 </span></p>
+            <div class="col-5 row-cols-1 flex-wrap d-flex justify-content-center my-2 py-auto text-light text-center">
+                <div class="row"><p>Total price per night: €<span class="totalPrice">0.00 </span></p></div> 
+                <div class="row"><p>Total price for stay: €<span class="totalStayPrice">0.00 </span></p></div>
+                
+                
             </div>
             <div class="col-3 d-flex justify-content-center my-2  text-center">
                     <button class="btn-light btn form-control text-dark" type="submit">Reserve now   <i class="fas fa-arrow-right"></i></button>

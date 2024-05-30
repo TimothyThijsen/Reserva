@@ -40,7 +40,7 @@
         }
         public int GetBookedAmount(DateTime date)
         {
-            return Schedule.GetBookedAmount(date,this);
+            return Schedule.GetBookedAmount(date, this);
         }
     }
 }
