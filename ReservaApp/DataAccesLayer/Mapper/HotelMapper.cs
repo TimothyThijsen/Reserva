@@ -14,8 +14,9 @@ namespace DataAccessLayer.Mapper
 			string street = reader.GetString(4);
 			string postalCode = reader.GetString(5);
 			string description = reader.GetString(6);
+			string pricingAlgorithm = reader.GetString(7);
 
-			return new Hotel(id, name, description, cityId, new Address(street, postalCode));
+			return new Hotel(id, name, description, cityId, new Address(street, postalCode),pricingAlgorithm);
 		 }
 
 		public static List<Hotel> GetHotels(SqlDataReader reader)

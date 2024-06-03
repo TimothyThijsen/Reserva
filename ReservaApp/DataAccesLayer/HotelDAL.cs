@@ -103,9 +103,6 @@ namespace DataAccessLayer
             Hotel hotel = null;
             try
             {
-				
-
-				
                 SqlDataReader reader = dbConnection.GetFromDB(cmd);
                 int index = 0;
 
