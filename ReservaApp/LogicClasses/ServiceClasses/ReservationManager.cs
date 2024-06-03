@@ -31,9 +31,6 @@ namespace DomainLayer.ServiceClasses
         public List<Reservation> GetAllReservationByRoomId(int roomId)
         {
             return reservationDAL.GetAllReservationByEntityId(roomId);
-        }public List<Reservation> GetAllReservationByActivityId(int activityId)
-        {
-            return reservationDAL.GetAllReservationByEntityId(activityId);
         }
         public Reservation GetReservationById(int id) 
         {

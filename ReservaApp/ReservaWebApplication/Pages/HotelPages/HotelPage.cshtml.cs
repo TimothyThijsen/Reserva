@@ -37,10 +37,7 @@ namespace ReservaWebApplication.Pages.HotelPages
             HttpContext.Session.SetString("prev_page", "/HotelPages/HotelPage");
             if (id> 0)
             {
-                if (HttpContext.Session.GetInt32("hotel_id") != id)
-                {
-                    HttpContext.Session.SetInt32("hotel_id", id);
-                }
+                if (HttpContext.Session.GetInt32("hotel_id") != id){HttpContext.Session.SetInt32("hotel_id", id);}
             }
             Setup();
           

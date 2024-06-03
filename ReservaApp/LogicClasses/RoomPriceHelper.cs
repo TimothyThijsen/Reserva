@@ -14,18 +14,16 @@ namespace DomainLayer
 	
 	public static class RoomPriceHelper
 	{
-/*		public static decimal GetTotalPriceExcl(List<ReservedRoom> reservedRooms, List<Room> roomsAtHotel, TimeSpan numberOfDays, Dictionary<int, decimal> dynamicRoomPrice)
+		const decimal reservaFee = 0.8m;
+		public static decimal GetTotalPriceExcl(decimal price, DateRange dateRange)
 		{
 			decimal totalPrice = 0;
-			foreach (var room in reservedRooms)
-			{
-				totalPrice += (room.Quantity * dynamicRoomPrice[room.RoomId] * numberOfDays.Days);
-			}
+			totalPrice = price * (dateRange.GetDaysCount()+1);
 			return totalPrice;
-		}*/
+		}
 		public static decimal CalculateFees(decimal priceExcl)
 		{
-			return priceExcl * (decimal)0.08;
+			return priceExcl * reservaFee;
 		}
 		public static decimal GetTotalPriceIncl(decimal priceExcl)
 		{

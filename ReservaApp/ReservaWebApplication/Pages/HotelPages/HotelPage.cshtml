@@ -39,7 +39,7 @@
                         <p class="card-text m-0">@room.BedType</p>
                         <p class="card-text m-0">Sleeps @room.Capacity</p>
                         <input type="hidden" id="roomPrice-@index" value="@room.Price">
-                        <input type="hidden" id="totalStayPrice-@index" value="@(@room.Price * @Convert.ToDecimal(Model.DateRange.GetDaysCount()+1))">
+                        <input type="hidden" id="totalStayPrice-@index" value="@RoomPriceHelper.GetTotalPriceExcl(room.Price, Model.DateRange)">
                         <p class="card-text m-0">@Model.reservationManager.GetAvailability(Model.DateRange,room.Id) left</p>
                     </div>
                     <div class="card-footer text-center justify-content-center col">

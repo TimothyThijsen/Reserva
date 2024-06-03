@@ -19,6 +19,7 @@ namespace Models
         public int Capacity { get; set; }
         public string BedType { get; set; }
 
+        //public RoomDTO() { }
         public RoomDTO(int id, int quantity, string name, int hotelId, decimal price, int capacity, string bedType) 
         { 
             Id = id;
