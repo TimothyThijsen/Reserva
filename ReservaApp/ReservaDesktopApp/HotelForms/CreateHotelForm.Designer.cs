@@ -30,6 +30,8 @@
         {
             btnCancel = new Button();
             panel1 = new Panel();
+            lblPricingAlgorithm = new Label();
+            cmbPricingAlgorithm = new ComboBox();
             txbPostalCode = new TextBox();
             txbStreet = new TextBox();
             lblPostalCode = new Label();
@@ -56,6 +58,8 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(lblPricingAlgorithm);
+            panel1.Controls.Add(cmbPricingAlgorithm);
             panel1.Controls.Add(txbPostalCode);
             panel1.Controls.Add(txbStreet);
             panel1.Controls.Add(lblPostalCode);
@@ -72,6 +76,23 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(756, 316);
             panel1.TabIndex = 1;
+            // 
+            // lblPricingAlgorithm
+            // 
+            lblPricingAlgorithm.AutoSize = true;
+            lblPricingAlgorithm.Location = new Point(325, 16);
+            lblPricingAlgorithm.Name = "lblPricingAlgorithm";
+            lblPricingAlgorithm.Size = new Size(99, 15);
+            lblPricingAlgorithm.TabIndex = 11;
+            lblPricingAlgorithm.Text = "Pricing algorithm";
+            // 
+            // cmbPricingAlgorithm
+            // 
+            cmbPricingAlgorithm.FormattingEnabled = true;
+            cmbPricingAlgorithm.Location = new Point(430, 10);
+            cmbPricingAlgorithm.Name = "cmbPricingAlgorithm";
+            cmbPricingAlgorithm.Size = new Size(208, 23);
+            cmbPricingAlgorithm.TabIndex = 10;
             // 
             // txbPostalCode
             // 
@@ -115,7 +136,7 @@
             txbDescription.Margin = new Padding(2);
             txbDescription.Multiline = true;
             txbDescription.Name = "txbDescription";
-            txbDescription.Size = new Size(528, 165);
+            txbDescription.Size = new Size(512, 165);
             txbDescription.TabIndex = 5;
             // 
             // txbName
@@ -207,5 +228,7 @@
         private TextBox txbPostalCode;
         private TextBox txbStreet;
         private Button btnConfirm;
+        private Label lblPricingAlgorithm;
+        private ComboBox cmbPricingAlgorithm;
     }
 }

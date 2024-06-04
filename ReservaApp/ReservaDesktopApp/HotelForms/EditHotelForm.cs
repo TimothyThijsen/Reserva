@@ -1,6 +1,7 @@
 ﻿using DomainLayer;
 using DomainLayer.ServiceClasses;
 using Microsoft.Extensions.DependencyInjection;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ReservaDesktopApp.HotelForms
 {
@@ -45,7 +47,27 @@ namespace ReservaDesktopApp.HotelForms
 			cmbCities.ValueMember = "Id";
 			cmbCities.DataSource = citiesComboItems;
 			cmbCities.SelectedIndex = citiesComboItems.FindIndex(c => c.Id == hotel.CityId);
-		}
+
+            cmbPricingAlgorithm.Items.Add(new ComboBoxItem("No Discount", "NoDiscount"));
+            cmbPricingAlgorithm.Items.Add(new ComboBoxItem("Reserva Curve", "ReservaCurve"));
+            cmbPricingAlgorithm.Items.Add(new ComboBoxItem("Reserva Curve + Seasonal Northern", "ReservaCurve, SeasonalNorthern"));
+            cmbPricingAlgorithm.Items.Add(new ComboBoxItem("Reserva Curve + Seasonal Southern", "ReservaCurve, SeasonalSouthern"));
+            cmbPricingAlgorithm.Items.Add(new ComboBoxItem("Seasonal Northern", "SeasonalNorthern"));
+            cmbPricingAlgorithm.Items.Add(new ComboBoxItem("Seasonal Southern", "SeasonalSouthern"));
+            cmbPricingAlgorithm.Items.Add(new ComboBoxItem("Minimal Curve", "MinimalCurve"));
+            cmbPricingAlgorithm.Items.Add(new ComboBoxItem("Minimal Curve + Seasonal Northern", "MinimalCurve, SeasonalNorthern"));
+            cmbPricingAlgorithm.Items.Add(new ComboBoxItem("Minimal Curve + Seasonal Southern", "MinimalCurve, SeasonalSouthern"));
+
+
+            foreach (ComboBoxItem item in cmbPricingAlgorithm.Items)
+            {
+                if (item.HiddenValue == hotel.PricingAlgorithms)
+                {
+                    cmbPricingAlgorithm.SelectedItem = item;
+                    break;
+                }
+            }
+        }
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
 			this.Close();
@@ -59,6 +81,7 @@ namespace ReservaDesktopApp.HotelForms
 			string postalCode;
 			string street;
 			bool success = false;
+			string pricingAlgorithms;
 			try
 			{
 				if (txbName.Text == string.Empty) { throw new Exception("Please provide a name"); }
@@ -71,7 +94,8 @@ namespace ReservaDesktopApp.HotelForms
 				postalCode = txbPostalCode.Text;
 				if (txbStreet.Text == string.Empty) { throw new Exception("Please provide a street address"); }
 				street = txbStreet.Text;
-				hotelManager.EditHotel(new Hotel(hotel.Id,name, description, city.Id, new Address(street, postalCode)));
+                pricingAlgorithms = ((ComboBoxItem)cmbPricingAlgorithm.SelectedItem).HiddenValue;
+                hotelManager.EditHotel(new Hotel(hotel.Id,name, description, city.Id, new Address(street, postalCode), pricingAlgorithms));
 				success = true;
 			}
 			catch (Exception ex)

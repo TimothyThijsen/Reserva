@@ -15,7 +15,7 @@ namespace DataAccessLayer
 		}
 		public void AddHotel(Hotel hotel)
 		{
-			string query = "EXEC CreateHotel @name, @description, @cityId, @street, @postalCode;";
+			string query = "EXEC CreateHotel @name, @description, @cityId, @street, @postalCode, @pricingAlgorithm;";
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
 			cmd.Parameters.AddWithValue("@name", hotel.Name);
@@ -23,6 +23,7 @@ namespace DataAccessLayer
 			cmd.Parameters.AddWithValue("@cityId", hotel.CityId);
 			cmd.Parameters.AddWithValue("@street", hotel.Address.Street);
 			cmd.Parameters.AddWithValue("@postalCode", hotel.Address.PostalCode);
+			cmd.Parameters.AddWithValue("@pricingAlgorithm", hotel.PricingAlgorithms);
 			try
 			{
 				dbConnection.ModifyDB(cmd);
@@ -36,7 +37,7 @@ namespace DataAccessLayer
 		public void EditHotel(Hotel hotel)
 		{
 			string query = "UPDATE [Hotel] SET name = @name, description = @description, " +
-					 "cityId = @cityId WHERE id = @id;  UPDATE [Address] SET street = @street, " +
+                     "cityId = @cityId, PricingAlgorithm = @pricingAlgorithm WHERE id = @id;  UPDATE [Address] SET street = @street, " +
 					 "postalCode = @postalCode WHERE id = (SELECT addressId FROM [Hotel] WHERE id = @id);";
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
@@ -46,7 +47,8 @@ namespace DataAccessLayer
 			cmd.Parameters.AddWithValue("@cityId", hotel.CityId);
 			cmd.Parameters.AddWithValue("@street", hotel.Address.Street);
 			cmd.Parameters.AddWithValue("@postalCode", hotel.Address.PostalCode);
-			try
+            cmd.Parameters.AddWithValue("@pricingAlgorithm", hotel.PricingAlgorithms);
+            try
 			{
 				dbConnection.ModifyDB(cmd);
 			}
