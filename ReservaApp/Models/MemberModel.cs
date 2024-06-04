@@ -18,8 +18,12 @@ namespace Models
 		public string LastName { get; set; }
 		//[DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
-		[Range(18, 100, ErrorMessage = "Must be 18+")]
-		public int Age { get; set; }
+
+		//[Range(typeof(DateTime), "01/01/1900", "12/31/2099", ErrorMessage = "Date of birth must be between 1900 and 2099")]
+		[Display(Name = "Date of Birth")]
+		[Required(ErrorMessage = "Date of birth is required")]
+		[DataType(DataType.Date)]
+		public DateTime DateOfBirth { get; set; }
 		[Required]
 		public MemberType Role { get; set; }
 
@@ -27,12 +31,12 @@ namespace Models
 		[RegularExpression(@"^(?=.*\d).+$", ErrorMessage = "Password must contain at least one numeric digit.")]
 		public string Password {  get; set; }
 		public MemberModel() { }
-        public MemberModel(string firstName, string lastName, string email, int age, MemberType memberType, string password)
+        public MemberModel(string firstName, string lastName, string email, DateTime date, MemberType memberType, string password)
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
-            Age = age;
+            DateOfBirth = date;
             Role = memberType;
             Password = password;
         }

@@ -16,13 +16,13 @@ namespace DataAccessLayer
 		public void AddUser(User user)
 		{
 			Member member = (Member)user;
-			string query = "EXEC CreateMember @name, @email, @password, @age, @role, @verified;";
+			string query = "EXEC CreateMember @name, @email, @password, @dateOfBirth, @role, @verified;";
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
 			cmd.Parameters.AddWithValue("@name", member.FirstName + " " + member.LastName);
 			cmd.Parameters.AddWithValue("@email", member.Email);
 			cmd.Parameters.AddWithValue("@password", member.Password);
-			cmd.Parameters.AddWithValue("@age", member.Age);
+			cmd.Parameters.AddWithValue("@dateOfBirth", member.DateOfBirth);
 			cmd.Parameters.AddWithValue("@role", (int)member.MemberType);
 			cmd.Parameters.AddWithValue("@verified", member.Verified);
 			try
@@ -52,13 +52,13 @@ namespace DataAccessLayer
 		public void EditUser(User user)
 		{
 			Member member = (Member)user;
-			string query = "EXEC UpdateMember @id, @name, @email, @age, @role, @points, @verified;";
+			string query = "EXEC UpdateMember @id, @name, @email, @dateOfBirth, @role, @points, @verified;";
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
 			cmd.Parameters.AddWithValue("@id", member.Id);
 			cmd.Parameters.AddWithValue("@name", member.FirstName + " " + member.LastName);
 			cmd.Parameters.AddWithValue("@email", member.Email);
-			cmd.Parameters.AddWithValue("@age", member.Age);
+			cmd.Parameters.AddWithValue("@dateOfBirth", member.DateOfBirth);
 			cmd.Parameters.AddWithValue("@role", member.MemberType);
 			cmd.Parameters.AddWithValue("@points", member.Points);
 			cmd.Parameters.AddWithValue("@verified", member.Verified);

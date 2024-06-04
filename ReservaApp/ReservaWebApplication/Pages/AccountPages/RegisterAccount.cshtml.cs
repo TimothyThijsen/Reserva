@@ -18,7 +18,7 @@ namespace ReservaWebApplication.Pages.AccountPages
     public class RegisterAccountModel : PageModel
     {
 		[BindProperty]
-		public MemberModel Member {  get; set; }
+		public MemberModel Member {  get; set; } =new MemberModel() { DateOfBirth = DateTime.Today.AddYears(-18) };
 		public string StatusMessage { get; set; }
 		MemberManager memberManager = new MemberManager(new MemberDAL());
 		public void OnGet(string? statusMessage)

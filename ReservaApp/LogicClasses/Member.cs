@@ -14,13 +14,13 @@ namespace DomainLayer
         public int? Points { get { return points; } }
         public MemberType MemberType {  get { return memberType; } }
         public bool Verified { get { return verified; } }
-        public Member(string firstName, string lastName, string email, int age,MemberType memberType, string password) : base(firstName, lastName, email, age, password)
+        public Member(string firstName, string lastName, string email, DateOnly dateOfBirth,MemberType memberType, string password) : base(firstName, lastName, email, dateOfBirth, password)
         {
             this.memberType = memberType;
             verified = false;
         }
         
-        public Member(int id, string firstName, string lastName, string email, int age, MemberType memberType, bool verified, string password) : base(id, firstName, lastName, email, age, password)
+        public Member(int id, string firstName, string lastName, string email, DateOnly dateOfBirth, MemberType memberType, bool verified, string password) : base(id, firstName, lastName, email, dateOfBirth, password)
         {
             this.memberType = memberType;
             this.verified = verified;

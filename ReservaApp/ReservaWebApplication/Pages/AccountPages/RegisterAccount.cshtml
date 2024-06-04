@@ -33,9 +33,9 @@
 			</div>
 			<div class="row mb-3">
 				<div class="col-3">
-					<label class="form-label" asp-for="Member.Age">Age</label>
-					<input class="form-control" type="number" asp-for="Member.Age" value="18"/>
-					<span asp-validation-for="Member.Age" class="text-danger"></span>
+					<label asp-for="Member.DateOfBirth"></label>
+					<input asp-for="Member.DateOfBirth" type="date" class="form-control" />
+					<span asp-validation-for="Member.DateOfBirth" class="text-danger"></span>
 				</div>
 			</div>
 			<div class="row">
@@ -61,6 +61,7 @@
 	</form>
 </div>
 <partial name="_ValidationScriptsPartial" />
+
 
 
 

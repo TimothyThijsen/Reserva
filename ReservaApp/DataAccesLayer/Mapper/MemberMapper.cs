@@ -12,12 +12,12 @@ namespace DataAccessLayer.Mapper
 			string firstName = name[0];
 			string lastName = name[1];
 			string email = Convert.ToString(reader["email"])!;
-			int age = Convert.ToInt32(reader["age"]);
+			DateOnly dateOfBirth = DateOnly.FromDateTime(Convert.ToDateTime(reader["dateOfBirth"]));
 			MemberType role = (MemberType)Convert.ToInt32(reader["role"]);
 			int points = Convert.ToInt32(reader["points"]) ;
 			bool verified = Convert.ToBoolean(reader["verified"]);
 			string password = Convert.ToString(reader["password"]);
-			return new Member(id, firstName, lastName, email, age, role, verified,password);
+			return new Member(id, firstName, lastName, email, dateOfBirth, role, verified,password);
 		}
 
 		public static List<User> GetMembers(SqlDataReader reader)
