@@ -33,17 +33,25 @@
                         <li class="nav-item mx-2 p-1 text-center  rounded-pill ">
                             <a class="nav-link text-light" asp-area="" asp-page="/Privacy">Redeem points</a>
                         </li>
-                        <li class="nav-item mx-2 p-1 text-center  rounded-pill ">
+                       
                             @if(User.FindFirst("id")!= null)
                             {
-                                <a class="nav-link text-light" asp-area="" asp-page="/AccountPages/AccountView">Account</a>
+                                <li class="nav-item mx-2 p-1 text-center  rounded-pill ">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/AccountPages/AccountView">Account</a>
+                                </li>
+                                <li class="nav-item mx-2 p-1 text-center  rounded-pill ">
+                                <a class="nav-link text-light" asp-page="/AccountPages/Logout">Logout</a>
+                                </li>
                             }
                             else
                             {
-                                <a class="nav-link text-light" asp-area="" asp-page="/AccountPages/Login">Login</a>
+                                <li class="nav-item mx-2 p-1 text-center  rounded-pill ">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/AccountPages/Login">Login</a>
+                                </li>
+                                
                             }
 
-                        </li>
+                        
                     </ul>
                 </div>
             </div>

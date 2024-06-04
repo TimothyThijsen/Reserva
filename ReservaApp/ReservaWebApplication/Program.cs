@@ -14,6 +14,8 @@ builder.Services.AddSingleton<ICityDAL, CityDAL>();
 builder.Services.AddSingleton<CityManager>();
 builder.Services.AddSingleton<IRoomDAL, RoomDAL>();
 builder.Services.AddSingleton<RoomManager>();
+builder.Services.AddSingleton<IUserDAL, MemberDAL>();
+builder.Services.AddSingleton<MemberManager>();
 
 builder.Services.AddRazorPages();
 
