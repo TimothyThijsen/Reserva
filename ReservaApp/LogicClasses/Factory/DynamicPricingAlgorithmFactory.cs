@@ -11,19 +11,22 @@ namespace Factory
 {
     public class DynamicPricingAlgorithmFactory
     {
+
+        private static readonly Dictionary<string, IPricingAlgorithm> _pricingAlgorithms = new()
+        {
+            { "ReservaCurve",new ReservaCurve()},
+            { "SeasonalNorthern",new SeasonalNorthern()},
+            { "SeasonalSouthern",new SeasonalSouthern()},
+            { "NoDiscount",new NoDiscount()},
+            { "MinimalCurve",new MinimalCurve()}
+        };
         public static IPricingAlgorithm GetAlgorithm(string algorithmType)
         {
-            switch (algorithmType)
+            if (!_pricingAlgorithms.TryGetValue(algorithmType, out var algorithm))
             {
-                case "ReservaCurve":
-                    return new ReservaCurve();
-                case "SeasonalNorthern":
-                    return new SeasonalNorthern();
-                default:
-                    throw new ArgumentException("Invalid algorithm type");
+                throw new ArgumentException("Invalid algorithm type");
             }
-
-            
+            return algorithm;
         }
     }
 }

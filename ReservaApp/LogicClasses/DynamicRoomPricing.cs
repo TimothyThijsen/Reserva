@@ -29,6 +29,7 @@ namespace DomainLayer
 
         public static decimal CalculateRoomPriceAverage(Room room, DateRange dateRange, List<string> pricingAlgorithms)
         {
+            
             IPricingAlgorithm pricingAlgorithm;
             decimal finalPrice = 0;
             List<DateTime> dates = new List<DateTime>();
@@ -39,25 +40,17 @@ namespace DomainLayer
             }
             foreach (DateTime dt in dates)
             {
+                decimal priceOnDay = room.Price;
                 foreach(string name in pricingAlgorithms)
                 {
                     pricingAlgorithm = DynamicPricingAlgorithmFactory.GetAlgorithm(name);
-                    finalPrice += pricingAlgorithm.CalculatePriceOnDay(room, dt);
+                    priceOnDay += pricingAlgorithm.CalculatePriceOnDay(room, dt);
                 }
-                //finalPrice += CalculatePriceOnDay(room, dt);
+                finalPrice += priceOnDay;
             }
 
             return finalPrice / (dateRange.GetDaysCount() + 1);
         }
-       /* public static decimal CalculateRoomPrice(Room room, DateRange dateRange) 
-        {
-           
-        }
-
-        public static decimal CalculatePricePerDay(Room room, DateTime date)
-        {
-           
-        }*/
 
         
     }

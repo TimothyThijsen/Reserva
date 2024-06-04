@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DomainLayer.PricingAlgorithms
 {
-    public class ReservaCurve : IPricingAlgorithm
+    public class MinimalCurve : IPricingAlgorithm
     {
         public decimal CalculatePriceOnDay(Room room, DateTime date)
         {
@@ -24,16 +23,16 @@ namespace DomainLayer.PricingAlgorithms
             }
             else
             {
-                priceOnDay = (room.Price * 0.8m) + (decimal)(12.5 * roomPercentageBooked + 8.75);
+                priceOnDay = (room.Price * 0.9m) + (decimal)(12.5 * roomPercentageBooked + 8.75);
             }
 
-            if (priceOnDay < (room.Price * 0.7m))
+            if (priceOnDay < (room.Price * 0.85m))
             {
-                priceOnDay = room.Price * 0.7m;
+                priceOnDay = room.Price * 0.85m;
             }
-            if (priceOnDay < (room.Price * 0.8m) && daysUntilDate > 15)
+            if (priceOnDay < (room.Price * 0.9m) && daysUntilDate > 15)
             {
-                priceOnDay = room.Price * 0.8m;
+                priceOnDay = room.Price * 0.9m;
             }
             if (priceOnDay > (room.Price * 1.4m))
             {
