@@ -25,7 +25,7 @@ namespace UnitTesting
         [TestMethod]
         public void AddMember()
         {
-            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, faker.Person.Email.ToLower(), 22, MemberType.free_account, "password");
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, faker.Person.Email.ToLower(),DateTime.Today, MemberType.free_account, "password");
 
             Assert.AreEqual(1, _memberManager.GetAllMembers().Count);
             _memberManager.AddMember(member);
@@ -46,7 +46,7 @@ namespace UnitTesting
         [TestMethod]
         public void AddMember_DuplicateEmail()
         {
-            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "same@mail.com", 22, MemberType.free_account, "password");
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "same@mail.com", DateTime.Today, MemberType.free_account, "password");
             List<Member> members = _memberManager.GetAllMembers();
             
             Assert.AreEqual(1, members.Count);
@@ -57,7 +57,7 @@ namespace UnitTesting
         [TestMethod]
         public void RemoveMember()
         {
-            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, faker.Person.Email, 22, MemberType.free_account, "password");
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, faker.Person.Email, DateTime.Today, MemberType.free_account, "password");
             _memberManager.AddMember(member);
 
             Assert.AreEqual(2, _memberManager.GetAllMembers().Count);
@@ -78,7 +78,7 @@ namespace UnitTesting
         [TestMethod]
         public void Login_ValidCredentials()
         {
-            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", 22, MemberType.free_account, "password123");
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", DateTime.Today, MemberType.free_account, "password123");
             _memberManager.AddMember(member);
             Member loggedInMember = _memberManager.Login("fake@mail.com", "password123");
 
@@ -90,7 +90,7 @@ namespace UnitTesting
         
         public void Login_IncorrectPassword()
         {
-            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", 22, MemberType.free_account, "password123");
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", DateTime.Today, MemberType.free_account, "password123");
             _memberManager.AddMember(member);
             
             Assert.ThrowsException<CredentialException>(() => _memberManager.Login("fake@mail.com", "wrongpassword"));
@@ -99,7 +99,7 @@ namespace UnitTesting
         [TestMethod]
         public void Login_NonExistingEmail()
         {
-            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", 22, MemberType.free_account, "password123");
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", DateTime.Today, MemberType.free_account, "password123");
             _memberManager.AddMember(member);
 
             Assert.ThrowsException<CredentialException>(() => _memberManager.Login("nonexisting@example.com", "password123"));

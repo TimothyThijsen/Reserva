@@ -11,7 +11,7 @@ namespace DomainLayer.PricingAlgorithms
     {
         public decimal CalculatePriceOnDay(Room room, DateTime date)
         {
-            return room.Price;
+            return 0;
         }
     }
 }

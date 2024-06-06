@@ -13,7 +13,7 @@ namespace UnitTesting.MockData
         private readonly Bogus.Faker faker = new Bogus.Faker("uk");
         List<User> users = new List<User>
         {
-            new Member(1, "Tim", "Thijsen", "same@mail.com", 22, MemberType.free_account, true, "password")
+            new Member(1, "Tim", "Thijsen", "same@mail.com", DateOnly.FromDateTime(DateTime.Today), MemberType.free_account, true, "password")
         };
 
         int _id = 2;
@@ -35,7 +35,7 @@ namespace UnitTesting.MockData
             {
                 throw new ValidationException();
             }
-            User userToAdd = new Member(_id,user.FirstName,user.LastName,user.Email,user.Age,((Member)user).MemberType,false,user.Password);
+            User userToAdd = new Member(_id,user.FirstName,user.LastName,user.Email,user.DateOfBirth,((Member)user).MemberType,false,user.Password);
             _id++;
 
             users.Add(userToAdd);

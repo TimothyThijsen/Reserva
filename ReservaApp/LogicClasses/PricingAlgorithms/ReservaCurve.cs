@@ -14,13 +14,14 @@ namespace DomainLayer.PricingAlgorithms
         {
             decimal priceOnDay = 0;
             double roomPercentageBooked = (double)room.GetBookedAmount(date) / room.Quantity;
-            double daysUntilDate = (date - DateTime.Today).TotalDays;
+            TimeSpan spanOfDays = date - DateTime.Today;
+            int daysUntilDate = spanOfDays.Days;
 
-            daysUntilDate = daysUntilDate > 0 ? daysUntilDate : 1;
+            daysUntilDate = daysUntilDate >= 1 ? daysUntilDate : 1;
             roomPercentageBooked = roomPercentageBooked > 0 ? roomPercentageBooked : 0.1;
             if (daysUntilDate <= 140)
             {
-                priceOnDay = room.Price * (decimal)(1.12 - (roomPercentageBooked / 10) - (2 / ((-0.075 * roomPercentageBooked + 2.8375) + daysUntilDate))) * (decimal)(Math.Sqrt((-0.008 * (daysUntilDate) + 1.08) + roomPercentageBooked));
+                priceOnDay = room.Price * (decimal)(1.12 - (roomPercentageBooked / 10) - (2 / ((-0.075 * roomPercentageBooked + 2.8375) + daysUntilDate))) * (decimal)(Math.Sqrt(((-0.008 * (daysUntilDate) + 1.08) + roomPercentageBooked)));
             }
             else
             {

@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace DomainLayer
 {
-    public static class DynamicRoomPricing
+    public class DynamicRoomPricing
     {
-        public static List<RoomDTO> CalculateRoomPrices(Hotel hotel, DateRange dateRange)
+        public List<RoomDTO> CalculateRoomPrices(Hotel hotel, DateRange dateRange)
         {
             List<RoomDTO> roomsDTOList = new List<RoomDTO>();
             foreach (Room room in hotel.Rooms)
@@ -27,7 +27,7 @@ namespace DomainLayer
             return roomsDTOList;
         }
 
-        public static decimal CalculateRoomPriceAverage(Room room, DateRange dateRange, List<string> pricingAlgorithms)
+        public decimal CalculateRoomPriceAverage(Room room, DateRange dateRange, List<string> pricingAlgorithms)
         {
             
             IPricingAlgorithm pricingAlgorithm;

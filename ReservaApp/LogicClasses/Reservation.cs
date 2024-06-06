@@ -19,7 +19,7 @@ namespace DomainLayer
         
         public decimal TotalPrice { get { return totalPrice; } set { totalPrice = value; } }
         public bool IsCanceled {  get { return isCanceled; } }
-        public Reservation() { }
+        //public Reservation() { }
         public Reservation(int userId,int amountOfGuest, decimal totalPrice) 
         { 
             this.userId = userId;

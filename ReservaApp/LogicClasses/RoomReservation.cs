@@ -13,7 +13,7 @@ namespace DomainLayer
         private DateRange dateRange;
         public List<ReservedRoom> ReservedRooms { get {  return reservedRooms; } set { reservedRooms = value; } }
         public DateRange DateRange { get { return dateRange; } }
-        public RoomReservation() { }
+        //public RoomReservation() { }
         public RoomReservation(int userId, int amountOfGuest, decimal totalPrice, DateTime startDate, DateTime endDate) : base(userId, amountOfGuest, totalPrice)
         {
             dateRange = new DateRange(startDate, endDate);
