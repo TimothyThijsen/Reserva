@@ -19,8 +19,9 @@ namespace ReservaWebApplication.Pages.AccountPages
     {
 		[BindProperty]
 		public MemberModel Member {  get; set; } =new MemberModel() { DateOfBirth = DateTime.Today.AddYears(-18) };
-		public string StatusMessage { get; set; }
+		public string? StatusMessage { get; set; }
 		MemberManager memberManager = new MemberManager(new MemberDAL());
+		public RegisterAccountModel(MemberManager memberManager) { this.memberManager = memberManager; }
 		public void OnGet(string? statusMessage)
         {
 			if (statusMessage != null)
@@ -30,6 +31,7 @@ namespace ReservaWebApplication.Pages.AccountPages
         }
         public IActionResult OnPost() 
         {
+			StatusMessage = string.Empty;
 			if (!ModelState.IsValid)
 			{
 				return Page();
@@ -51,7 +53,7 @@ namespace ReservaWebApplication.Pages.AccountPages
 				StatusMessage = ex.Message;
 			}
 
-			if (StatusMessage != null)
+			if (StatusMessage != string.Empty)
 			{
 				return RedirectToPage("/AccountPages/RegisterAccount", new Dictionary<string, string> { { "statusMessage", StatusMessage } });
 			}

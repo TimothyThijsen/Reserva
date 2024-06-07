@@ -9,7 +9,7 @@ namespace Factory
         new Dictionary<ReservationType, Func<ReservationManager>>
         {
             { ReservationType.RoomReservation, () => new ReservationManager(new RoomReservationDAL()) },
-            { ReservationType.ActivityReservation, () => new ReservationManager(new ActivityReservationDAL()) }
+            { ReservationType.ActivityReservation, () => new ReservationManager(new ActivityReservationDAL()) }//f maybe include mock
         };
         public static ReservationManager GetReservationManager(ReservationType type)
         {

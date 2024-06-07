@@ -17,7 +17,8 @@ namespace ReservaWebApplication.Pages.AccountPages
         [BindProperty]
         public Credentials Credentials { get; set; }
         public string? StatusMessage { get; set; }
-		MemberManager memberManager = new MemberManager(new MemberDAL());
+		MemberManager memberManager;
+		public LoginModel (MemberManager memberManager) { this.memberManager = memberManager; }
         public void OnGet(string? statusMessage)
         {
             if(statusMessage != null)
