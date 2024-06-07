@@ -19,6 +19,7 @@ namespace ReservaWebApplication.Pages.HotelPages
         [BindProperty]
         public SearchBarPartialModel SearchBarPartialModel { get; set; } = new SearchBarPartialModel(); 
         SearchModel? SearchModel { get; set; } = new SearchModel();
+        public string StatusMessage { get; set; }
         public HotelsViewModel(HotelManager hotelManager, CityManager cityManager)
         {
             this.hotelManager = hotelManager;
@@ -35,6 +36,8 @@ namespace ReservaWebApplication.Pages.HotelPages
             SearchBarPartialModel.Cities = cityManager.GetAllCities();
             SearchBarPartialModel.SearchModel = SearchModel;
             Hotels = hotelManager.GetHotelsBySearchModel(SearchBarPartialModel.SearchModel);
+
+            
         }
         public IActionResult OnPost()
         {

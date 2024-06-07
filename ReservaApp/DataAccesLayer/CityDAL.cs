@@ -1,4 +1,5 @@
 ﻿using DomainLayer;
+using DomainLayer.Exceptions;
 using DomainLayer.Interfaces;
 using Microsoft.Data.SqlClient;
 
@@ -48,10 +49,16 @@ namespace DataAccessLayer
 			}
 			catch (SqlException ex)
 			{
-				throw new Exception(ex.Message);
+                switch (ex.Number)
+                {
+                    case 53:
+                        throw new RepositoryUnavailableException();
+                }
+                throw new Exception(ex.Message);
 			}
             finally
             {
+
                 if (cmd is IDisposable diposable)
                 {
                     cmd.Connection.Close();

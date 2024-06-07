@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Mapper;
 using DomainLayer;
+using DomainLayer.Exceptions;
 using DomainLayer.Interfaces;
 using Microsoft.Data.SqlClient;
 
@@ -30,7 +31,12 @@ namespace DataAccessLayer
 			}
 			catch (SqlException ex)
 			{
-				throw new Exception(ex.Message);
+				switch (ex.Number)
+				{
+					case -2:
+						throw new RepositoryUnavailableException();
+				}
+                throw new Exception(ex.Message);
 			}
 		}
 
@@ -81,9 +87,14 @@ namespace DataAccessLayer
 				}
 
 			}
-			catch (SqlException)
+			catch (SqlException ex)
 			{
-				throw new Exception("Unable to reach database!");
+                switch (ex.Number)
+                {
+                    case -2:
+                        throw new RepositoryUnavailableException();
+                }
+                throw new Exception("Unable to reach database!");
 			}
             finally
             {

@@ -17,6 +17,7 @@ namespace ReservaWebApplication.Pages
         [BindProperty]
         public SearchBarPartialModel SearchBarPartialModel { get; set; } = new SearchBarPartialModel();
         public SearchModel SearchModel { get; set; } = new SearchModel();
+        public string StatusMessage { get; set; }
         public IndexModel(ILogger<IndexModel> logger, CityManager cityManager)
         {
             _logger = logger;
@@ -26,7 +27,15 @@ namespace ReservaWebApplication.Pages
         public void OnGet()
         {
             HttpContext.Session.Remove("prev_page");
-            SearchBarPartialModel.Cities = cityManager.GetAllCities();
+            try
+            {
+                SearchBarPartialModel.Cities = cityManager.GetAllCities();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = ex.Message;
+            }
+           
             SearchBarPartialModel.SearchModel = SearchModel;   
             
         }
