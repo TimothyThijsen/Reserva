@@ -9,11 +9,14 @@ namespace DomainLayer.PricingAlgorithms
 {
     public class MinimalCurve : IPricingAlgorithm
     {
+        TimeProvider TimeProvider;
+        public MinimalCurve(TimeProvider timeProvider) 
+        { this.TimeProvider = timeProvider; }
         public decimal CalculatePriceOnDay(Room room, DateTime date)
         {
             decimal priceOnDay = 0;
             double roomPercentageBooked = (double)room.GetBookedAmount(date) / room.Quantity;
-            TimeSpan spanOfDays = date - DateTime.Today;
+            TimeSpan spanOfDays = date - TimeProvider.GetLocalNow();
             int daysUntilDate = spanOfDays.Days;
             daysUntilDate = daysUntilDate >= 1 ? daysUntilDate : 1;
             roomPercentageBooked = roomPercentageBooked > 0 ? roomPercentageBooked : 0.1;

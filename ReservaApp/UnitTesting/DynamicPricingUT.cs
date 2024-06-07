@@ -1,4 +1,5 @@
 ﻿using DomainLayer.ServiceClasses;
+using Microsoft.Extensions.Time.Testing;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace UnitTesting
         private RoomManager _roomManager;
         private ReservationManager reservationManager;
         private DynamicRoomPricing drp;
+        FakeTimeProvider fakeTimeProvider = new FakeTimeProvider();
         DateTime today;
         [TestInitialize]
         public void Setup()
@@ -22,30 +24,36 @@ namespace UnitTesting
             today = DateTime.Today;
             _roomManager = new RoomManager(new MockRoomDAL());
             reservationManager = new ReservationManager(new MockReservationDAL());
-            drp = new DynamicRoomPricing();
+            fakeTimeProvider.SetUtcNow(new DateTime(2024,06,06));
+            drp = new DynamicRoomPricing(fakeTimeProvider);
             room = _roomManager.GetRoomById(1);
             room.Schedule.AddListOfReservations(reservationManager.GetAllReservationByRoomId(1));
         }
         //dates booked 1 = 0.2, 2 = 0.7, 3=0.5
         [TestMethod]
-        public void Calculate4DaysPriceReservaCurve()
+        public void Calculate3DaysPriceReservaCurve()
         {
-            
-            decimal price = drp.CalculateRoomPriceAverage(room, new DateRange(new DateTime(today.Year, today.Month, today.Day +1 , 16,00,00), new DateTime(today.Year, today.Month,today.Day+4, 11,00,00)),new List<string> { "ReservaCurve"});
-            string expectedPrice = "81.47";
-            Assert.AreEqual(expectedPrice, price.ToString("0.00"));
+            DateTime start = new DateTime(2024, 06, 07, 16, 00, 00);
+            DateTime end =   new DateTime(2024, 06, 10, 11, 00, 00);
+            decimal price = drp.CalculateRoomPriceAverage(room, new DateRange(start,end),new List<string> { "ReservaCurve"});
+            decimal expectedPrice = 81.47m;
+            Assert.AreEqual(expectedPrice, price);
         }
         [TestMethod]
-        public void Calculate4DaysNoDiscount()
+        public void Calculate3DaysNoDiscount()
         {
-            decimal price = drp.CalculateRoomPriceAverage(room, new DateRange(new DateTime(today.Year, today.Month, today.Day + 1, 16, 00, 00), new DateTime(today.Year, today.Month, today.Day + 4, 11, 00, 00)), new List<string> { "NoDiscount" });
+            DateTime start = new DateTime(2024, 06, 07, 16, 00, 00);
+            DateTime end =   new DateTime(2024, 06, 10, 11, 00, 00);
+            decimal price = drp.CalculateRoomPriceAverage(room, new DateRange(start, end), new List<string> { "NoDiscount" });
             decimal expectedPrice = 100m;
             Assert.AreEqual(expectedPrice, price);
         }
         [TestMethod]
-        public void Calculate4DaysPriceMinimalCurve()
+        public void Calculate3DaysPriceMinimalCurve()
         {
-            decimal price = drp.CalculateRoomPriceAverage(room, new DateRange(new DateTime(today.Year, today.Month, today.Day + 1, 16, 00, 00), new DateTime(today.Year, today.Month, today.Day + 4, 11, 00, 00)), new List<string> { "MinimalCurve" });
+            DateTime start = new DateTime(2024, 06, 07, 16, 00, 00);
+            DateTime end =   new DateTime(2024, 06, 10, 11, 00, 00);
+            decimal price = drp.CalculateRoomPriceAverage(room, new DateRange(start,end), new List<string> { "MinimalCurve" });
             string expectedPrice = "86.82";
             Assert.AreEqual(expectedPrice, price.ToString("0.00"));
         }

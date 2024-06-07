@@ -9,9 +9,12 @@ namespace DomainLayer.PricingAlgorithms
 {
     public class SeasonalNorthern : IPricingAlgorithm
     {
+        TimeProvider timeProvider;
+        public SeasonalNorthern(TimeProvider timeProvider) { this.timeProvider = timeProvider; }
         public decimal CalculatePriceOnDay(Room room, DateTime date)
         {
-            int month = date.Month;
+
+            int month = timeProvider.GetLocalNow().Month;
 
             if (month >= 11 || month <= 3)
             {

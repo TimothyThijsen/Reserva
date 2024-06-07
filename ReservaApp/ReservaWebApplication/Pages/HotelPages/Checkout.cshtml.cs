@@ -16,17 +16,15 @@ namespace ReservaWebApplication.Pages.HotelPages
     {
         ReservationManager reservationManager = ReservationManagerFactory.GetReservationManager(ReservationType.RoomReservation);
         HotelManager hotelManager;
-        RoomManager roomManager;
         public Hotel hotel;
         [BindProperty]
         public string StatusMessage {  get; set; }
        
         public RoomReservation reservation {  get; set; }
         public decimal PriceExcl {  get; set; }
-        public CheckoutModel(HotelManager hotelManager, RoomManager roomManager)
+        public CheckoutModel(HotelManager hotelManager)
         {
             this.hotelManager = hotelManager;
-            this.roomManager = roomManager;
         }
         public void OnGet(string? statusMessage)
         {

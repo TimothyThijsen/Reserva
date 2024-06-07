@@ -10,13 +10,18 @@ namespace DomainLayer.PricingAlgorithms
 {
     public class ReservaCurve : IPricingAlgorithm
     {
+        
+        TimeProvider timeProvider;
+        public ReservaCurve(TimeProvider timeProvider) 
+        {
+            this.timeProvider = timeProvider;
+        }
         public decimal CalculatePriceOnDay(Room room, DateTime date)
         {
             decimal priceOnDay = 0;
             double roomPercentageBooked = (double)room.GetBookedAmount(date) / room.Quantity;
-            TimeSpan spanOfDays = date - DateTime.Today;
+            TimeSpan spanOfDays = date - timeProvider.GetLocalNow(); //DateTime.Today;
             int daysUntilDate = spanOfDays.Days;
-
             daysUntilDate = daysUntilDate >= 1 ? daysUntilDate : 1;
             roomPercentageBooked = roomPercentageBooked > 0 ? roomPercentageBooked : 0.1;
             if (daysUntilDate <= 140)

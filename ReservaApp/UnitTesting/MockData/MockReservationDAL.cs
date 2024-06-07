@@ -16,13 +16,13 @@ namespace UnitTesting.MockData
             reservations = new List<Reservation>
             {
                
-                new RoomReservation(1,2,100,new DateTime(today.Year,today.Month,today.Day,11,00,00),new DateTime(today.Year,today.Month,today.Day+2,16,00,00)),
-                new RoomReservation(1,2,100,new DateTime(today.Year,today.Month,today.Day,11,00,00),new DateTime(today.Year, today.Month, today.Day+2,16,00,00)),
-                new RoomReservation(1,2,100,new DateTime(today.Year,today.Month,today.Day+2,11,00,00),new DateTime(today.Year, today.Month, today.Day+5,16,00,00)),
-                new RoomReservation(1,2,100,new DateTime(today.Year,today.Month,today.Day+2,11,00,00),new DateTime(today.Year, today.Month, today.Day+5,16,00,00)),
-                new RoomReservation(1,2,100,new DateTime(today.Year,today.Month,today.Day+2,11,00,00),new DateTime(today.Year, today.Month, today.Day+5,16,00,00)),
-                new RoomReservation(1,2,100,new DateTime(today.Year,today.Month,today.Day+2,11,00,00),new DateTime(today.Year, today.Month, today.Day+5,16,00,00)),
-                new RoomReservation(1,2,100,new DateTime(today.Year,today.Month,today.Day+2,11,00,00),new DateTime(today.Year, today.Month, today.Day+5,16,00,00))
+                new RoomReservation(1,2,100,new DateTime(2024,06,06,11,00,00),new DateTime(2024,06,08,16,00,00)),
+                new RoomReservation(1,2,100,new DateTime(2024,06,06,11,00,00),new DateTime(2024,06,08,16,00,00)),
+                new RoomReservation(1,2,100,new DateTime(2024,06,08,11,00,00),new DateTime(2024,06,11,16,00,00)),
+                new RoomReservation(1,2,100,new DateTime(2024,06,08,11,00,00),new DateTime(2024,06,11,16,00,00)),
+                new RoomReservation(1,2,100,new DateTime(2024,06,08,11,00,00),new DateTime(2024,06,11,16,00,00)),
+                new RoomReservation(1,2,100,new DateTime(2024, 06, 08,11,00,00),new DateTime(2024,06,11,16,00,00)),
+                new RoomReservation(1,2,100,new DateTime(2024, 06, 08,11,00,00),new DateTime(2024,06,11,16,00,00))
             };
             foreach (RoomReservation rm in reservations)
             {
