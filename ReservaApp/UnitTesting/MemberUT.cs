@@ -50,7 +50,7 @@ namespace UnitTesting
             List<Member> members = _memberManager.GetAllMembers();
             
             Assert.AreEqual(1, members.Count);
-            Assert.ThrowsException<ValidationException>(() => _memberManager.AddMember(member));
+            Assert.ThrowsException<EmailValidationException>(() => _memberManager.AddMember(member));
             Assert.AreEqual(1, members.Count);
         }
 

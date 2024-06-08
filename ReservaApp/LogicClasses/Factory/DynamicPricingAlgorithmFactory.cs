@@ -1,4 +1,5 @@
-﻿using DomainLayer.Interfaces;
+﻿using DomainLayer.Exceptions;
+using DomainLayer.Interfaces;
 using DomainLayer.PricingAlgorithms;
 using DomainLayer.ServiceClasses;
 using System;
@@ -31,7 +32,7 @@ namespace Factory
         {
             if (!_pricingAlgorithms.TryGetValue(algorithmType, out var algorithm))
             {
-                throw new ArgumentException("Invalid algorithm type");
+                throw new InvalidAlgorithmException();
             }
             return algorithm;
         }
