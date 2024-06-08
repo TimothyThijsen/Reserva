@@ -11,7 +11,6 @@ namespace DomainLayer.Interfaces
     {
         void AddReservation(Reservation reservation);
         void RemoveReservation(Reservation reservation);
-        int GetAvailability(DateRange dateRange, Room room);
 
     }
 }
