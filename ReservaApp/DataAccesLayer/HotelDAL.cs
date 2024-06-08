@@ -33,7 +33,7 @@ namespace DataAccessLayer
 			{
 				switch (ex.Number)
 				{
-					case -2:
+					case 53:
 						throw new RepositoryUnavailableException();
 				}
                 throw new Exception(ex.Message);
@@ -91,7 +91,7 @@ namespace DataAccessLayer
 			{
                 switch (ex.Number)
                 {
-                    case -2:
+                    case 53:
                         throw new RepositoryUnavailableException();
                 }
                 throw new Exception("Unable to reach database!");

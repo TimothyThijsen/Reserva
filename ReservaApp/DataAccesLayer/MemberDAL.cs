@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Mapper;
 using DomainLayer;
+using DomainLayer.Exceptions;
 using DomainLayer.Interfaces;
 using Microsoft.Data.SqlClient;
 
@@ -30,7 +31,14 @@ namespace DataAccessLayer
 				dbConnection.ModifyDB(cmd);
 			}
 			catch (SqlException ex) {
-                if (ex.Number == 2601) { throw new Exception("Email is already in use!"); }
+
+                switch (ex.Number)
+                {
+                    case 53:
+                        throw new RepositoryUnavailableException();
+					case 2601:
+						throw new EmailValidationException();
+                }
                 throw new Exception(ex.Message); }
 
 		}
