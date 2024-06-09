@@ -63,7 +63,7 @@ namespace DataAccessLayer.Mapper
 			int amountOfGuests = (int)reader["amountOfGuests"];
             int activitiesId = (int)reader["activitiesId"];
 			DateTime date = (DateTime)reader["date"];
-			return new ActivityReservation(id, userId, amountOfGuests, totalPrice, isCancelled);
+			return new ActivityReservation(id, userId, amountOfGuests, totalPrice, isCancelled,activitiesId,date);
 
         }
     }

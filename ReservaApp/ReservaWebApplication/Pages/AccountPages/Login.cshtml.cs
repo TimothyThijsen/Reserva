@@ -66,6 +66,7 @@ namespace ReservaWebApplication.Pages.AccountPages
 		{
 			List<Claim> claims = new List<Claim>();
 			claims.Add(new Claim("id", member.Id.ToString()));
+			claims.Add(new Claim(ClaimTypes.Role, member.MemberType.ToString())); 
 			ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 			return new ClaimsPrincipal(claimsIdentity);
 		}
