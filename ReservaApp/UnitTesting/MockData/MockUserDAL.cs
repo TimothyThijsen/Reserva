@@ -33,7 +33,7 @@ namespace UnitTesting.MockData
         {
             if (users.Find(u => u.Email == user.Email) != null)
             {
-                throw new ValidationException();
+                throw new EmailValidationException();
             }
             User userToAdd = new Member(_id,user.FirstName,user.LastName,user.Email,user.DateOfBirth,((Member)user).MemberType,false,user.Password);
             _id++;
