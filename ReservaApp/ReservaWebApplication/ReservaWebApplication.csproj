@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataAccesLayer\DataAccessLayer.csproj" />
-    <ProjectReference Include="..\Factory\Factory.csproj" />
+    <ProjectReference Include="..\Enums\Enums.csproj" />
     <ProjectReference Include="..\LogicClasses\DomainLayer.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>

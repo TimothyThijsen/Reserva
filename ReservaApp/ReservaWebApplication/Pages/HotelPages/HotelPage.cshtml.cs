@@ -18,7 +18,8 @@ namespace ReservaWebApplication.Pages.HotelPages
     {
         HotelManager hotelManager;
         public CityManager cityManager;
-        public ReservationManager reservationManager = ReservationManagerFactory.GetReservationManager(ReservationType.RoomReservation);
+        public ReservationManager reservationManager;
+        DynamicRoomPricing dynamicRoomPricing;
         [BindProperty]
         public string StatusMessage { get; set; }
         [BindProperty]
@@ -27,11 +28,14 @@ namespace ReservaWebApplication.Pages.HotelPages
         public SearchModel searchModel = new SearchModel();
         public Hotel Hotel { get; set; }
         public DateRange DateRange { get; set; }
-        public HotelPageModel(HotelManager hotelManager, CityManager cityManager) 
+        public HotelPageModel(HotelManager hotelManager, CityManager cityManager, GetReservationManager getReservationManager, TimeProvider timeProvider) 
         { 
             this.hotelManager = hotelManager;
             this.cityManager = cityManager;
-        }
+            this.reservationManager = getReservationManager.Invoke(ReservationType.RoomReservation);
+            dynamicRoomPricing = new DynamicRoomPricing(timeProvider, reservationManager);
+
+		}
 		public void OnGet(int id, string statusMessage)
         {
             HttpContext.Session.SetString("prev_page", "/HotelPages/HotelPage");
@@ -98,7 +102,7 @@ namespace ReservaWebApplication.Pages.HotelPages
             int id = (int)HttpContext.Session.GetInt32("hotel_id");
             Hotel = hotelManager.GetHotelAndRoomsById(id);
             DateRange = new DateRange(searchModel.GetStartDate(), searchModel.GetEndDate());
-            roomDTOs = Hotel.GetRoomPrices(DateRange,reservationManager);
+            roomDTOs = Hotel.GetRoomPrices(DateRange, dynamicRoomPricing);
         }
     }
 }

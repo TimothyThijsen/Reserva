@@ -13,7 +13,6 @@ namespace DomainLayer
         private string name, description, pricingAlgorithms;
         //private double rating;
         private Address address;
-        DynamicRoomPricing dynamicRoomPricing = new DynamicRoomPricing(TimeProvider.System);
         private List<Room>? rooms;
         //private List<Rating> ratings;
         public int Id { get { return id; } }
@@ -35,13 +34,9 @@ namespace DomainLayer
         {
             this.id = id;
         }
-        public List<RoomDTO> GetRoomPrices(DateRange dateRange,ReservationManager reservationManager)
+        public List<RoomDTO> GetRoomPrices(DateRange dateRange, DynamicRoomPricing dynamicRoomPricing)
         {
             List<RoomDTO> roomsList = new List<RoomDTO>();
-            foreach (Room room in rooms)
-            {
-                room.Schedule.AddListOfReservations(reservationManager.GetAllReservationByRoomId(room.Id));
-            }    
             roomsList = dynamicRoomPricing.CalculateRoomPrices(this, dateRange);
             return roomsList;
         }

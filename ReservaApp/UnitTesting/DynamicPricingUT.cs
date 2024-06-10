@@ -15,19 +15,17 @@ namespace UnitTesting
     public class DynamicPricingUT
     {
         private Room room;
-        private RoomManager _roomManager;
-        private ReservationManager reservationManager;
+        private RoomManager _roomManager  = new RoomManager(new MockRoomDAL());
+        private ReservationManager reservationManager = new ReservationManager(new MockReservationDAL());
         private DynamicRoomPricing drp;
         FakeTimeProvider fakeTimeProvider = new FakeTimeProvider();
         [TestInitialize]
         public void Setup()
         {
-            _roomManager = new RoomManager(new MockRoomDAL());
-            reservationManager = new ReservationManager(new MockReservationDAL());
             fakeTimeProvider.SetUtcNow(new DateTime(2024,06,06));
-            drp = new DynamicRoomPricing(fakeTimeProvider);
+            drp = new DynamicRoomPricing(fakeTimeProvider, reservationManager);
             room = _roomManager.GetRoomById(1);
-            room.Schedule.AddListOfReservations(reservationManager.GetAllReservationByRoomId(1));
+            room.Schedule.AddListOfReservations(reservationManager.GetAllReservationByRoomId(1));//fix
         }
         //dates booked 1 = 0.2, 2 = 0.7, 3=0.5
         [TestMethod]

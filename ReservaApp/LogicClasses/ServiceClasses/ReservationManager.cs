@@ -4,10 +4,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DomainLayer;
 using DomainLayer.Interfaces;
+using DomainLayer.ServiceClasses;
+public delegate ReservationManager GetReservationManager(ReservationType reservationType);
 namespace DomainLayer.ServiceClasses
 {
-    public class ReservationManager
+	public class ReservationManager
     {
         IReservationDAL reservationDAL;
 

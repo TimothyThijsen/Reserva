@@ -5,7 +5,7 @@ namespace Factory
 {
     public  class ReservationManagerFactory
     {
-        private static readonly Dictionary<ReservationType, Func<ReservationManager>> _factories =
+        /*private static readonly Dictionary<ReservationType, Func<ReservationManager>> _factories =
         new Dictionary<ReservationType, Func<ReservationManager>>
         {
             { ReservationType.RoomReservation, () => new ReservationManager(new RoomReservationDAL()) },
@@ -19,6 +19,6 @@ namespace Factory
             }
 
             throw new ArgumentException("Invalid reservation type");
-        }
+        }*/
     }
 }

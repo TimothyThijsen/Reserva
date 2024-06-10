@@ -1,4 +1,5 @@
 ﻿using DomainLayer.Interfaces;
+using DomainLayer.ServiceClasses;
 using Factory;
 using Models;
 using System;
@@ -14,17 +15,20 @@ namespace DomainLayer
     public class DynamicRoomPricing
     {
         TimeProvider timeProvider;
-        public DynamicRoomPricing(TimeProvider timeProvider) 
+        ReservationManager roomReservationManager;
+        public DynamicRoomPricing(TimeProvider timeProvider, ReservationManager roomReservationManager) 
         { 
             this.timeProvider = timeProvider;
+            this.roomReservationManager = roomReservationManager;
         }
         public List<RoomDTO> CalculateRoomPrices(Hotel hotel, DateRange dateRange)
         {
             List<RoomDTO> roomsDTOList = new List<RoomDTO>();
-            List<string> pricingAlgorithms = hotel.PricingAlgorithms.Split(", ").ToList();
+			List<string> pricingAlgorithms = hotel.PricingAlgorithms.Split(", ").ToList();
             foreach (Room room in hotel.Rooms!)
             {
-                decimal price = CalculateRoomPriceAverage(room, dateRange, pricingAlgorithms);
+                room.Schedule.AddListOfReservations(roomReservationManager.GetAllReservationByRoomId(room.Id));
+				decimal price = CalculateRoomPriceAverage(room, dateRange, pricingAlgorithms);
                 roomsDTOList.Add(new RoomDTO(room.Id, room.Quantity, room.Name, room.HotelId,
                     price,
                     room.Capacity, room.BedType

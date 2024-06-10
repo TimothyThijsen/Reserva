@@ -1,7 +1,9 @@
 using DataAccessLayer;
+using DomainLayer;
 using DomainLayer.Interfaces;
 using DomainLayer.ServiceClasses;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Principal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,20 @@ builder.Services.AddSingleton<IRoomDAL, RoomDAL>();
 builder.Services.AddSingleton<RoomManager>();
 builder.Services.AddSingleton<IUserDAL, MemberDAL>();
 builder.Services.AddSingleton<MemberManager>();
+
+builder.Services.AddSingleton(sp => TimeProvider.System);
+builder.Services.AddTransient<RoomReservationDAL>();
+builder.Services.AddTransient<ActivityReservationDAL>();
+builder.Services.AddSingleton<GetReservationManager>(sp => reservationType =>
+{
+	switch (reservationType)
+	{
+		case ReservationType.RoomReservation:
+			return new ReservationManager(sp.GetRequiredService<RoomReservationDAL>());
+		default:
+			return new ReservationManager(sp.GetRequiredService<ActivityReservationDAL>());
+	}
+});
 
 builder.Services.AddRazorPages();
 

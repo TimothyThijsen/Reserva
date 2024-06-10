@@ -14,7 +14,7 @@ namespace ReservaWebApplication.Pages.HotelPages
     [Authorize]
     public class CheckoutModel : PageModel
     {
-        ReservationManager reservationManager = ReservationManagerFactory.GetReservationManager(ReservationType.RoomReservation);
+        ReservationManager reservationManager;
         HotelManager hotelManager;
         public Hotel hotel;
         [BindProperty]
@@ -22,9 +22,10 @@ namespace ReservaWebApplication.Pages.HotelPages
        
         public RoomReservation reservation {  get; set; }
         public decimal PriceExcl {  get; set; }
-        public CheckoutModel(HotelManager hotelManager)
+        public CheckoutModel(HotelManager hotelManager, GetReservationManager getReservationManager)
         {
             this.hotelManager = hotelManager;
+            reservationManager = getReservationManager.Invoke(ReservationType.RoomReservation);
         }
         public void OnGet(string? statusMessage)
         {
