@@ -25,6 +25,13 @@ namespace DataAccessLayer
 			}
 			catch (SqlException ex)
 			{
+				switch (ex.Number)
+				{
+					case 53:
+						throw new RepositoryUnavailableException();
+					case 2601:
+						throw new CityNameException();
+				}
 				throw new Exception(ex.Message);
 			}
 

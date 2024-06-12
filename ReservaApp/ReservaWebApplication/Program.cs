@@ -2,6 +2,7 @@ using DataAccessLayer;
 using DomainLayer;
 using DomainLayer.Interfaces;
 using DomainLayer.ServiceClasses;
+using Enums;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Principal;
 
@@ -16,10 +17,8 @@ builder.Services.AddSingleton<ICityDAL, CityDAL>();
 builder.Services.AddSingleton<CityManager>();
 builder.Services.AddSingleton<IRoomDAL, RoomDAL>();
 builder.Services.AddSingleton<RoomManager>();
-builder.Services.AddSingleton<IUserDAL, MemberDAL>();
-builder.Services.AddSingleton<MemberManager>();
-
 builder.Services.AddSingleton(sp => TimeProvider.System);
+
 builder.Services.AddTransient<RoomReservationDAL>();
 builder.Services.AddTransient<ActivityReservationDAL>();
 builder.Services.AddSingleton<GetReservationManager>(sp => reservationType =>
@@ -33,6 +32,20 @@ builder.Services.AddSingleton<GetReservationManager>(sp => reservationType =>
 	}
 });
 
+builder.Services.AddTransient<MemberDAL>();
+builder.Services.AddSingleton<MemberManager>(provider =>
+{
+	var memberDal = provider.GetRequiredService<MemberDAL>();
+	return new MemberManager(memberDal);
+});
+
+builder.Services.AddTransient<EmployeeDAL>();
+
+builder.Services.AddSingleton<EmployeeManager>(provider =>
+{
+	var employeeDal = provider.GetRequiredService<EmployeeDAL>();
+	return new EmployeeManager(employeeDal);
+});
 builder.Services.AddRazorPages();
 
 

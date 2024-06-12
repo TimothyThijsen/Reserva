@@ -16,7 +16,7 @@ namespace DomainLayer.ServiceClasses
         }
 
         public void AddCity(City city) 
-        { 
+        {
             cityDAL.AddCity(city);
         }
 
