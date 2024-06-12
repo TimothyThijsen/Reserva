@@ -173,11 +173,13 @@ namespace ReservaDesktopApp.HotelForms
 			try
 			{
 				roomManager.RemoveRoom(selectedRoom.Id);
+				SetupRoomDisplay();
 			}
 			catch(Exception ex)
 			{
 				MessageBox.Show(ex.Message);
 			}
+			
 		}
 	}
 }

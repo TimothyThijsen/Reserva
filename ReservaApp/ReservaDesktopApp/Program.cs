@@ -35,7 +35,17 @@ namespace ReservaDesktopApp
                     x.AddSingleton<CityManager>();
                     x.AddSingleton<RoomManager>();
                     x.AddSingleton<HotelManager>();
-                })
+					x.AddTransient<MemberDAL>();
+					x.AddSingleton<MemberManager>(provider =>
+					{
+						return new MemberManager(provider.GetRequiredService<MemberDAL>());
+					});
+					x.AddTransient<EmployeeDAL>();
+					x.AddSingleton<EmployeeManager>(provider =>
+					{
+						return new EmployeeManager(provider.GetRequiredService<EmployeeDAL>());
+					});
+				})
                 .Build()
                 .Services;
         }

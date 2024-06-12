@@ -84,7 +84,26 @@ namespace ReservaDesktopApp.HotelForms
 
 		private void btnRemoveHotel_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Not yet implemented");
+			if (selectedHotel == null)
+			{
+				MessageBox.Show("Select a hotel");
+				return;
+			}
+			DialogResult dialogResult = MessageBox.Show("Are you sure to delete?", "Confirm", MessageBoxButtons.YesNo);
+
+			if (dialogResult == DialogResult.Yes)
+			{
+				try
+				{
+					hotelManager.RemoveHotel(selectedHotel.Id);
+					ShowHotels();
+				}
+				catch(Exception ex) 
+				{
+					MessageBox.Show(ex.Message);
+				}
+				  
+			}
 		}
 
 		private void lvHotelDisplay_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)

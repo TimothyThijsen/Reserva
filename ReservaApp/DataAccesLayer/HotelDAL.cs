@@ -174,7 +174,21 @@ namespace DataAccessLayer
 
 		public void RemoveHotel(int id)
 		{
-			throw new NotImplementedException();
+			string query = "BEGIN DECLARE @addressId INT; " +
+				"SET @addressId = (SELECT addressId FROM [Hotel] WHERE id = @id);" +
+				" DELETE FROM [Hotel] WHERE id = @id; " +
+				"DELETE FROM [Address] WHERE id = @addressId; END";
+			SqlCommand cmd = new SqlCommand(query);
+			cmd.Parameters.Clear();
+			cmd.Parameters.AddWithValue("@id", id);
+			try
+			{
+				dbConnection.ModifyDB(cmd);
+			}
+			catch (SqlException ex)
+			{
+				throw new Exception(ex.Message);
+			}
 		}
 	}
 }

@@ -167,7 +167,19 @@ namespace DataAccessLayer
 
 		public void RemoveRoom(int id)
 		{
-			throw new NotImplementedException();
+			string query = "DELETE FROM [ReservedRoom] WHERE roomId = @id; DELETE FROM [Room] WHERE id = @id;";
+			SqlCommand cmd = new SqlCommand(query);
+			cmd.Parameters.Clear();
+			cmd.Parameters.AddWithValue("@id", id);
+
+			try
+			{
+				dbConnection.ModifyDB(cmd);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
 		}
 	}
 }
