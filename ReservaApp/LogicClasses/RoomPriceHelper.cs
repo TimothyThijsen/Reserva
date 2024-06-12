@@ -14,7 +14,7 @@ namespace DomainLayer
 	
 	public static class RoomPriceHelper
 	{
-		const decimal reservaFee = 0.8m;
+		const decimal reservaFee = 0.085m;
 		public static decimal GetTotalPriceExcl(decimal price, DateRange dateRange)
 		{
 			decimal totalPrice = 0;

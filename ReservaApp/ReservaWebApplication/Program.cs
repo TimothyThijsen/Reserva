@@ -35,17 +35,15 @@ builder.Services.AddSingleton<GetReservationManager>(sp => reservationType =>
 builder.Services.AddTransient<MemberDAL>();
 builder.Services.AddSingleton<MemberManager>(provider =>
 {
-	var memberDal = provider.GetRequiredService<MemberDAL>();
-	return new MemberManager(memberDal);
+	return new MemberManager(provider.GetRequiredService<MemberDAL>());
 });
-
 builder.Services.AddTransient<EmployeeDAL>();
-
 builder.Services.AddSingleton<EmployeeManager>(provider =>
 {
-	var employeeDal = provider.GetRequiredService<EmployeeDAL>();
-	return new EmployeeManager(employeeDal);
+	return new EmployeeManager(provider.GetRequiredService<EmployeeDAL>());
 });
+
+
 builder.Services.AddRazorPages();
 
 
