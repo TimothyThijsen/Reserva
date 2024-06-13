@@ -1,4 +1,5 @@
-﻿using DomainLayer;
+﻿using DataAccessLayer.Mapper;
+using DomainLayer;
 using DomainLayer.Exceptions;
 using DomainLayer.Interfaces;
 using Microsoft.Data.SqlClient;
@@ -89,22 +90,97 @@ namespace DataAccessLayer
 
 		public List<User> GetAllUser()
 		{
-			throw new NotImplementedException();
+			string query = "SELECT * FROM [vwEmployee]";
+			SqlCommand cmd = new SqlCommand(query);
+			List<User> employees = new List<User>();
+			try
+			{
+				SqlDataReader reader = dbConnection.GetFromDB(cmd);
+				reader.Read();
+				employees = EmployeeMapper.GetEmployees(reader);
+			}
+			catch (SqlException ex)
+			{
+				throw new Exception(ex.Message);
+			}
+			finally
+			{
+				if (cmd is IDisposable diposable)
+				{
+					cmd.Connection.Close();
+					diposable.Dispose();
+				}
+			}
+
+			return employees;
 		}
 
 		public User GetUser(int id)
 		{
-			throw new NotImplementedException();
+			string query = "SELECT * FROM [vwEmployee] where id = @id";
+			SqlCommand cmd = new SqlCommand(query);
+			cmd.Parameters.AddWithValue("@id", id);
+			Employee employee = null!;
+			try
+			{
+				SqlDataReader reader = dbConnection.GetFromDB(cmd);
+				reader.Read();
+				employee = EmployeeMapper.GetEmployee(reader);
+			}
+			catch (SqlException ex)
+			{
+				throw new Exception(ex.Message);
+			}
+			finally
+			{
+				if (cmd is IDisposable diposable)
+				{
+					cmd.Connection.Close();
+					diposable.Dispose();
+				}
+			}
+			return employee;
 		}
 
 		public User GetUserByEmail(string email)
 		{
-			throw new NotImplementedException();
+			string query = "SELECT * FROM [vwEmployee] where email = @email";
+			SqlCommand cmd = new SqlCommand(query);
+			cmd.Parameters.AddWithValue("@email", email);
+			Employee employee = null!;
+			try
+			{
+				SqlDataReader reader = dbConnection.GetFromDB(cmd);
+				reader.Read();
+				employee = EmployeeMapper.GetEmployee(reader);
+			}
+			catch (SqlException ex)
+			{
+				throw new Exception(ex.Message);
+			}
+			finally
+			{
+				if (cmd is IDisposable diposable)
+				{
+					cmd.Connection.Close();
+					diposable.Dispose();
+				}
+			}
+
+			return employee;
 		}
 
 		public void RemoveUser(int id)
 		{
-			throw new NotImplementedException();
+			string query = "DELETE FROM [Employee] where id = @id; DELETE FROM [User] where id = @id";
+			SqlCommand cmd = new SqlCommand(query);
+			cmd.Parameters.Clear();
+			cmd.Parameters.AddWithValue("@id", id);
+			try
+			{
+				dbConnection.ModifyDB(cmd);
+			}
+			catch (SqlException ex) { throw new Exception(ex.Message); }
 		}
 	}
 }
