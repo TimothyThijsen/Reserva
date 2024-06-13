@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 
 namespace DomainLayer
 {
-
-	
 	public static class RoomPriceHelper
 	{
 		const decimal reservaFee = 0.085m;

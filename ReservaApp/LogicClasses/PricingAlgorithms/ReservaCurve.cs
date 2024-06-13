@@ -20,7 +20,7 @@ namespace DomainLayer.PricingAlgorithms
         {
             decimal priceOnDay = 0;
             double roomPercentageBooked = (double)room.GetBookedAmount(date) / room.Quantity;
-            TimeSpan spanOfDays = date - timeProvider.GetLocalNow(); //DateTime.Today;
+            TimeSpan spanOfDays = date - timeProvider.GetLocalNow();
             int daysUntilDate = spanOfDays.Days;
             daysUntilDate = daysUntilDate >= 1 ? daysUntilDate : 1;
             roomPercentageBooked = roomPercentageBooked > 0 ? roomPercentageBooked : 0.1;
@@ -32,7 +32,7 @@ namespace DomainLayer.PricingAlgorithms
             {
                 priceOnDay = (room.Price * 0.8m) + (decimal)(12.5 * roomPercentageBooked + 8.75);
             }
-
+            //checks if calculated price in allowed range of discount.
             if (priceOnDay < (room.Price * 0.7m))
             {
                 priceOnDay = room.Price * 0.7m;

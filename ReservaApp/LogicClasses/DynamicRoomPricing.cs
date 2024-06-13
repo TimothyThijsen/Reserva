@@ -42,17 +42,18 @@ namespace DomainLayer
             IPricingAlgorithm pricingAlgorithm;
             DynamicPricingAlgorithmFactory dynamicPricingAlgorithmFactory = new DynamicPricingAlgorithmFactory(timeProvider);
             decimal finalPrice = 0;
+            //will loop trough every date in dateRange
             for (DateTime dt = dateRange.Start; dt <= dateRange.End; dt = dt.AddDays(1))
             {
                 decimal priceOnDay = room.Price;
-                foreach(string name in pricingAlgorithms)
+                foreach(string name in pricingAlgorithms)//loops trough all pricingAlgorithms
                 {
                     pricingAlgorithm = dynamicPricingAlgorithmFactory.GetAlgorithm(name);
-                    priceOnDay += pricingAlgorithm.CalculatePriceOnDay(room, dt);
-                }
-                finalPrice += priceOnDay;
+                    priceOnDay += pricingAlgorithm.CalculatePriceOnDay(room, dt);//calculates price differences
+				}
+                finalPrice += priceOnDay;//Adds the calculated differences to base price
             }
-            return Decimal.Round((finalPrice / (dateRange.GetDaysCount() + 1)),2) ;
+            return Decimal.Round((finalPrice / (dateRange.GetDaysCount() + 1)),2);//rounds result to 2 points
         }
 
         
