@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace UnitTesting.MockData
 {
-	public class MockUserDAL : IUserDAL
+	public class MockMemberDAL : IUserDAL
 	{
         private readonly Bogus.Faker faker = new Bogus.Faker("uk");
         List<User> users = new List<User>

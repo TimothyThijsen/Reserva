@@ -19,7 +19,7 @@ namespace UnitTesting
         [TestInitialize]
         public void Setup()
         {
-            _memberManager = new MemberManager(new MockUserDAL());
+            _memberManager = new MemberManager(new MockMemberDAL());
         }
 
         [TestMethod]
