@@ -9,19 +9,14 @@ namespace DomainLayer
 {
     public class ActivitySchedule : ISchedule
     {
+        List<Reservation> _activities;
         public void AddReservation(Reservation reservation)
         {
-            throw new NotImplementedException();
+            _activities.Add(reservation);
         }
-
-        public int GetAvailability(DateRange dateRange, Room room)
-        {
-            throw new NotImplementedException();
-        }
-
         public void RemoveReservation(Reservation reservation)
         {
-            throw new NotImplementedException();
+            _activities.RemoveAt(_activities.FindIndex(r => r.Id == reservation.Id));
         }
     }
 }

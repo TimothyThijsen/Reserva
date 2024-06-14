@@ -140,9 +140,34 @@ namespace DataAccessLayer
             }
         }
 
-        public int GetAvailability(DateRange dateRange, int entityId)
+        public int GetAvailability(DateRange dateRange, int activityId)
         {
-            throw new NotImplementedException();
-        }
+			string query = "SELECT COUNT(id) FROM ActivitiesReservation" +
+                " WHERE activitiesId = 1 AND date <= @endDate AND date >= @startDate;";
+			SqlCommand cmd = new SqlCommand(query);
+			cmd.Parameters.AddWithValue("@startDate", dateRange.Start);
+			cmd.Parameters.AddWithValue("@endDate", dateRange.End);
+			cmd.Parameters.AddWithValue("@activityId", activityId);
+			int availability = 0;
+			try
+			{
+				SqlDataReader reader = dbConnection.GetFromDB(cmd);
+				reader.Read();
+				availability = reader.GetInt32(0);
+			}
+			catch (SqlException ex)
+			{
+				throw new Exception(ex.Message);
+			}
+			finally
+			{
+				if (cmd is IDisposable diposable)
+				{
+					cmd.Connection.Close();
+					diposable.Dispose();
+				}
+			}
+			return availability;
+		}
     }
 }

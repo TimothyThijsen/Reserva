@@ -197,12 +197,12 @@ namespace DataAccessLayer
             cmd.Parameters.AddWithValue("@startDate", dateRange.Start);
             cmd.Parameters.AddWithValue("@endDate", dateRange.End);
             cmd.Parameters.AddWithValue("@roomId", roomId);
-            int availibility = 0;
+            int availability = 0;
             try
             {
                 SqlDataReader reader = dbConnection.GetFromDB(cmd);
                 reader.Read();
-                availibility = reader.GetInt32(0);
+				availability = reader.GetInt32(0);
             }
             catch (SqlException ex)
             {
@@ -216,7 +216,7 @@ namespace DataAccessLayer
                     diposable.Dispose();
                 }
             }
-            return availibility;
+            return availability;
         }
     }
 }
