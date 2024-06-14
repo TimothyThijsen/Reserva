@@ -1,9 +1,12 @@
+using DomainLayer;
 using DomainLayer.ServiceClasses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
 using Newtonsoft.Json;
 using ReservaWebApplication.Models;
+using System.Collections.Generic;
+using System;
 
 namespace ReservaWebApplication.Pages
 {
@@ -11,14 +14,18 @@ namespace ReservaWebApplication.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         public CityManager cityManager;
+        HotelManager hotelManager;
+        public List<Hotel> hotels;
+        public List<City> cities;   
         [BindProperty]
         public SearchBarPartialModel SearchBarPartialModel { get; set; } = new SearchBarPartialModel();
         public SearchModel SearchModel { get; set; } = new SearchModel();
         public string StatusMessage { get; set; }
-        public IndexModel(ILogger<IndexModel> logger, CityManager cityManager)
+        public IndexModel(ILogger<IndexModel> logger, CityManager cityManager, HotelManager hotelManager)
         {
             _logger = logger;
             this.cityManager = cityManager;
+            this.hotelManager = hotelManager;
         }
 
         public void OnGet()
@@ -26,7 +33,9 @@ namespace ReservaWebApplication.Pages
             HttpContext.Session.Remove("prev_page");
             try
             {
-                SearchBarPartialModel.Cities = cityManager.GetAllCities();
+                cities = cityManager.GetAllCities();
+                hotels = hotelManager.GetAllHotels();
+                SearchBarPartialModel.Cities = cities.GetRange(0, cities.Count); ;
             }
             catch (Exception ex)
             {
@@ -34,7 +43,10 @@ namespace ReservaWebApplication.Pages
             }
 
             SearchBarPartialModel.SearchModel = SearchModel;
-
+            
+            int index = 4;
+            hotels.RemoveRange(index, hotels.Count - index);
+            cities.RemoveRange(index, cities.Count - index);
         }
         public IActionResult OnPost()
         {

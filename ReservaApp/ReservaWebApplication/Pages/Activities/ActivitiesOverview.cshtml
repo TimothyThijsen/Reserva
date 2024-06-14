@@ -3,4 +3,20 @@
 @{
 }
 
-not implemented
+<div class="alert alert-info" role="alert">
+	Reservation of activity is not a working feature.
+</div>
+@foreach (Activity activity in Model.activitiesList)
+{
+	<div class="card">
+		<div class="card-header"> 
+			<h4>@activity.Name</h4>
+		</div>
+		<div class="card-body">
+			<p>price: @activity.Price.ToString("€0.00")</p>
+			<p>capacity: @activity.Capacity</p>
+			<p>City: @Model.cityManager.GetCity(activity.CityId).Name</p>
+			<p>Descrpition: @activity.Description</p>
+		</div>
+	</div>
+}

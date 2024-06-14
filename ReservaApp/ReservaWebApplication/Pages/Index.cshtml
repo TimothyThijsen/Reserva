@@ -11,21 +11,47 @@
 <partial name="_SearchBarPartial" model="@Model.SearchBarPartialModel" />
 
 <partial name="_StatusMessagePartial" model="@Model.StatusMessage" />
-<h2>Last-minute deals:</h2>
+<h2>Featured Hotels:</h2>
 <div class="scrollable-cards">
-    <div class="card border-2 shadow">
-        <img src="https://th.bing.com/th/id/OIP.YlF5RjQbKdSe-jPvbJuo7QHaE8?w=287&h=191&c=7&r=0&o=5&dpr=1.5&pid=1.7" class="card-img-top" alt="room">
-        <div class="card-body">
-            <h5 class="card-title">Single bedroom</h5>
-            <p class="card-text">Cost Per night: $100</p>
-            <p class="card-text">1 double bed</p>
-            <p class="card-text">Sleeps 2</p>
+    @foreach (Hotel hotel in Model.hotels)
+    {
+        <div class="col-11 col-lg-6">
+            <div class="card w-100  border-3 my-3 mx-3 shadow">
+                <div class="row g-0 ">
+                    <div class="col-4 d-flex flex-column hotelImage ">
+                        <img class="img-fluid overflow-hidden rounded-start" src="https://www.checkatrade.com/blog/wp-content/uploads/2021/04/Feature-cost-to-build-a-hotel.jpg" class="card-img-top" alt="hotel">
+                    </div>
+                    <div class="col-8 d-flex align-items-start flex-column mb-3 ">
+                        <div class="card-body">
+                            <h5 class="card-title">@hotel.Name</h5>
+                            <p class="card-text m-0 text-muted">@Model.cityManager.GetCity(hotel.CityId).Name, @hotel.Address.ToString()</p>
+                            <p class="card-text m-0">@hotel.Description</p>
+                            <p class="card-subtitle">Rooms</p>
+
+                        </div>
+                        <div class="p-2 col-12 d-flex mt-auto  text-center">
+                            <a asp-page="/HotelPages/HotelPage" asp-route-id="@hotel.Id" class="btn btn-primary stretched-link ms-auto">Check availability <i class="fas fa-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-footer">
-            <a asp-page="/RoomPages/RoomPage" class="btn align-self-center btn-primary">Reserve</a>
-        </div>
-    </div>
+    }
     
 </div>
+<h2>Top locations:</h2>
+<div class="scrollable-cards">
+    @foreach (City city in Model.cities)
+    {
+        <div class="card">
+            <div class="card-header">
+                <h4>@city.Name</h4>
+            </div>
+            <div class="card-body">
+                <p class="text-wrap">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+        </div>
+    }
 
+</div>
 
