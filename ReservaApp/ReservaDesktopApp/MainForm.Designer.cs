@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             panelMenu = new Panel();
+            btnEmployee = new Button();
+            btnActivity = new Button();
             btnLocationView = new Button();
             btnHotelOverview = new Button();
             panelLogo = new Panel();
@@ -38,7 +40,6 @@
             lblTitle = new Label();
             btnCloseChildForm = new Button();
             panelDesktopPanel = new Panel();
-            btnActivity = new Button();
             panelMenu.SuspendLayout();
             panelLogo.SuspendLayout();
             panelTitle.SuspendLayout();
@@ -47,6 +48,7 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.FromArgb(0, 11, 105);
+            panelMenu.Controls.Add(btnEmployee);
             panelMenu.Controls.Add(btnActivity);
             panelMenu.Controls.Add(btnLocationView);
             panelMenu.Controls.Add(btnHotelOverview);
@@ -57,6 +59,46 @@
             panelMenu.Name = "panelMenu";
             panelMenu.Size = new Size(261, 825);
             panelMenu.TabIndex = 0;
+            // 
+            // btnEmployee
+            // 
+            btnEmployee.Dock = DockStyle.Top;
+            btnEmployee.FlatAppearance.BorderSize = 0;
+            btnEmployee.FlatStyle = FlatStyle.Flat;
+            btnEmployee.Font = new Font("Segoe UI", 10F);
+            btnEmployee.ForeColor = Color.Gainsboro;
+            btnEmployee.Image = (Image)resources.GetObject("btnEmployee.Image");
+            btnEmployee.ImageAlign = ContentAlignment.MiddleLeft;
+            btnEmployee.Location = new Point(0, 427);
+            btnEmployee.Margin = new Padding(4, 5, 4, 5);
+            btnEmployee.Name = "btnEmployee";
+            btnEmployee.Padding = new Padding(17, 0, 0, 0);
+            btnEmployee.Size = new Size(261, 100);
+            btnEmployee.TabIndex = 4;
+            btnEmployee.Text = "   Employees";
+            btnEmployee.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnEmployee.UseVisualStyleBackColor = true;
+            btnEmployee.Click += btnEmployee_Click;
+            // 
+            // btnActivity
+            // 
+            btnActivity.Dock = DockStyle.Top;
+            btnActivity.FlatAppearance.BorderSize = 0;
+            btnActivity.FlatStyle = FlatStyle.Flat;
+            btnActivity.Font = new Font("Segoe UI", 10F);
+            btnActivity.ForeColor = Color.Gainsboro;
+            btnActivity.Image = (Image)resources.GetObject("btnActivity.Image");
+            btnActivity.ImageAlign = ContentAlignment.MiddleLeft;
+            btnActivity.Location = new Point(0, 327);
+            btnActivity.Margin = new Padding(4, 5, 4, 5);
+            btnActivity.Name = "btnActivity";
+            btnActivity.Padding = new Padding(17, 0, 0, 0);
+            btnActivity.Size = new Size(261, 100);
+            btnActivity.TabIndex = 3;
+            btnActivity.Text = "   Activities";
+            btnActivity.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnActivity.UseVisualStyleBackColor = true;
+            btnActivity.Click += btnActivity_Click;
             // 
             // btnLocationView
             // 
@@ -171,26 +213,6 @@
             panelDesktopPanel.Size = new Size(1080, 698);
             panelDesktopPanel.TabIndex = 2;
             // 
-            // btnActivity
-            // 
-            btnActivity.Dock = DockStyle.Top;
-            btnActivity.FlatAppearance.BorderSize = 0;
-            btnActivity.FlatStyle = FlatStyle.Flat;
-            btnActivity.Font = new Font("Segoe UI", 10F);
-            btnActivity.ForeColor = Color.Gainsboro;
-            btnActivity.Image = (Image)resources.GetObject("btnActivity.Image");
-            btnActivity.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActivity.Location = new Point(0, 327);
-            btnActivity.Margin = new Padding(4, 5, 4, 5);
-            btnActivity.Name = "btnActivity";
-            btnActivity.Padding = new Padding(17, 0, 0, 0);
-            btnActivity.Size = new Size(261, 100);
-            btnActivity.TabIndex = 3;
-            btnActivity.Text = "   Activities";
-            btnActivity.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnActivity.UseVisualStyleBackColor = true;
-            btnActivity.Click += btnActivity_Click;
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -222,5 +244,6 @@
         private Button btnCloseChildForm;
 		private Button btnLocationView;
         private Button btnActivity;
+        private Button btnEmployee;
     }
 }

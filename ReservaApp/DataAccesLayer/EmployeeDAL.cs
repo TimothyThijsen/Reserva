@@ -17,7 +17,7 @@ namespace DataAccessLayer
         public void AddUser(User user)
         {
             Employee employee = (Employee)user;
-            string query = "BEGIN DECLARE @userId INT; INSERT INTO [User] (name, email, password, role, dateOfBirth) VALUES (@name, @email, @password,  @role, @dateOfBirth);SET @userId = SCOPE_IDENTITY();" +
+            string query = "DECLARE @userId INT; INSERT INTO [User] (name, email, password, role, dateOfBirth) VALUES (@name, @email, @password,  @role, @dateOfBirth);SET @userId = SCOPE_IDENTITY();" +
                 "INSERT INTO [Employee] (id, salary, phoneNumber) VALUES (@userId, @salary, @phoneNumber);";
             SqlCommand cmd = new SqlCommand(query);
             cmd.Parameters.Clear();

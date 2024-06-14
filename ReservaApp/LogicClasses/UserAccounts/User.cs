@@ -2,12 +2,12 @@
 {
     public abstract class User
     {
-        int? id;
+        int id;
         string firstName, lastName, email;
         string? password;
         DateOnly dateOfBirth;
 
-        public int? Id { get { return id; } }
+        public int Id { get { return id; } }
         public string FirstName { get { return firstName; } }
         public string LastName { get { return lastName; } }
         public string Email { get { return email; } }

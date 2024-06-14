@@ -14,16 +14,16 @@ namespace DomainLayer.ServiceClasses
             this.userDAL = userDAL;
         }
 
-        public void AddEmployee(MemberModel memberModel)
+        public void AddEmployee(Employee employee)
         {
-            if (!ObjectValidator.HasNoEmptyFields(memberModel))
+            if (!ObjectValidator.HasNoEmptyFields(employee))
             {
                 throw new ValidationException("Incomplete member model");
             }
 
             //Member member = memberModel.ToLogicLayer();
             //member.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(member.Password);
-
+            userDAL.AddUser(employee);
             //.AddUser(member);
         }
 
@@ -31,22 +31,22 @@ namespace DomainLayer.ServiceClasses
         {
             userDAL.RemoveUser(id);
         }
-        public Member GetEmployee(int id)
+        public Employee GetEmployee(int id)
         {
-            return (Member)userDAL.GetUser(id);
+            return (Employee)userDAL.GetUser(id);
         }
 
-        public List<Member> GetAllMembers()
+        public List<Employee> GetAllEmployees()
         {
-            return userDAL.GetAllUser().Select(x => (Member)x).ToList();
+            return userDAL.GetAllUser().Select(x => (Employee)x).ToList();
         }
-        public Member GetEmployeeByEmail(string email)
+        public Employee GetEmployeeByEmail(string email)
         {
-            return (Member)userDAL.GetUserByEmail(email);
+            return (Employee)userDAL.GetUserByEmail(email);
         }
-        public Member Login(string email, string password)
+        public Employee Login(string email, string password)
         {
-            Member member = GetEmployeeByEmail(email);
+            Employee member = GetEmployeeByEmail(email);
             if (member == null)
             {
                 throw new CredentialException();

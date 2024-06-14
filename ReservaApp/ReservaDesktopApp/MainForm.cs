@@ -1,5 +1,7 @@
 ﻿
 
+using ReservaDesktopApp.EmployeeForms;
+
 namespace ReservaDesktopApp
 {
     public partial class MainForm : Form
@@ -100,6 +102,11 @@ namespace ReservaDesktopApp
         private void btnActivity_Click(object sender, EventArgs e)
         {
             OpenChildForm(new ActivitiesOverviewForm(), sender);
+        }
+
+        private void btnEmployee_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new EmployeeOverViewForm(), sender);
         }
     }
 }
