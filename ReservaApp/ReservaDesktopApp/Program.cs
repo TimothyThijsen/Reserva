@@ -32,9 +32,11 @@ namespace ReservaDesktopApp
                     x.AddSingleton<IHotelDAL, HotelDAL>();
                     x.AddSingleton<IRoomDAL, RoomDAL>();
                     x.AddSingleton<ICityDAL, CityDAL>();
+                    x.AddSingleton<IActivityDAL, ActivityDAL>();
                     x.AddSingleton<CityManager>();
                     x.AddSingleton<RoomManager>();
                     x.AddSingleton<HotelManager>();
+                    x.AddSingleton<ActivitiesManager>();
 					x.AddTransient<MemberDAL>();
 					x.AddSingleton<MemberManager>(provider =>
 					{

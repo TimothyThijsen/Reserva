@@ -20,7 +20,7 @@ namespace DataAccessLayer
 		}
 		public void AddActivity(Activity activity)
 		{
-			string query = "BEGIN DECLARE @addressId INT; INSERT INTO [Address] (street, postalCode) VALUES (@street, @postalCode); addressId = SCOPE_IDENTITY();" +
+			string query = "BEGIN DECLARE @addressId INT; INSERT INTO [Address] (street, postalCode) VALUES (@street, @postalCode); SET @addressId = SCOPE_IDENTITY();" +
 				"INSERT INTO [Activity] (name, description, price, addressId, cityId, capacity) VALUES (@name, @description, @price, @addressId, @cityId, @capacity); END";
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
