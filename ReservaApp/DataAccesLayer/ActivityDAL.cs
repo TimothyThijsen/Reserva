@@ -44,7 +44,7 @@ namespace DataAccessLayer
 
 		public void EditActivity(Activity activity)
 		{
-			string query = "BEGIN DECLARE @addressId INT; @addressId = addressId FROM [Activity] WHERE id = @id;" +
+			string query = "DECLARE @addressId INT; SELECT @addressId = addressId FROM [Activity] WHERE id = @id;" +
 				"UPDATE [Activity] SET name = @name, description = @description, price = @price, " +
 				"capacity = @capacity, cityId = @cityId WHERE id = @id;" +
 				"UPDATE [Address] SET street = @street, postalCode = @postalCode WHERE id = @addressId";
@@ -149,7 +149,7 @@ namespace DataAccessLayer
 
 		public void RemoveActivity(Activity activity)
 		{
-			string query = "BEGIN DECLARE @addressId INT; @addressId = addressId FROM [Activity] WHERE id = @id; " +
+			string query = "DECLARE @addressId INT; SELECT @addressId = addressId FROM [Activity] WHERE id = @id; " +
 				"DELETE FROM [Activity] WHERE id = @id; DELETE FROM [Address] WHERE id = @addressId;";
 			SqlCommand cmd = new SqlCommand(query);
 			cmd.Parameters.Clear();
