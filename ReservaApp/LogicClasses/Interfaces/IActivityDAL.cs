@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DomainLayer.Interfaces
+﻿namespace DomainLayer.Interfaces
 {
-	public interface IActivityDAL
-	{
-		void AddActivity(Activity activity);
-		void EditActivity(Activity activity);
-		void RemoveActivity(Activity activity);
-		List<Activity> GetAllActivities();
-		List<Activity> GetAllActivitiesByCity(int cityId);
-		Activity GetActivityById(int id);
+    public interface IActivityDAL
+    {
+        void AddActivity(Activity activity);
+        void EditActivity(Activity activity);
+        void RemoveActivity(Activity activity);
+        List<Activity> GetAllActivities();
+        List<Activity> GetAllActivitiesByCity(int cityId);
+        Activity GetActivityById(int id);
 
-	}
+    }
 }

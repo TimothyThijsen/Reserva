@@ -1,7 +1,6 @@
 using DomainLayer;
 using DomainLayer.ServiceClasses;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ReservaWebApplication.Pages.AccountPages
@@ -13,8 +12,8 @@ namespace ReservaWebApplication.Pages.AccountPages
     {
         public Member Member { get; set; }
         public MemberManager MemberManager { get; set; }
-        public AccountViewModel(MemberManager memberManager) 
-        { 
+        public AccountViewModel(MemberManager memberManager)
+        {
             MemberManager = memberManager;
         }
 

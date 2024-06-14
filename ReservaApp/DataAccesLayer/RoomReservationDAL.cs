@@ -2,12 +2,6 @@
 using DomainLayer;
 using DomainLayer.Interfaces;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
@@ -172,7 +166,7 @@ namespace DataAccessLayer
                 cmd.Parameters.AddWithValue("@reservationId", reservation.Id);
                 reader = dbConnection.GetFromDB(cmd);
                 ((RoomReservation)reservation).ReservedRooms = ReservationMapper.GetReservedRoom(reader);
-                
+
             }
             catch (SqlException ex)
             {
@@ -202,7 +196,7 @@ namespace DataAccessLayer
             {
                 SqlDataReader reader = dbConnection.GetFromDB(cmd);
                 reader.Read();
-				availability = reader.GetInt32(0);
+                availability = reader.GetInt32(0);
             }
             catch (SqlException ex)
             {

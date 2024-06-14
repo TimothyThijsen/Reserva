@@ -2,12 +2,6 @@
 using DomainLayer;
 using DomainLayer.Interfaces;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
@@ -142,32 +136,32 @@ namespace DataAccessLayer
 
         public int GetAvailability(DateRange dateRange, int activityId)
         {
-			string query = "SELECT COUNT(id) FROM ActivitiesReservation" +
+            string query = "SELECT COUNT(id) FROM ActivitiesReservation" +
                 " WHERE activitiesId = 1 AND date <= @endDate AND date >= @startDate;";
-			SqlCommand cmd = new SqlCommand(query);
-			cmd.Parameters.AddWithValue("@startDate", dateRange.Start);
-			cmd.Parameters.AddWithValue("@endDate", dateRange.End);
-			cmd.Parameters.AddWithValue("@activityId", activityId);
-			int availability = 0;
-			try
-			{
-				SqlDataReader reader = dbConnection.GetFromDB(cmd);
-				reader.Read();
-				availability = reader.GetInt32(0);
-			}
-			catch (SqlException ex)
-			{
-				throw new Exception(ex.Message);
-			}
-			finally
-			{
-				if (cmd is IDisposable diposable)
-				{
-					cmd.Connection.Close();
-					diposable.Dispose();
-				}
-			}
-			return availability;
-		}
+            SqlCommand cmd = new SqlCommand(query);
+            cmd.Parameters.AddWithValue("@startDate", dateRange.Start);
+            cmd.Parameters.AddWithValue("@endDate", dateRange.End);
+            cmd.Parameters.AddWithValue("@activityId", activityId);
+            int availability = 0;
+            try
+            {
+                SqlDataReader reader = dbConnection.GetFromDB(cmd);
+                reader.Read();
+                availability = reader.GetInt32(0);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (cmd is IDisposable diposable)
+                {
+                    cmd.Connection.Close();
+                    diposable.Dispose();
+                }
+            }
+            return availability;
+        }
     }
 }

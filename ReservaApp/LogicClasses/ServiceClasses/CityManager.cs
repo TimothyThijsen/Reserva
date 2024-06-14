@@ -1,21 +1,16 @@
 ﻿using DomainLayer.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainLayer.ServiceClasses
 {
     public class CityManager
     {
         ICityDAL cityDAL;
-        public CityManager(ICityDAL cityDAL) 
-        { 
+        public CityManager(ICityDAL cityDAL)
+        {
             this.cityDAL = cityDAL;
         }
 
-        public void AddCity(City city) 
+        public void AddCity(City city)
         {
             cityDAL.AddCity(city);
         }
@@ -27,7 +22,8 @@ namespace DomainLayer.ServiceClasses
         public List<City> GetAllCities()
         {
             return cityDAL.GetAllCities();
-        }public City GetCity(int cityId)
+        }
+        public City GetCity(int cityId)
         {
             return cityDAL.GetCity(cityId);
         }

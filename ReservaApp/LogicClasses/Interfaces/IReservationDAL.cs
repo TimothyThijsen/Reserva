@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DomainLayer.Interfaces
+﻿namespace DomainLayer.Interfaces
 {
     public interface IReservationDAL
     {
@@ -13,6 +7,6 @@ namespace DomainLayer.Interfaces
         List<Reservation> GetAllReservationByMember(int userId);
         List<Reservation> GetAllReservationByEntityId(int entityId);
         Reservation GetByReservationId(int id);
-        int GetAvailability(DateRange dateRange, int entityId); 
+        int GetAvailability(DateRange dateRange, int entityId);
     }
 }

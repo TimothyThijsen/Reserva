@@ -1,10 +1,4 @@
 ﻿using LogicClasses.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainLayer
 {
@@ -28,7 +22,7 @@ namespace DomainLayer
         }
         public bool IsBiggerThan(DateTime date)
         {
-            if(Start >  date) return true;
+            if (Start > date) return true;
             return false;
         }
         public int GetDaysCount()

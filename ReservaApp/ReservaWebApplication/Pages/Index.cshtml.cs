@@ -1,10 +1,7 @@
-using DataAccessLayer;
-using DomainLayer;
 using DomainLayer.ServiceClasses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
-using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using ReservaWebApplication.Models;
 
@@ -35,11 +32,11 @@ namespace ReservaWebApplication.Pages
             {
                 StatusMessage = ex.Message;
             }
-           
-            SearchBarPartialModel.SearchModel = SearchModel;   
-            
+
+            SearchBarPartialModel.SearchModel = SearchModel;
+
         }
-        public IActionResult OnPost() 
+        public IActionResult OnPost()
         {
             HttpContext.Session.SetString("search_model", JsonConvert.SerializeObject(SearchBarPartialModel.SearchModel));
             return RedirectToPage("/HotelPages/HotelsView");

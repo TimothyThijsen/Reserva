@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DomainLayer
+﻿namespace DomainLayer
 {
     public class Activity
     {
@@ -36,7 +29,7 @@ namespace DomainLayer
         }
         public Activity(int id, int cityId, int capacity, string name, string description, decimal price, Address address) : this(cityId, capacity, name, description, price, address)
         {
-             this.id = id;
+            this.id = id;
         }
     }
 }

@@ -4,19 +4,19 @@ namespace DomainLayer
 {
     public class RoomSchedule : ISchedule
     {
-        List<Reservation> scheduledReservations = new List<Reservation> ();
+        List<Reservation> scheduledReservations = new List<Reservation>();
         public void AddReservation(Reservation reservation)
         {
             scheduledReservations.Add(reservation);
         }
-        public void AddListOfReservations(List<Reservation> reservations) 
-        { 
+        public void AddListOfReservations(List<Reservation> reservations)
+        {
             foreach (RoomReservation reservation in reservations)
             {
-                 AddReservation(reservation);
+                AddReservation(reservation);
             }
         }
-        public int GetAvailability(DateRange dateRange,Room room)
+        public int GetAvailability(DateRange dateRange, Room room)
         {
             int countScheduled = 0;
             foreach (RoomReservation reservation in scheduledReservations)

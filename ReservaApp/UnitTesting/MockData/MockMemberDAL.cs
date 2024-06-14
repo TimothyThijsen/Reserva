@@ -1,15 +1,7 @@
-﻿
-using DomainLayer;
-using DomainLayer.Interfaces;
-using LogicClasses.Interfaces;
-using Models;
-using System;
-using System.ComponentModel.DataAnnotations;
-
-namespace UnitTesting.MockData
+﻿namespace UnitTesting.MockData
 {
-	public class MockMemberDAL : IUserDAL
-	{
+    public class MockMemberDAL : IUserDAL
+    {
         private readonly Bogus.Faker faker = new Bogus.Faker("uk");
         List<User> users = new List<User>
         {
@@ -17,17 +9,17 @@ namespace UnitTesting.MockData
         };
 
         int _id = 2;
-		public User GetUser(int id)
-		{
-			int index = users.FindIndex(u => u.Id == id);
-            
-			return users[index];
-		}
+        public User GetUser(int id)
+        {
+            int index = users.FindIndex(u => u.Id == id);
 
-		public string[] GetCredentials(string email)
-		{
-			throw new NotImplementedException();
-		}
+            return users[index];
+        }
+
+        public string[] GetCredentials(string email)
+        {
+            throw new NotImplementedException();
+        }
 
         public void AddUser(User user)
         {
@@ -35,7 +27,7 @@ namespace UnitTesting.MockData
             {
                 throw new EmailValidationException();
             }
-            User userToAdd = new Member(_id,user.FirstName,user.LastName,user.Email,user.DateOfBirth,((Member)user).MemberType,false,user.Password);
+            User userToAdd = new Member(_id, user.FirstName, user.LastName, user.Email, user.DateOfBirth, ((Member)user).MemberType, false, user.Password);
             _id++;
 
             users.Add(userToAdd);
@@ -58,7 +50,7 @@ namespace UnitTesting.MockData
             {
                 users[index] = user;
             }
-            
+
         }
         public List<User> GetAllUser()
         {
@@ -68,7 +60,7 @@ namespace UnitTesting.MockData
         public User? GetUserByEmail(string email)
         {
             int index = users.FindIndex(u => u.Email == email);
-            if(index < 0)
+            if (index < 0)
             {
                 return null;
             }

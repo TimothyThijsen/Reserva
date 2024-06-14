@@ -1,8 +1,5 @@
-using DataAccessLayer;
 using DomainLayer;
-using DomainLayer.Interfaces;
 using DomainLayer.ServiceClasses;
-using Factory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models;
@@ -17,7 +14,7 @@ namespace ReservaWebApplication.Pages.HotelPages
         public CityManager cityManager;
         public List<Hotel> Hotels { get; set; } = new List<Hotel>();
         [BindProperty]
-        public SearchBarPartialModel SearchBarPartialModel { get; set; } = new SearchBarPartialModel(); 
+        public SearchBarPartialModel SearchBarPartialModel { get; set; } = new SearchBarPartialModel();
         SearchModel? SearchModel { get; set; } = new SearchModel();
         public string StatusMessage { get; set; }
         public HotelsViewModel(HotelManager hotelManager, CityManager cityManager)
@@ -37,7 +34,7 @@ namespace ReservaWebApplication.Pages.HotelPages
             SearchBarPartialModel.SearchModel = SearchModel;
             Hotels = hotelManager.GetHotelsBySearchModel(SearchBarPartialModel.SearchModel);
 
-            
+
         }
         public IActionResult OnPost()
         {

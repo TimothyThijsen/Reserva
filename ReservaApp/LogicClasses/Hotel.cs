@@ -1,9 +1,4 @@
-﻿using DomainLayer.Interfaces;
-using DomainLayer.ServiceClasses;
-using Models;
-using System.ComponentModel;
-using System.Net;
-using System.Net.Sockets;
+﻿using Models;
 
 namespace DomainLayer
 {
@@ -23,14 +18,15 @@ namespace DomainLayer
         public Address Address { get { return address; } }
         //public double Rating { get { return rating; } }
         public List<Room>? Rooms { get { return rooms; } set { rooms = value; } }
-        public Hotel(string name,string description, int cityId, Address address, string pricingAlgorithms)
+        public Hotel(string name, string description, int cityId, Address address, string pricingAlgorithms)
         {
             this.name = name;
             this.description = description;
             this.cityId = cityId;
             this.address = address;
             this.pricingAlgorithms = pricingAlgorithms;
-        }public Hotel(int id, string name,string description, int cityId, Address address, string pricingAlgorithms) : this(name,description,cityId,address,pricingAlgorithms)
+        }
+        public Hotel(int id, string name, string description, int cityId, Address address, string pricingAlgorithms) : this(name, description, cityId, address, pricingAlgorithms)
         {
             this.id = id;
         }

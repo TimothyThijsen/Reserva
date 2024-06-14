@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.VisualStudio.TestPlatform.Common.Utilities;
-
-namespace UnitTesting
+﻿namespace UnitTesting
 {
     [TestClass]
     public class HotelUT
@@ -23,12 +15,12 @@ namespace UnitTesting
         [TestMethod]
         public void AddHotel()
         {
-            Hotel hotel = new Hotel(2, faker.Company.CompanyName(),faker.Lorem.Paragraph(), 1, new Address(faker.Person.Address.Street,faker.Person.Address.ZipCode),"ReservaCurve");
-            
+            Hotel hotel = new Hotel(2, faker.Company.CompanyName(), faker.Lorem.Paragraph(), 1, new Address(faker.Person.Address.Street, faker.Person.Address.ZipCode), "ReservaCurve");
+
             _hotelManager.AddHotel(hotel);
 
             Assert.IsTrue(_hotelManager.GetAllHotels().Contains(hotel));
-            Assert.AreEqual(2,_hotelManager.GetAllHotels().Count);
+            Assert.AreEqual(2, _hotelManager.GetAllHotels().Count);
         }
 
         [TestMethod]
@@ -38,7 +30,7 @@ namespace UnitTesting
             _hotelManager.AddHotel(hotel);
             Hotel editHotel = new Hotel(2, "Grand hotel", faker.Lorem.Paragraph(), 1, new Address(faker.Person.Address.Street, faker.Person.Address.ZipCode), "ReservaCurve");
             _hotelManager.EditHotel(editHotel);
-            
+
             Assert.AreEqual("Grand hotel", _hotelManager.GetHotelById(hotel.Id).Name);
         }
 
@@ -48,7 +40,7 @@ namespace UnitTesting
             List<Hotel> hotelList = new List<Hotel>();
             hotelList.Add(new Hotel(2, faker.Company.CompanyName(), faker.Lorem.Paragraph(), 1, new Address(faker.Person.Address.Street, faker.Person.Address.ZipCode), "ReservaCurve"));
             hotelList.Add(new Hotel(3, faker.Company.CompanyName(), faker.Lorem.Paragraph(), 1, new Address(faker.Person.Address.Street, faker.Person.Address.ZipCode), "ReservaCurve"));
-            foreach(Hotel hotel in hotelList)
+            foreach (Hotel hotel in hotelList)
             {
                 _hotelManager.AddHotel(hotel);
             }
@@ -59,8 +51,8 @@ namespace UnitTesting
             Assert.IsNotNull(_hotelManager.GetAllHotels().Find(h => h.Id == 3));
             Assert.AreEqual(2, _hotelManager.GetAllHotels().Count);
         }
-        
-       
+
+
 
     }
 }

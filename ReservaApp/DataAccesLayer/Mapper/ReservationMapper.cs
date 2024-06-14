@@ -1,11 +1,5 @@
 ﻿using DomainLayer;
-using DomainLayer.Interfaces;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Mapper
 {
@@ -15,11 +9,11 @@ namespace DataAccessLayer.Mapper
         {
             int id = (int)reader["id"];
             int userId = (int)reader["userId"];
-            decimal totalPrice = (decimal)reader["totalPrice"]; 
-            bool isCancelled = (bool)reader["isCancelled"]; 
+            decimal totalPrice = (decimal)reader["totalPrice"];
+            bool isCancelled = (bool)reader["isCancelled"];
             int amountOfGuests = (int)reader["amountOfGuests"];
-            DateTime startDate = (DateTime)reader["startDate"]; 
-            DateTime endDate = (DateTime)reader["endDate"]; 
+            DateTime startDate = (DateTime)reader["startDate"];
+            DateTime endDate = (DateTime)reader["endDate"];
             return new RoomReservation(id, userId, amountOfGuests, totalPrice, isCancelled, startDate, endDate);
         }
 
@@ -56,14 +50,14 @@ namespace DataAccessLayer.Mapper
         }
         public static Reservation GetActivityReservation(SqlDataReader reader)
         {
-			int id = (int)reader["id"];
-			int userId = (int)reader["userId"];
-			decimal totalPrice = (decimal)reader["totalPrice"];
-			bool isCancelled = (bool)reader["isCancelled"];
-			int amountOfGuests = (int)reader["amountOfGuests"];
+            int id = (int)reader["id"];
+            int userId = (int)reader["userId"];
+            decimal totalPrice = (decimal)reader["totalPrice"];
+            bool isCancelled = (bool)reader["isCancelled"];
+            int amountOfGuests = (int)reader["amountOfGuests"];
             int activitiesId = (int)reader["activitiesId"];
-			DateTime date = (DateTime)reader["date"];
-			return new ActivityReservation(id, userId, amountOfGuests, totalPrice, isCancelled,activitiesId,date);
+            DateTime date = (DateTime)reader["date"];
+            return new ActivityReservation(id, userId, amountOfGuests, totalPrice, isCancelled, activitiesId, date);
 
         }
     }

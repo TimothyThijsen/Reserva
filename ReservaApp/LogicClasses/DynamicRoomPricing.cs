@@ -2,13 +2,6 @@
 using DomainLayer.ServiceClasses;
 using Factory;
 using Models;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainLayer
 {
@@ -16,19 +9,19 @@ namespace DomainLayer
     {
         TimeProvider timeProvider;
         ReservationManager roomReservationManager;
-        public DynamicRoomPricing(TimeProvider timeProvider, ReservationManager roomReservationManager) 
-        { 
+        public DynamicRoomPricing(TimeProvider timeProvider, ReservationManager roomReservationManager)
+        {
             this.timeProvider = timeProvider;
             this.roomReservationManager = roomReservationManager;
         }
         public List<RoomDTO> CalculateRoomPrices(Hotel hotel, DateRange dateRange)
         {
             List<RoomDTO> roomsDTOList = new List<RoomDTO>();
-			List<string> pricingAlgorithms = hotel.PricingAlgorithms.Split(", ").ToList();
+            List<string> pricingAlgorithms = hotel.PricingAlgorithms.Split(", ").ToList();
             foreach (Room room in hotel.Rooms!)
             {
                 room.Schedule.AddListOfReservations(roomReservationManager.GetAllReservationByRoomId(room.Id));
-				decimal price = CalculateRoomPriceAverage(room, dateRange, pricingAlgorithms);
+                decimal price = CalculateRoomPriceAverage(room, dateRange, pricingAlgorithms);
                 roomsDTOList.Add(new RoomDTO(room.Id, room.Quantity, room.Name, room.HotelId,
                     price,
                     room.Capacity, room.BedType
@@ -46,16 +39,16 @@ namespace DomainLayer
             for (DateTime dt = dateRange.Start; dt <= dateRange.End; dt = dt.AddDays(1))
             {
                 decimal priceOnDay = room.Price;
-                foreach(string name in pricingAlgorithms)//loops trough all pricingAlgorithms
+                foreach (string name in pricingAlgorithms)//loops trough all pricingAlgorithms
                 {
                     pricingAlgorithm = dynamicPricingAlgorithmFactory.GetAlgorithm(name);
                     priceOnDay += pricingAlgorithm.CalculatePriceOnDay(room, dt);//calculates price differences
-				}
+                }
                 finalPrice += priceOnDay;//Adds the calculated differences to base price
             }
-            return Decimal.Round((finalPrice / (dateRange.GetDaysCount() + 1)),2);//rounds result to 2 points
+            return Decimal.Round((finalPrice / (dateRange.GetDaysCount() + 1)), 2);//rounds result to 2 points
         }
 
-        
+
     }
 }

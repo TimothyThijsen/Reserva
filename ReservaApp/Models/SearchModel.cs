@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DomainLayer;
+﻿using System.Globalization;
 
 
 namespace Models
 {
     public class SearchModel
     {
-        public int? CityId {  get; set; }
+        public int? CityId { get; set; }
         public string? StartDate { get; set; }
         public string? EndDate { get; set; }
         public int? AmountOfGuests { get; set; }
-        
-        public DateTime GetStartDate (){
+
+        public DateTime GetStartDate()
+        {
             DateTime startDate = DateTime.ParseExact(StartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             return new DateTime(startDate.Year, startDate.Month, startDate.Day, 16, 0, 0);
         }
@@ -28,7 +23,7 @@ namespace Models
 
         }
 
-        public void Setup ()
+        public void Setup()
         {
             if (StartDate == null)
             {

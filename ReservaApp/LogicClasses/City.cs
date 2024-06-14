@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DomainLayer
+﻿namespace DomainLayer
 {
     public class City
     {
@@ -13,12 +7,12 @@ namespace DomainLayer
 
         public int Id { get { return id; } }
         public string Name { get { return char.ToUpper(name[0]) + name.Substring(1); } }
-        public City(string name) 
+        public City(string name)
         {
             this.name = name;
         }
         public City(int id, string name) : this(name)
-        { 
+        {
             this.id = id;
         }
     }

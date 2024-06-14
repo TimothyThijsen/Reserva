@@ -1,13 +1,4 @@
-﻿using DomainLayer;
-using DomainLayer.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UnitTesting.MockData
+﻿namespace UnitTesting.MockData
 {
     public class MockHotelDAL : IHotelDAL
     {
@@ -16,35 +7,35 @@ namespace UnitTesting.MockData
         new Hotel(1, "HotelTest","HotelTest description", 1, new Address("street", "1234AB"),"ReservaCurve")
         };
 
-   
-    public void AddHotel(Hotel hotel)
-    {
-        hotelList.Add(hotel);
-    }
 
-    public void EditHotel(Hotel hotel)
-    {
-        hotelList[hotelList.IndexOf(hotelList.Find(h => h.Id == hotel.Id))] = hotel;
-    }
+        public void AddHotel(Hotel hotel)
+        {
+            hotelList.Add(hotel);
+        }
 
-    public List<Hotel> GetAllHotels()
-    {
-        return hotelList;
-    }
+        public void EditHotel(Hotel hotel)
+        {
+            hotelList[hotelList.IndexOf(hotelList.Find(h => h.Id == hotel.Id))] = hotel;
+        }
 
-    public Hotel GetHotelAndRoomsById(int id)
-    {
-        throw new NotImplementedException();
-    }
+        public List<Hotel> GetAllHotels()
+        {
+            return hotelList;
+        }
 
-    public Hotel GetHotelById(int id)
-    {
-        return hotelList.Find(h => h.Id == id);
-    }
+        public Hotel GetHotelAndRoomsById(int id)
+        {
+            throw new NotImplementedException();
+        }
 
-    public void RemoveHotel(int id)
-    {
-        hotelList.Remove(hotelList.Find(h => h.Id == id));
-    }
+        public Hotel GetHotelById(int id)
+        {
+            return hotelList.Find(h => h.Id == id);
+        }
+
+        public void RemoveHotel(int id)
+        {
+            hotelList.Remove(hotelList.Find(h => h.Id == id));
+        }
     }
 }

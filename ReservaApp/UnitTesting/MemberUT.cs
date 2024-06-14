@@ -1,13 +1,5 @@
-﻿
-using DomainLayer;
-using Models;
-using System;
-using System.Collections.Generic;
+﻿using Models;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnitTesting
 {
@@ -25,7 +17,7 @@ namespace UnitTesting
         [TestMethod]
         public void AddMember()
         {
-            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, faker.Person.Email.ToLower(),DateTime.Today, MemberType.free_account, "password");
+            MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, faker.Person.Email.ToLower(), DateTime.Today, MemberType.free_account, "password");
 
             Assert.AreEqual(1, _memberManager.GetAllMembers().Count);
             _memberManager.AddMember(member);
@@ -48,7 +40,7 @@ namespace UnitTesting
         {
             MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "same@mail.com", DateTime.Today, MemberType.free_account, "password");
             List<Member> members = _memberManager.GetAllMembers();
-            
+
             Assert.AreEqual(1, members.Count);
             Assert.ThrowsException<EmailValidationException>(() => _memberManager.AddMember(member));
             Assert.AreEqual(1, members.Count);
@@ -87,12 +79,12 @@ namespace UnitTesting
         }
 
         [TestMethod]
-        
+
         public void Login_IncorrectPassword()
         {
             MemberModel member = new MemberModel(faker.Person.FirstName, faker.Person.LastName, "fake@mail.com", DateTime.Today, MemberType.free_account, "password123");
             _memberManager.AddMember(member);
-            
+
             Assert.ThrowsException<CredentialException>(() => _memberManager.Login("fake@mail.com", "wrongpassword"));
         }
 

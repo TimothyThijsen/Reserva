@@ -1,18 +1,12 @@
 ﻿using DomainLayer.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DomainLayer.PricingAlgorithms
 {
     public class ReservaCurve : IPricingAlgorithm
     {
-        
+
         TimeProvider timeProvider;
-        public ReservaCurve(TimeProvider timeProvider) 
+        public ReservaCurve(TimeProvider timeProvider)
         {
             this.timeProvider = timeProvider;
         }

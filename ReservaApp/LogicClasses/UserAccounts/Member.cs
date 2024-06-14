@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DomainLayer
+﻿namespace DomainLayer
 {
     public class Member : User
     {
@@ -12,14 +6,14 @@ namespace DomainLayer
         bool verified;
         MemberType memberType;
         public int? Points { get { return points; } }
-        public MemberType MemberType {  get { return memberType; } }
+        public MemberType MemberType { get { return memberType; } }
         public bool Verified { get { return verified; } }
-        public Member(string firstName, string lastName, string email, DateOnly dateOfBirth,MemberType memberType, string password) : base(firstName, lastName, email, dateOfBirth, password)
+        public Member(string firstName, string lastName, string email, DateOnly dateOfBirth, MemberType memberType, string password) : base(firstName, lastName, email, dateOfBirth, password)
         {
             this.memberType = memberType;
             verified = false;
         }
-        
+
         public Member(int id, string firstName, string lastName, string email, DateOnly dateOfBirth, MemberType memberType, bool verified, string password) : base(id, firstName, lastName, email, dateOfBirth, password)
         {
             this.memberType = memberType;

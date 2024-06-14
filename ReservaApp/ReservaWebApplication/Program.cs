@@ -2,9 +2,7 @@ using DataAccessLayer;
 using DomainLayer;
 using DomainLayer.Interfaces;
 using DomainLayer.ServiceClasses;
-using Enums;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Security.Principal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,30 +15,32 @@ builder.Services.AddSingleton<ICityDAL, CityDAL>();
 builder.Services.AddSingleton<CityManager>();
 builder.Services.AddSingleton<IRoomDAL, RoomDAL>();
 builder.Services.AddSingleton<RoomManager>();
+builder.Services.AddSingleton<IActivityDAL, ActivityDAL>();
+builder.Services.AddSingleton<ActivitiesManager>();
 builder.Services.AddSingleton(sp => TimeProvider.System);
 
 builder.Services.AddTransient<RoomReservationDAL>();
 builder.Services.AddTransient<ActivityReservationDAL>();
 builder.Services.AddSingleton<GetReservationManager>(sp => reservationType =>
 {
-	switch (reservationType)
-	{
-		case ReservationType.RoomReservation:
-			return new ReservationManager(sp.GetRequiredService<RoomReservationDAL>());
-		default:
-			return new ReservationManager(sp.GetRequiredService<ActivityReservationDAL>());
-	}
+    switch (reservationType)
+    {
+        case ReservationType.RoomReservation:
+            return new ReservationManager(sp.GetRequiredService<RoomReservationDAL>());
+        default:
+            return new ReservationManager(sp.GetRequiredService<ActivityReservationDAL>());
+    }
 });
 
 builder.Services.AddTransient<MemberDAL>();
 builder.Services.AddSingleton<MemberManager>(provider =>
 {
-	return new MemberManager(provider.GetRequiredService<MemberDAL>());
+    return new MemberManager(provider.GetRequiredService<MemberDAL>());
 });
 builder.Services.AddTransient<EmployeeDAL>();
 builder.Services.AddSingleton<EmployeeManager>(provider =>
 {
-	return new EmployeeManager(provider.GetRequiredService<EmployeeDAL>());
+    return new EmployeeManager(provider.GetRequiredService<EmployeeDAL>());
 });
 
 

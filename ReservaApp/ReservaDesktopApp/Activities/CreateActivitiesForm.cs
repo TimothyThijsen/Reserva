@@ -1,16 +1,5 @@
-﻿using DomainLayer.ServiceClasses;
-using DomainLayer;
-using Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
+﻿using DomainLayer;
+using DomainLayer.ServiceClasses;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ReservaDesktopApp.Activities
@@ -72,7 +61,7 @@ namespace ReservaDesktopApp.Activities
                 postalCode = txbPostalCode.Text;
                 if (txbStreet.Text == string.Empty) { throw new Exception("Please provide a street address"); }
                 street = txbStreet.Text;
-                if (nmrCapacity.Value <1) { throw new Exception("Please provide a capacity bigger than 0"); }
+                if (nmrCapacity.Value < 1) { throw new Exception("Please provide a capacity bigger than 0"); }
                 capacity = Convert.ToInt32(nmrCapacity.Value);
                 price = nmrPrice.Value;
                 activitiesManager.AddActivity(new Activity(city.Id, capacity, name, description, price, new Address(street, postalCode)));

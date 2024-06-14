@@ -1,49 +1,50 @@
 ﻿using Microsoft.Data.SqlClient;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DataAccessLayer
 {
-	public class DatabaseConnection : IConnection
-	{
-		private const string connectionString = "server=mssqlstud.fhict.local;database=dbi504835_reserva;uid=dbi504835_reserva;password=password12345;TrustServerCertificate=True;";
+    public class DatabaseConnection : IConnection
+    {
+        private const string connectionString = "server=mssqlstud.fhict.local;database=dbi504835_reserva;uid=dbi504835_reserva;password=password12345;TrustServerCertificate=True;";
 
-		public void ModifyDB(SqlCommand cmd)
-		{
+        public void ModifyDB(SqlCommand cmd)
+        {
 
-			SqlConnection conn = new SqlConnection(connectionString);
-			conn.Open();
-			SqlTransaction transaction = conn.BeginTransaction();
-			cmd.Connection = conn;
-			cmd.Transaction = transaction;
-			try
-			{
-				cmd.ExecuteNonQuery();
-				transaction.Commit();
-			}
-			catch (SqlException ex)
-			{
-				transaction.Rollback();
-				throw ex;
-			}
-			finally
-			{
-				if (cmd is IDisposable disposable) { 
-					cmd.Connection.Close();
-					disposable.Dispose(); }
+            SqlConnection conn = new SqlConnection(connectionString);
+            conn.Open();
+            SqlTransaction transaction = conn.BeginTransaction();
+            cmd.Connection = conn;
+            cmd.Transaction = transaction;
+            try
+            {
+                cmd.ExecuteNonQuery();
+                transaction.Commit();
+            }
+            catch (SqlException ex)
+            {
+                transaction.Rollback();
+                throw ex;
+            }
+            finally
+            {
+                if (cmd is IDisposable disposable)
+                {
+                    cmd.Connection.Close();
+                    disposable.Dispose();
+                }
 
-			}
+            }
 
-		}
+        }
 
 
-		public SqlDataReader GetFromDB(SqlCommand cmd)
-		{
-			SqlConnection conn = new SqlConnection(connectionString);
-			cmd.Connection = conn;
-			conn.Open();
-			SqlDataReader reader = cmd.ExecuteReader();
-			
-			return reader;
-		}
-	}
+        public SqlDataReader GetFromDB(SqlCommand cmd)
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            cmd.Connection = conn;
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            return reader;
+        }
+    }
 }

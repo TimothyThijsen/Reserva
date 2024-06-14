@@ -1,10 +1,4 @@
 ﻿using DomainLayer;
-using DomainLayer.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models.Mapper
 {
@@ -12,7 +6,7 @@ namespace Models.Mapper
     {
         public static RoomReservation ToLogicLayer(this RoomReservationModel reservationModel)
         {
-            RoomReservation reservation = new RoomReservation(reservationModel.UserId, reservationModel.AmountOfGuest,reservationModel.TotalPrice, reservationModel.StartDate, reservationModel.EndDate);
+            RoomReservation reservation = new RoomReservation(reservationModel.UserId, reservationModel.AmountOfGuest, reservationModel.TotalPrice, reservationModel.StartDate, reservationModel.EndDate);
             reservation.ReservedRooms = reservationModel.ReservedRooms.Cast<ReservedRoom>().ToList();
             return reservation;
         }

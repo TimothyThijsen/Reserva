@@ -1,11 +1,4 @@
-﻿using DomainLayer.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UnitTesting.Model
+﻿namespace UnitTesting.Model
 {
     /*public class MemberModel 
     {

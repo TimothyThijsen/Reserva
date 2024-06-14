@@ -1,18 +1,6 @@
-﻿using DataAccessLayer;
+﻿using DomainLayer;
 using DomainLayer.ServiceClasses;
-using DomainLayer;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Microsoft.Extensions.DependencyInjection;
-using DomainLayer.PricingAlgorithms;
 using Models;
 
 namespace ReservaDesktopApp.HotelForms
@@ -21,7 +9,7 @@ namespace ReservaDesktopApp.HotelForms
     {
         CityManager cityManager;
         HotelManager hotelManager;
-       
+
 
         public CreateHotelForm()
         {
@@ -34,7 +22,7 @@ namespace ReservaDesktopApp.HotelForms
         {
             List<City> citiesComboItems = new List<City>();
             cmbCities.Items.Clear();
-            
+
 
             foreach (City city in cityManager.GetAllCities())
             {
@@ -43,11 +31,11 @@ namespace ReservaDesktopApp.HotelForms
             }
 
             cmbCities.DisplayMember = "Name";
-            cmbCities.ValueMember = "Id";    
+            cmbCities.ValueMember = "Id";
             cmbCities.DataSource = citiesComboItems;
             cmbCities.SelectedIndex = -1;
 
-            cmbPricingAlgorithm.Items.Add(new ComboBoxItem("No Discount","NoDiscount"));
+            cmbPricingAlgorithm.Items.Add(new ComboBoxItem("No Discount", "NoDiscount"));
             cmbPricingAlgorithm.Items.Add(new ComboBoxItem("Reserva Curve", "ReservaCurve"));
             cmbPricingAlgorithm.Items.Add(new ComboBoxItem("Reserva Curve + Seasonal Northern", "ReservaCurve, SeasonalNorthern"));
             cmbPricingAlgorithm.Items.Add(new ComboBoxItem("Reserva Curve + Seasonal Southern", "ReservaCurve, SeasonalSouthern"));
@@ -86,15 +74,15 @@ namespace ReservaDesktopApp.HotelForms
                 description = txbDescription.Text;
                 if (cmbCities.SelectedIndex < 0) { throw new Exception("Please select a city"); }
                 city = (City)cmbCities.SelectedItem;
-                if(txbPostalCode.Text == string.Empty) { throw new Exception("Please provide a postal code"); }
+                if (txbPostalCode.Text == string.Empty) { throw new Exception("Please provide a postal code"); }
                 postalCode = txbPostalCode.Text;
-                if(txbStreet.Text == string.Empty) { throw new Exception("Please provide a street address"); }
+                if (txbStreet.Text == string.Empty) { throw new Exception("Please provide a street address"); }
                 street = txbStreet.Text;
                 pricingAlgorithms = ((ComboBoxItem)cmbPricingAlgorithm.SelectedItem).HiddenValue;
                 hotelManager.AddHotel(new Hotel(name, description, city.Id, new Address(street, postalCode), pricingAlgorithms));
                 success = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

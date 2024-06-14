@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DomainLayer
+﻿namespace DomainLayer
 {
     public class ActivityReservation : Reservation
     {
@@ -12,7 +6,7 @@ namespace DomainLayer
         int activityId;
         public DateTime Date { get { return date; } }
         public int ActivityId { get { return activityId; } }
-        public ActivityReservation(int userId, int amountOfGuest , decimal totalPrice, int activityId, DateTime date) : base(userId, amountOfGuest, totalPrice)
+        public ActivityReservation(int userId, int amountOfGuest, decimal totalPrice, int activityId, DateTime date) : base(userId, amountOfGuest, totalPrice)
         {
             this.activityId = activityId;
             this.date = date;

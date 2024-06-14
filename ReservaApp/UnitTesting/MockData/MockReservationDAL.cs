@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UnitTesting.MockData
+﻿namespace UnitTesting.MockData
 {
     public class MockReservationDAL : IReservationDAL
     {
@@ -15,7 +9,7 @@ namespace UnitTesting.MockData
             DateTime today = DateTime.Today;
             reservations = new List<Reservation>
             {
-               
+
                 new RoomReservation(1,2,100,new DateTime(2024,06,06,11,00,00),new DateTime(2024,06,08,16,00,00)),
                 new RoomReservation(1,2,100,new DateTime(2024,06,06,11,00,00),new DateTime(2024,06,08,16,00,00)),
                 new RoomReservation(1,2,100,new DateTime(2024,06,08,11,00,00),new DateTime(2024,06,11,16,00,00)),

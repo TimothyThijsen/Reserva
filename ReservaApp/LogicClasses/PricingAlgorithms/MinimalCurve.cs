@@ -1,16 +1,11 @@
 ﻿using DomainLayer.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DomainLayer.PricingAlgorithms
 {
     public class MinimalCurve : IPricingAlgorithm
     {
         TimeProvider TimeProvider;
-        public MinimalCurve(TimeProvider timeProvider) 
+        public MinimalCurve(TimeProvider timeProvider)
         { this.TimeProvider = timeProvider; }
         public decimal CalculatePriceOnDay(Room room, DateTime date)
         {

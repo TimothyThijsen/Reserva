@@ -1,72 +1,71 @@
-using DomainLayer.ServiceClasses;
 using DataAccessLayer;
+using DomainLayer;
+using DomainLayer.ServiceClasses;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
+using Models;
 using System.ComponentModel.DataAnnotations;
-using Models.Mapper;
-using DomainLayer;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
 
 namespace ReservaWebApplication.Pages.AccountPages
 {
-    
+
     public class RegisterAccountModel : PageModel
     {
-		[BindProperty]
-		public MemberModel Member {  get; set; } =new MemberModel() { DateOfBirth = DateTime.Today.AddYears(-18) };
-		public string? StatusMessage { get; set; }
-		MemberManager memberManager = new MemberManager(new MemberDAL());
-		public RegisterAccountModel(MemberManager memberManager) { this.memberManager = memberManager; }
-		public void OnGet(string? statusMessage)
+        [BindProperty]
+        public MemberModel Member { get; set; } = new MemberModel() { DateOfBirth = DateTime.Today.AddYears(-18) };
+        public string? StatusMessage { get; set; }
+        MemberManager memberManager = new MemberManager(new MemberDAL());
+        public RegisterAccountModel(MemberManager memberManager) { this.memberManager = memberManager; }
+        public void OnGet(string? statusMessage)
         {
-			if (statusMessage != null)
-			{
-				StatusMessage = statusMessage.Trim();
-			}
-        }
-        public IActionResult OnPost() 
-        {
-			StatusMessage = string.Empty;
-			if (!ModelState.IsValid)
-			{
-				return Page();
-			}
-			try
-			{
-				memberManager.AddMember(Member);
-                
+            if (statusMessage != null)
+            {
+                StatusMessage = statusMessage.Trim();
             }
-			catch (ValidationException ex)
-			{
-				StatusMessage = ex.Message;
-			}
-			catch (SqlException)
-			{
-				StatusMessage = "Unable to reach database at this current moment, please try again later";
-			}catch(Exception ex)
-			{
-				StatusMessage = ex.Message;
-			}
+        }
+        public IActionResult OnPost()
+        {
+            StatusMessage = string.Empty;
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            try
+            {
+                memberManager.AddMember(Member);
 
-			if (StatusMessage != string.Empty)
-			{
-				return RedirectToPage("/AccountPages/RegisterAccount", new Dictionary<string, string> { { "statusMessage", StatusMessage } });
-			}
-			try
-			{
+            }
+            catch (ValidationException ex)
+            {
+                StatusMessage = ex.Message;
+            }
+            catch (SqlException)
+            {
+                StatusMessage = "Unable to reach database at this current moment, please try again later";
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = ex.Message;
+            }
+
+            if (StatusMessage != string.Empty)
+            {
+                return RedirectToPage("/AccountPages/RegisterAccount", new Dictionary<string, string> { { "statusMessage", StatusMessage } });
+            }
+            try
+            {
                 Member member = memberManager.Login(Member.Email, Member.Password);
                 ClaimsPrincipal claimsPrincipal = GetClaimsPrincipal(member);
                 HttpContext.SignInAsync(claimsPrincipal).GetAwaiter().GetResult();
-			}
-			catch (Exception) { }
-			return new RedirectToPageResult("/Index");
+            }
+            catch (Exception) { }
+            return new RedirectToPageResult("/Index");
 
-		}
+        }
         private ClaimsPrincipal GetClaimsPrincipal(Member member)
         {
             List<Claim> claims = new List<Claim>();

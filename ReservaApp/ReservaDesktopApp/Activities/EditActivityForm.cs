@@ -1,7 +1,6 @@
 ﻿using DomainLayer;
 using DomainLayer.ServiceClasses;
 using Microsoft.Extensions.DependencyInjection;
-using Models;
 
 
 
@@ -73,7 +72,7 @@ namespace ReservaDesktopApp.Activities
                 if (nmrCapacity.Value < 1) { throw new Exception("Please provide a capacity bigger than 0"); }
                 capacity = Convert.ToInt32(nmrCapacity.Value);
                 price = nmrPrice.Value;
-                activitiesManager.EditActivity(new Activity(activity.Id,city.Id, capacity, name, description, price, new Address(street, postalCode)));
+                activitiesManager.EditActivity(new Activity(activity.Id, city.Id, capacity, name, description, price, new Address(street, postalCode)));
                 success = true;
             }
             catch (Exception ex)

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DomainLayer
+﻿namespace DomainLayer
 {
     public abstract class User
     {
         int? id;
-        string firstName, lastName, email; 
+        string firstName, lastName, email;
         string? password;
         DateOnly dateOfBirth;
 
@@ -19,7 +13,7 @@ namespace DomainLayer
         public string Email { get { return email; } }
         public string? Password { get { return password; } set { password = value; } }
         public DateOnly DateOfBirth { get { return dateOfBirth; } }
-        public int Age {  get { return DateTime.Today.Year - dateOfBirth.Year; } }
+        public int Age { get { return DateTime.Today.Year - dateOfBirth.Year; } }
         public User(string firstName, string lastName, string email, DateOnly dateOfBirth, string password)
         {
             this.firstName = firstName;
@@ -28,7 +22,7 @@ namespace DomainLayer
             this.dateOfBirth = dateOfBirth;
             this.password = password;
         }
-        public User(int id, string firstName, string lastName, string email, DateOnly dateOfBirth, string password) : this(firstName, lastName,email, dateOfBirth, password)
+        public User(int id, string firstName, string lastName, string email, DateOnly dateOfBirth, string password) : this(firstName, lastName, email, dateOfBirth, password)
         {
             this.id = id;
         }

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace Models
+﻿namespace Models
 {
     public class RoomDTO
     {
@@ -20,8 +11,8 @@ namespace Models
         public string BedType { get; set; }
 
         //public RoomDTO() { }
-        public RoomDTO(int id, int quantity, string name, int hotelId, decimal price, int capacity, string bedType) 
-        { 
+        public RoomDTO(int id, int quantity, string name, int hotelId, decimal price, int capacity, string bedType)
+        {
             Id = id;
             Quantity = quantity;
             Name = name;
